@@ -23,7 +23,7 @@
 
 
 
-		.CSEG
+		.area   CODE1   (ABS)   ; ASXXXX directive, absolute addressing
 
 ;----------------------------; IMSAI CONSOLE PORTS
 FPLED		.EQU 255	;Front Panel LED
@@ -34,24 +34,24 @@ FPSW		.EQU 255	;Front Panel Switches
 PROPELLERS	.EQU 0		;Propeller Console Status Port
 PROPELLERD	.EQU 1		;Propeller Console Data Port
 
-CPU_IO		.EQU 20H	;Base address for onboard CPU I/O
+CPU_IO		.EQU 0x20	;Base address for onboard CPU I/O
 UART0		.EQU CPU_IO
-UART1		.EQU CPU_IO+8H
-SPI		.EQU CPU_IO+10H
+UART1		.EQU CPU_IO+0x08
+SPI		.EQU CPU_IO+0x10
 SPI_SS		.EQU SPI+1
-PPORT		.EQU CPU_IO+18H
+PPORT		.EQU CPU_IO+0x18
 
-		.ORG 0000H
+		.ORG 0x0000
 
 		MVI	A,2
-START_DELAY	LXI	H,0
-		LXI	B,1		
-		DAD	B	
-		JNC	$-1
+START_DELAY:	LXI	H,0
+		LXI	B,1
+1$:		DAD	B
+		JNC	1$
 		DCR	A
 		JNZ	START_DELAY
-		
-		MVI	A,80H	;Set baud rate
+
+		MVI	A,0x80	;Set baud rate
 		OUT	UART0+3
 		OUT	UART1+3
 		MVI	A,12	;12=9600 baud
@@ -66,56 +66,56 @@ START_DELAY	LXI	H,0
 		OUT	UART0+4
 		OUT	UART1+4
 		IN	UART0		;Clear any rxd flag
-		
+
 
 		LXI	H,MSG1		;System Start, Display Welcome Message
 		JMP	PRINTI_NS
-MSG1		.text "\r\nALTAIR/IMSAI 8080 CPU BOARD BOOT LOADER - Josh Bensadon v2.5 Sep 3, 2018"
-		.text "\r\n<D> -SD Card Directory"
-		.text "\r\n<R> -RAM Test"
-		.text "\r\n<V> -View Load"
-		.text "\r\n> \000"
+MSG1:		.ascii "\r\nALTAIR/IMSAI 8080 CPU BOARD BOOT LOADER - Josh Bensadon v2.5 Sep 3, 2018"
+		.ascii "\r\n<D> -SD Card Directory"
+		.ascii "\r\n<R> -RAM Test"
+		.ascii "\r\n<V> -View Load"
+		.ascii "\r\n> \000"
 
 		XRA	A
 		STA	GH_VIEW
-	
+
 		LXI	B,3
-DDLP0		MVI	E,5
-		
-DDLP1		LXI	H,0
-DDLP2		IN	UART0+5	;10	;TEST FOR RX DATA
+DDLP0:		MVI	E,5
+
+DDLP1:		LXI	H,0
+DDLP2:		IN	UART0+5	;10	;TEST FOR RX DATA
 		ANI	1	;7
 		JZ	DDLP3	;10
 		IN	UART0
 		JMP	DDLP4
-		
-DDLP3		IN	PROPELLERS
+
+DDLP3:		IN	PROPELLERS
 		ANI	2
 		JZ	DDLP5
 		IN	PROPELLERD
 		ORA	A
 		JZ	DDLP5
-		CPI	0FFh
+		CPI	0xFF
 		JZ	DDLP5
-		
-DDLP4		OUT	UART0
+
+DDLP4:		OUT	UART0
 		OUT	PROPELLERD
 		CPI	27
 		JZ	BOOT_SD
 		CPI	32
 		JZ	DDSKP
-		ANI	5Fh		;Upper Case
-		CPI	'D'
+		ANI	0x5F		;Upper Case
+		CPI	"D"
 		JZ	DO_DIR
-		CPI	'R'
+		CPI	"R"
 		JZ	TEST_RAM
-		CPI	'V'
+		CPI	"V"
 		JZ	BOOT_SDVIEW
-		
-DDLP5		DAD	B	;10
+
+DDLP5:		DAD	B	;10
 		JNC	DDLP2	;10	47*20K/2=~ 0.5 Sec
 
-DDSKP		MVI	A,'.'
+DDSKP:		MVI	A,"."
 		OUT	UART0
 		OUT	PROPELLERD
 		DCR	E
@@ -123,29 +123,29 @@ DDSKP		MVI	A,'.'
 
 		JMP	BOOT_SD
 
-BOOT_SDVIEW	MVI	A,1
+BOOT_SDVIEW:	MVI	A,1
 		STA	GH_VIEW
 		JMP	DDLP0
 
 ;-------------------------------------------------
-DO_DIR		LXI	SP,HIGHSTACK ;128 Bytes of stack available.
+DO_DIR:		LXI	SP,HIGHSTACK ;128 Bytes of stack available.
 
 		CALL	PRINTI
-		.text "\r\nINIT_FAT \000"
+		.ascii "\r\nINIT_FAT \000"
 
 		CALL	INIT_FAT
 
 		CALL	PRINTI
-		.text "\r\n\DIRECTORY:\r\n\000"
+		.ascii "\r\nDIRECTORY:\r\n\000"
 		CALL	SD_LDIR1
-SDLF_LP 	JZ	INPUT_FNAME		;End of list
+SDLF_LP: 	JZ	INPUT_FNAME		;End of list
 		MOV	A,M
 		CPI	33
 		JM	DD_NEXT
 		CPI	127
 		JP	DD_NEXT
 		PUSH	H			;Test if starting cluster is 0, skip file
-		LXI	B,1Ah
+		LXI	B,0x1A
 		DAD	B
 		MOV	A,M
 		INX	H
@@ -156,34 +156,34 @@ SDLF_LP 	JZ	INPUT_FNAME		;End of list
 		CALL	PRINT_FILENAME
 
 ;		CALL	PRINTI
-;		.text "\r\n\000"
+;		.ascii "\r\n\000"
 ;		CALL	SD_LDIRN
 ;		JMP	SDLF_LP
-		
+
 		LDA	PC_POS
 		CPI	64
 		JM	DD_SAMELINE
 		CALL	PRINTI
-		.text "\r\n\000"
-DD_SAMELINE	LDA	PC_POS			;TAB OUT 16 CHARS
-		ANI	0Fh
+		.ascii "\r\n\000"
+DD_SAMELINE:	LDA	PC_POS			;TAB OUT 16 CHARS
+		ANI	0x0F
 		JZ	DD_NEXT
-		MVI	A,' '
+		MVI	A," "
 		CALL	PUT_CHAR
 		JMP	DD_SAMELINE
 
-DD_NEXT		CALL	SD_LDIRN
+DD_NEXT:		CALL	SD_LDIRN
 		JMP	SDLF_LP
 
 
 ;-----------------------------------------------------------------------------------------------------
-INPUT_FNAME	CALL 	PRINTI		;Display Menu Prompt
-		.text "\r\nENTER 8.3 FILE NAME> \000"
+INPUT_FNAME:	CALL 	PRINTI		;Display Menu Prompt
+		.ascii "\r\nENTER 8.3 FILE NAME> \000"
 		LXI	H,FILENAME
 		MVI	B,11
-		MVI	A,' '
+		MVI	A," "
 		CALL	FILL_BLOCK
-		MVI	C,'.'
+		MVI	C,"."
 		MVI	B,8
 		CALL	GET_STRING
 		JC	INPUT_FNAME
@@ -192,8 +192,8 @@ INPUT_FNAME	CALL 	PRINTI		;Display Menu Prompt
 		LXI	H,FILEEXT
 		MVI	B,3
 		CALL	GET_STRING
-LOADIT		CALL 	PRINTI	
-		.text "\r\n\000"		
+LOADIT:		CALL 	PRINTI
+		.ascii "\r\n\000"
 		JMP	SD_MANUAL
 
 
@@ -204,16 +204,16 @@ LOADIT		CALL 	PRINTI
 ;B=START PAGE (Hard coded at F0)
 ;C=END PAGE   (Hard coded at FF)
 
-TEST_RAM	LXI	H,0
-		LXI	B,1		
-		DAD	B	
-		JNC	$-1
+TEST_RAM:	LXI	H,0
+		LXI	B,1
+1$:		DAD	B
+		JNC	1$
 
 		LXI	H,MSG2		;TEST RAM Message
 		JMP	PRINTI_NS
-MSG2		.text "\r\nTesting SYSTEM RAM @F000-FFFF\r\nRAM PAGE MARCH\000"
+MSG2:		.ascii "\r\nTesting SYSTEM RAM @F000-FFFF\r\nRAM PAGE MARCH\000"
 
-RAM_TEST:	
+RAM_TEST:
 
 ;B AND C Have been hard coded to F0 AND FF
 
@@ -234,29 +234,29 @@ RAM_TEST:
 ; NEXT E
 ;
 
-		MVI	E,0FFh		;E selects the polarity of the test, ie March a page of 1'S or 0's
+		MVI	E,0xFF		;E selects the polarity of the test, ie March a page of 1'S or 0's
 
 ;Clear/Set all pages
-RT1_LP0		LXI	H,0F000h	;HL = BASE RAM ADDRESS
-		
-RT1_LP1		MOV	A,E		;CLEAR A
+RT1_LP0:	LXI	H,0xF000	;HL = BASE RAM ADDRESS
+
+RT1_LP1:	MOV	A,E		;CLEAR A
 		CMA
-RT1_LP2		MOV	M,A		;WRITE PAGE
+RT1_LP2:	MOV	M,A		;WRITE PAGE
 		INR	L
 		JNZ	RT1_LP2		;LOOP TO QUICKLY WRITE 1 PAGE
 		MOV	A,H
 		INR	H		;ADVANCE TO NEXT PAGE
-		CPI	0FFh		;COMPARE WITH END PAGE
+		CPI	0xFF		;COMPARE WITH END PAGE
 		JNZ	RT1_LP1		;LOOP UNTIL = END PAGE
 
 ;March 1 PAGE through RAM
-		MVI	D,0F0h		;Begin with START PAGE
+		MVI	D,0xF0		;Begin with START PAGE
 
 ;Write FF to page D
-RT1_LP3		MOV	H,D		;HL = Marched Page ADDRESS
+RT1_LP3:	MOV	H,D		;HL = Marched Page ADDRESS
 		;MVI	L,0
 
-		MVI	A,'.'
+		MVI	A,"."
 		OUT	UART0
 		OUT	PROPELLERD
 
@@ -264,26 +264,26 @@ RT1_LP3		MOV	H,D		;HL = Marched Page ADDRESS
 		CMA
 		OUT	FPLED
 		;MOV	A,E		;SET A
-RT1_LP4		MOV	M,E		;WRITE PAGE
+RT1_LP4:	MOV	M,E		;WRITE PAGE
 		INR	L
 		JNZ	RT1_LP4		;LOOP TO QUICKLY WRITE 1 PAGE
 
 ;Test all pages for 0 (except page D = FF)
-		LXI	H,0F000h	;HL = BASE RAM ADDRESS
+		LXI	H,0xF000	;HL = BASE RAM ADDRESS
 
-RT1_LP5		MOV	A,H		;IF H = D
+RT1_LP5:	MOV	A,H		;IF H = D
 		CMP	D
 		MOV	A,E		;THEN Value = FF
 		JZ	RT1_LP6
 		CMA			;ELSE Value = 00
 
-RT1_LP6		CMP	M		;TEST RAM
+RT1_LP6:	CMP	M		;TEST RAM
 		JNZ	RT_FAIL
 		INR	L
 		JNZ	RT1_LP6		;LOOP TO QUICKLY TEST 1 PAGE
 		MOV	A,H
 		INR	H		;ADVANCE TO NEXT PAGE
-		CPI	0FFh		;COMPARE WITH END PAGE
+		CPI	0xFF		;COMPARE WITH END PAGE
 		JNZ	RT1_LP5		;LOOP UNTIL = END PAGE
 
 ;Write 00 back to page D
@@ -291,13 +291,13 @@ RT1_LP6		CMP	M		;TEST RAM
 		;MVI	L,0
 		MOV	A,E
 		CMA
-RT1_LP7		MOV	M,A		;WRITE PAGE
+RT1_LP7:	MOV	M,A		;WRITE PAGE
 		INR	L
 		JNZ	RT1_LP7		;LOOP TO QUICKLY WRITE 1 PAGE
 
 		MOV	A,D
 		INR	D		;ADVANCE TO NEXT PAGE
-		CPI	0FFh		;COMPARE WITH END PAGE
+		CPI	0xFF		;COMPARE WITH END PAGE
 		JNZ	RT1_LP3		;LOOP UNTIL = END PAGE
 
 		INR	E
@@ -305,10 +305,10 @@ RT1_LP7		MOV	M,A		;WRITE PAGE
 
 		LXI	H,MSG3
 		JMP	PRINTI_NS
-MSG3		.text "PASSED\r\nRAM BYTE MARCH A\000"
+MSG3:		.ascii "PASSED\r\nRAM BYTE MARCH A\000"
 
-		DCR	B	;5
-		JNZ	$-1	;10    15*256 ~= 4,000 ~= 2mSec
+1$:		DCR	B	;5
+		JNZ	1$	;10    15*256 ~= 4,000 ~= 2mSec
 
 
 ;Byte March Test.  7 Sec/K
@@ -328,31 +328,31 @@ MSG3		.text "PASSED\r\nRAM BYTE MARCH A\000"
 ;   NEXT H
 ; NEXT E
 
-		MVI	E,0FFh		;E selects the polarity of the test, ie March a page of 1'S or 0's
+		MVI	E,0xFF		;E selects the polarity of the test, ie March a page of 1'S or 0's
 
 ;Clear/Set all pages
 
-RT2_LP0		MVI	H,0F0h		;HL = BASE RAM ADDRESS
-RT2_LP1		MVI	L,0
+RT2_LP0:	MVI	H,0xF0		;HL = BASE RAM ADDRESS
+RT2_LP1:	MVI	L,0
 
 		MOV	A,H
 		CMA
 		OUT	FPLED
-		MVI	A,'.'
+		MVI	A,"."
 		OUT	UART0
 		OUT	PROPELLERD
 
 
 		MOV	A,E		;CLEAR A
 		CMA
-RT2_LP2		MOV	M,A		;WRITE PAGE
+RT2_LP2:	MOV	M,A		;WRITE PAGE
 		INR	L
 		JNZ	RT2_LP2		;LOOP TO QUICKLY WRITE 1 PAGE
 
 
 		MVI	D,0		;Starting with BYTE 00 of page
 
-RT2_LP3		MOV	L,D		;Save at byte march ptr
+RT2_LP3:	MOV	L,D		;Save at byte march ptr
 		MOV	A,E		;SET A
 		MOV	M,A
 
@@ -360,7 +360,7 @@ RT2_LP3		MOV	L,D		;Save at byte march ptr
 		CMA			;CLEAR A
 		MVI	L,0
 
-RT2_LP4		CMP	M		;TEST BYTE FOR CLEAR
+RT2_LP4:	CMP	M		;TEST BYTE FOR CLEAR
 		JZ	RT2_NX1
 		CMA			;SET A
 		CMP	M		;TEST BYTE FOR SET
@@ -370,7 +370,7 @@ RT2_LP4		CMP	M		;TEST BYTE FOR CLEAR
 		JNZ	RT_FAIL
 		MOV	A,E		;CLEAR A
 		CMA
-RT2_NX1		INR	L
+RT2_NX1:	INR	L
 		JNZ	RT2_LP4		;LOOP TO QUICKLY WRITE 1 PAGE
 
 		MOV	L,D		;Save at byte march ptr
@@ -383,7 +383,7 @@ RT2_NX1		INR	L
 
 		MOV	A,H
 		INR	H		;ADVANCE TO NEXT PAGE
-		CPI	0FFh		;COMPARE WITH END PAGE
+		CPI	0xFF		;COMPARE WITH END PAGE
 		JNZ	RT2_LP1		;LOOP UNTIL = END PAGE
 
 		INR	E
@@ -391,96 +391,96 @@ RT2_NX1		INR	L
 
 		LXI	H,MSG4
 		JMP	PRINTI_NS
-MSG4		.text "PASSED\r\nRAM BYTE MARCH B\000"
+MSG4:		.ascii "PASSED\r\nRAM BYTE MARCH B\000"
 
 ;26 Sec/K
 
-BYTEMARCH2
-		MVI	E,0FFh		;E selects the polarity of the test, ie March a page of 1'S or 0's
+BYTEMARCH2:
+		MVI	E,0xFF		;E selects the polarity of the test, ie March a page of 1'S or 0's
 
-RT4_LP0		MVI	D,0		;Starting with BYTE 00 of page
+RT4_LP0:	MVI	D,0		;Starting with BYTE 00 of page
 
 ;CLEAR all pages
 
-		LXI	H,0F000h	;HL = BASE RAM ADDRESS
-		
+		LXI	H,0xF000	;HL = BASE RAM ADDRESS
 
-RT4_LP1		MOV	A,E		;CLEAR A
+
+RT4_LP1:	MOV	A,E		;CLEAR A
 		CMA
-RT4_LP2		MOV	M,A		;WRITE PAGE
+RT4_LP2:	MOV	M,A		;WRITE PAGE
 		INR	L
 		JNZ	RT4_LP2		;LOOP TO QUICKLY WRITE 1 PAGE
 
 		MOV	A,H
 		INR	H		;ADVANCE TO NEXT PAGE
-		CPI	0FFh		;COMPARE WITH END PAGE
+		CPI	0xFF		;COMPARE WITH END PAGE
 		JNZ	RT4_LP1		;LOOP UNTIL = END PAGE
 
 
-RT4_LP3		MOV	A,D
+RT4_LP3:	MOV	A,D
 		CMA
 		OUT	FPLED
-		
-		ANI	0Fh
+
+		ANI	0x0F
 		JNZ	RT4_SKP
-		MVI	A,'.'
+		MVI	A,"."
 		OUT	UART0
 		OUT	PROPELLERD
 
 
-RT4_SKP
+RT4_SKP:
 
 					;Write SET byte at "D" in every page
-		MVI	H,0F0h		;HL = BASE RAM ADDRESS
+		MVI	H,0xF0		;HL = BASE RAM ADDRESS
 		MOV	L,D		;Save at byte march ptr
-RT4_LP4		MOV	M,E
+RT4_LP4:	MOV	M,E
 
 		MOV	A,H
 		INR	H		;ADVANCE TO NEXT PAGE
-		CPI	0FFh		;COMPARE WITH END PAGE
+		CPI	0xFF		;COMPARE WITH END PAGE
 		JNZ	RT4_LP4		;LOOP UNTIL = END PAGE
 
 
 		MVI	L,0
 
-RT4_LP5		MVI	H,0F0h		;HL = BASE RAM ADDRESS
+RT4_LP5:	MVI	H,0xF0		;HL = BASE RAM ADDRESS
 		MOV	A,L
 		CMP	D
 		JZ	RT4_LP7		;Test for marked byte in all pages
 
-RT4_LP6		MOV	A,E
+RT4_LP6:	MOV	A,E
 		CMA			;CLEAR A
 		CMP	M		;TEST BYTE FOR CLEAR
 		JNZ	RT_FAIL
 
 		MOV	A,H
 		INR	H		;ADVANCE TO NEXT PAGE
-		CPI	0FFh		;COMPARE WITH END PAGE
+		CPI	0xFF		;COMPARE WITH END PAGE
 		JNZ	RT4_LP6		;LOOP UNTIL = END PAGE
 		JMP	RT4_NX
 
-RT4_LP7		MOV	A,E
+RT4_LP7:	MOV	A,E
 		CMP	M		;TEST BYTE FOR SET
 		JNZ	RT_FAIL
 
 		MOV	A,H
 		INR	H		;ADVANCE TO NEXT PAGE
-		CPI	0FFh		;COMPARE WITH END PAGE
+		CPI	0xFF		;COMPARE WITH END PAGE
 		JNZ	RT4_LP7		;LOOP UNTIL = END PAGE
 
-RT4_NX		INR	L
+RT4_NX:		INR	L
 		JNZ	RT4_LP5
 
 					;Write CLEAR byte at "D" in every page
-		MVI	H,0F0h		;HL = BASE RAM ADDRESS
+		MVI	H,0xF0		;HL = BASE RAM ADDRESS
 		MOV	L,D		;Save at byte march ptr
-RT4_LP8		MOV	A,E
+RT4_LP8:	MOV	A,E
 		CMA
 		MOV	M,A
 
 		MOV	A,H
 		INR	H		;ADVANCE TO NEXT PAGE
-		CPI	0FFh		;COMPARE WITH END PAGE
+		CPI	0xFF		;COMPARE WITH END PAGE
 		JNZ	RT4_LP8		;LOOP UNTIL = END PAGE
 
 		INR	D
@@ -492,47 +492,47 @@ RT4_LP8		MOV	A,E
 
 		LXI	H,MSG5
 		JMP	PRINTI_NS
-MSG5		.text "PASSED\r\nRAM BIT MARCH \000"
+MSG5:		.ascii "PASSED\r\nRAM BIT MARCH \000"
 
 
-BIT_MARCH
+BIT_MARCH:
 ;Bit March Test.  0.1 Sec/K
 
 		MVI	E,01		;E selects the bit to march
 
 ;Clear/Set all pages
 
-RT3_LP1		LXI	H,0F000h	;HL = BASE RAM ADDRESS
-		
+RT3_LP1:	LXI	H,0xF000	;HL = BASE RAM ADDRESS
+
 
 		MOV	A,E		;Display bit pattern on LED PORT
 		CMA
 		OUT	FPLED
-		MVI	A,'.'
+		MVI	A,"."
 		OUT	UART0
 		OUT	PROPELLERD
 
-RT3_LP2		MOV	A,E		;FETCH MARCHING BIT PATTERN
-RT3_LP3		MOV	M,A		;WRITE PAGE
+RT3_LP2:	MOV	A,E		;FETCH MARCHING BIT PATTERN
+RT3_LP3:	MOV	M,A		;WRITE PAGE
 		INR	L
 		JNZ	RT3_LP3		;LOOP TO QUICKLY WRITE 1 PAGE
 
 		MOV	A,H
 		INR	H		;ADVANCE TO NEXT PAGE
-		CPI	0FFh		;COMPARE WITH END PAGE
+		CPI	0xFF		;COMPARE WITH END PAGE
 		JNZ	RT3_LP2		;LOOP UNTIL = END PAGE
 
-		LXI	H,0F000h	;HL = BASE RAM ADDRESS
+		LXI	H,0xF000	;HL = BASE RAM ADDRESS
 
-RT3_LP4		MOV	A,E		;FETCH MARCHING BIT PATTERN
-RT3_LP5		CMP	M
+RT3_LP4:	MOV	A,E		;FETCH MARCHING BIT PATTERN
+RT3_LP5:	CMP	M
 		JNZ	RT_FAIL
 		INR	L
 		JNZ	RT3_LP5		;LOOP TO QUICKLY WRITE 1 PAGE
 
 		MOV	A,H
 		INR	H		;ADVANCE TO NEXT PAGE
-		CPI	0FFh		;COMPARE WITH END PAGE
+		CPI	0xFF		;COMPARE WITH END PAGE
 		JNZ	RT3_LP4		;LOOP UNTIL = END PAGE
 
 
@@ -550,13 +550,13 @@ RT3_LP5		CMP	M
 		CMA			;INVERT ALL BITS
 		MOV	E,A
 		JMP	RT3_LP1
-RT3_NX1		CPI	0FEh
+RT3_NX1:	CPI	0xFE
 		JNZ	RT3_LP1
 
 
 		LXI	H,MSG6
 		JMP	PRINTI_NS
-MSG6		.text "PASSED\r\nRAM SEQUENCE TEST\000"
+MSG6:		.ascii "PASSED\r\nRAM SEQUENCE TEST\000"
 
 
 
@@ -564,42 +564,42 @@ MSG6		.text "PASSED\r\nRAM SEQUENCE TEST\000"
 
 ;Clear/Set all pages
 
-RT5_LP1		MOV	A,E		;Display bit pattern on LED PORT
-		ANI	7h
+RT5_LP1:	MOV	A,E		;Display bit pattern on LED PORT
+		ANI	0x7
 		JNZ	RT5_SKP
-		MVI	A,'.'
+		MVI	A,"."
 		OUT	UART0
 		OUT	PROPELLERD
 
-RT5_SKP
+RT5_SKP:
 		MOV	A,E		;Display bit pattern on LED PORT
 		CMA
 		OUT	FPLED
 
-		LXI	H,0F000h	;HL = BASE RAM ADDRESS
-		
+		LXI	H,0xF000	;HL = BASE RAM ADDRESS
+
 		MOV	D,E
 
-RT5_LP2		INR	D
+RT5_LP2:	INR	D
 		JNZ	RT5_NX1
 		INR	D
-RT5_NX1		MOV	M,D		;WRITE PAGE
+RT5_NX1:	MOV	M,D		;WRITE PAGE
 		INR	L
 		JNZ	RT5_LP2		;LOOP TO QUICKLY WRITE 1 PAGE
 
 		MOV	A,H
 		INR	H		;ADVANCE TO NEXT PAGE
-		CPI	0FFh		;COMPARE WITH END PAGE
+		CPI	0xFF		;COMPARE WITH END PAGE
 		JNZ	RT5_LP2		;LOOP UNTIL = END PAGE
 
-		LXI	H,0F000h	;HL = BASE RAM ADDRESS
-		
+		LXI	H,0xF000	;HL = BASE RAM ADDRESS
+
 		MOV	D,E
 
-RT5_LP3		INR	D
+RT5_LP3:	INR	D
 		JNZ	RT5_NX2
 		INR	D
-RT5_NX2		MOV	A,D
+RT5_NX2:	MOV	A,D
 		CMP	M		;TEST
 		JNZ	RT_FAIL
 		INR	L
@@ -607,7 +607,7 @@ RT5_NX2		MOV	A,D
 
 		MOV	A,H
 		INR	H		;ADVANCE TO NEXT PAGE
-		CPI	0FFh		;COMPARE WITH END PAGE
+		CPI	0xFF		;COMPARE WITH END PAGE
 		JNZ	RT5_LP3		;LOOP UNTIL = END PAGE
 
 		INR	E
@@ -615,86 +615,86 @@ RT5_NX2		MOV	A,D
 
 		LXI	H,MSG7
 		JMP	PRINTI_NS
-MSG7		.text "PASSED\000"
-		
+MSG7:		.ascii "PASSED\000"
+
 		JMP	BOOT_SD
 
 
-RT_FAIL		MOV	D,H		;Save the address in HL to DE
+RT_FAIL:	MOV	D,H		;Save the address in HL to DE
 		MOV	E,L
 		LXI	H,MSG8
 		JMP	PRINTI_NS
-MSG8		.text "\r\nFAILED AT:\000"
+MSG8:		.ascii "\r\nFAILED AT:\000"
 
 		MOV	A, D
-		
+
 		RRC
 		RRC
 		RRC
 		RRC
 
-		ANI	0Fh
-		ADI	90h
+		ANI	0x0F
+		ADI	0x90
 		DAA
-		ACI	40h
+		ACI	0x40
 		DAA
 
-		DCR	B	;5
-		JNZ	$-1	;10    15*256 ~= 4,000 ~= 2mSec
+2$:		DCR	B	;5
+		JNZ	2$	;10    15*256 ~= 4,000 ~= 2mSec
 		OUT	UART0
 		OUT	PROPELLERD
 
 		MOV	A, D
-		
-		ANI	0Fh
-		ADI	90h
+
+		ANI	0x0F
+		ADI	0x90
 		DAA
-		ACI	40h
+		ACI	0x40
 		DAA
 
-		DCR	B	;5
-		JNZ	$-1	;10    15*256 ~= 4,000 ~= 2mSec
-		OUT	UART0
-		OUT	PROPELLERD
-		
-		MOV	A, E
-		
-		RRC
-		RRC
-		RRC
-		RRC
-
-		ANI	0Fh
-		ADI	90h
-		DAA
-		ACI	40h
-		DAA
-
-		DCR	B	;5
-		JNZ	$-1	;10    15*256 ~= 4,000 ~= 2mSec
+3$:		DCR	B	;5
+		JNZ	3$	;10    15*256 ~= 4,000 ~= 2mSec
 		OUT	UART0
 		OUT	PROPELLERD
 
 		MOV	A, E
-		
-		ANI	0Fh
-		ADI	90h
+
+		RRC
+		RRC
+		RRC
+		RRC
+
+		ANI	0x0F
+		ADI	0x90
 		DAA
-		ACI	40h
+		ACI	0x40
 		DAA
 
-		DCR	B	;5
-		JNZ	$-1	;10    15*256 ~= 4,000 ~= 2mSec
+4$:		DCR	B	;5
+		JNZ	4$	;10    15*256 ~= 4,000 ~= 2mSec
 		OUT	UART0
 		OUT	PROPELLERD
 
-SYS_HALT
+		MOV	A, E
+
+		ANI	0x0F
+		ADI	0x90
+		DAA
+		ACI	0x40
+		DAA
+
+5$:		DCR	B	;5
+		JNZ	5$	;10    15*256 ~= 4,000 ~= 2mSec
+		OUT	UART0
+		OUT	PROPELLERD
+
+SYS_HALT:
 		LXI	H,MSG12
 		JMP	PRINTI_NS
-MSG12		.text " - SYSTEM HALTED\r\n\000"
+MSG12:		.ascii " - SYSTEM HALTED\r\n\000"
 
-		HLT
-		JMP	$-1
+6$:		HLT
+		JMP	6$
 
 
 ;===============================================
@@ -706,10 +706,10 @@ PRINTI_NS:	MOV	A, M
 		ORA	A
 		JNZ	PRINTI_DO
 		PCHL		;RETURN TO NEXT INSTRUCTION
-PRINTI_DO	
+PRINTI_DO:
 		DCR	B	 ;5
 		JNZ	PRINTI_DO ;10    15*256 ~= 4,000 ~= 2mSec
-		
+
 		OUT	UART0
 		OUT	PROPELLERD
 		JMP	PRINTI_NS
@@ -737,41 +737,41 @@ PRINTI_DO
 ;>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>;
 ;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<;
 ;----------------------------------------------------------------------------------------------------; BOOT SD
-BOOT_SD		LXI	SP,HIGHSTACK ;128 Bytes of stack available.
+BOOT_SD:		LXI	SP,HIGHSTACK ;128 Bytes of stack available.
 
 		CALL	PRINTI
-		.text "\r\nBOOT BIOS.HEX, INIT_FAT \000"
+		.ascii "\r\nBOOT BIOS.HEX, INIT_FAT \000"
 
 		CALL	INIT_FAT
 
 		CALL	PRINTI
-		.text "\r\nLOADING FILE \000"
+		.ascii "\r\nLOADING FILE \000"
 
 		LXI	D,SDISKA+1
 		CALL	INIT_BLOCK	;Preload SD_FCB with file name
-		.text	"BIOS    HEX\000"
+		.ascii	"BIOS    HEX\000"
 
 ;=====================================================================================================
 ;Open File
-		
-SD_OPEN		LXI	H,SDISKA
+
+SD_OPEN:	LXI	H,SDISKA
 		MVI	M,0		;FSTAT=0, Clear Open Status
 		INX	H		;+1 = FNAME
 		LXI	D,FILENAME	;Write FCB File name to FILENAME for finding
 		MVI	B,11
 		CALL	COPY_RAM
-SD_MANUAL	CALL	SDV_FIND_FILE	;H=Directory Entry  ;PRINT FILE NAME, FOUND OR NOT
+SD_MANUAL:	CALL	SDV_FIND_FILE	;H=Directory Entry  ;PRINT FILE NAME, FOUND OR NOT
 		JZ	DO_DIR		;Exit if file not found
 
-SDO_DO		PUSH	H
-		LXI	B,1Ch		;File Size Offset (into Directory Entry)
+SDO_DO:		PUSH	H
+		LXI	B,0x1C		;File Size Offset (into Directory Entry)
 		DAD	B
 		CALL	MOV_32_HL	;Move (HL) to 32 bit register BCDE
 		LXI	H,FSIZE
 		CALL	MOV_HL_32	;Save 32 bits to RAM at HL
-		
+
 		POP	H
-		LXI	B,1Ah		;H=(START CLUSTER)
+		LXI	B,0x1A		;H=(START CLUSTER)
 		DAD	B
 		CALL	LD_HL_HL	;Fetch Starting Custer
 		XCHG			;D=Starting Cluster
@@ -783,11 +783,11 @@ SDO_DO		PUSH	H
 		MOV	M,D
 		INX	H
 		MVI	B,14
-		MVI	A,0FFH
+		MVI	A,0xFF
 		CALL	FILL_BLOCK	;Fill 14 bytes of FF (Nuke pointers to force new calculations)
-		
+
 		CALL	PRINTI
-		.text "\r\nFILE SIZE=0x\000"
+		.ascii "\r\nFILE SIZE=0x\000"
 
 		LHLD	FSIZE+2
 		CALL	PUT_HL
@@ -795,32 +795,32 @@ SDO_DO		PUSH	H
 		CALL	PUT_HL
 
 		CALL	PRINTI
-		.text "\r\n\000"
-		
+		.ascii "\r\n\000"
+
 		LXI	H,0
 		SHLD	LOGICAL_SEC
-		LXI	H,0FFFFh	;Start INB_PTR AT END to Force a Sector Read
+		LXI	H,0xFFFF	;Start INB_PTR AT END to Force a Sector Read
 		SHLD	INB_PTR
-		
+
 		MVI	A,0		;CLEAR START ADDRESS VALID
 		STA	GH_VALID
-		
+
 		LXI	H,GH0
 		SHLD	GH_STATE
 
-READ_FILE_LOOP	LXI	H,FSIZE
+READ_FILE_LOOP:	LXI	H,FSIZE
 		CALL	MOV_32_HL	;Fetch File Size (count)
-		
+
 		CALL	TSTZ_32
 		JZ	DO_EOF		;END OF FILE REACHED
-		
+
 		CALL	DEC_32		;Decrement count of bytes
 		LXI	H,FSIZE
 		CALL	MOV_HL_32	;Save count
-		
-	
+
+
 		;Input:	LOGICAL_SEC = 0=First Sector
-		
+
 		LHLD	INB_PTR
 		INX	H
 		MOV	A,H
@@ -833,15 +833,15 @@ READ_FILE_LOOP	LXI	H,FSIZE
 		SHLD	LOGICAL_SEC
 
 		LXI	H,SD_RAM_BUFFER
-RFL_1		SHLD	INB_PTR
-		
+RFL_1:		SHLD	INB_PTR
+
 		LDA	GH_VIEW
 		ORA	A
 		JZ	RFL_2
 		MOV	A,M
 		CALL	PUT_CHAR
-		
-RFL_2		MOV	A,M
+
+RFL_2:		MOV	A,M
 
 		LXI	H,READ_FILE_LOOP
 		PUSH	H		;RETURN ADDRESS
@@ -849,27 +849,27 @@ RFL_2		MOV	A,M
 		PCHL			;Jump to state of Get HEX File
 
 					;End of File Reached
-DO_EOF		CALL	PRINTI
-		.text "\r\n-EOF-\000"
-		
+DO_EOF:		CALL	PRINTI
+		.ascii "\r\n-EOF-\000"
+
 		JMP	GH_EXEC
 
 					;========================================================== STATE 0
-GH0		CPI	':'		;State 0, Wait for start of a record, look for colon
+GH0:		CPI	":"		;State 0, Wait for start of a record, look for colon
 		RNZ
 
 		XRA	A
 		STA	GH_CHKSUM	;Init CHKSUM=0
 					;Next state is to fetch an ascii pair into a BYTE, then process this as line count
 		LXI	H,GH1
-GH_NEXT_BYTE	SHLD	GH_STATE2	;- - - - - - - - - - - - NEXT = FETCH ASCII PAIR
-	
+GH_NEXT_BYTE:	SHLD	GH_STATE2	;- - - - - - - - - - - - NEXT = FETCH ASCII PAIR
+
 		LXI	H,GH_MSD	;Fetch MSD char
 		SHLD	GH_STATE
 		RET
 
 					;- - - - - - - - - - - - FETCH MSD
-GH_MSD		CALL	IS_HEX_CHAR	;Process MSD char
+GH_MSD:		CALL	IS_HEX_CHAR	;Process MSD char
 		JC	CHAR_ERROR
 		RLC
 		RLC
@@ -880,7 +880,7 @@ GH_MSD		CALL	IS_HEX_CHAR	;Process MSD char
 		SHLD	GH_STATE
 		RET
 					;- - - - - - - - - - - - FETCH LSD
-GH_LSD		CALL	IS_HEX_CHAR	;Process LSD char
+GH_LSD:		CALL	IS_HEX_CHAR	;Process LSD char
 		JC	CHAR_ERROR
 		MOV	H,A
 		LDA	GH_BYTE
@@ -893,19 +893,19 @@ GH_LSD		CALL	IS_HEX_CHAR	;Process LSD char
 		LHLD	GH_STATE2
 		PCHL			;Execute the Get HEX
 
-CHAR_ERROR	CALL	PRINTI
-		.text "\r\n!!! ERROR, NOT A HEX CHAR\000"
+CHAR_ERROR:	CALL	PRINTI
+		.ascii "\r\n!!! ERROR, NOT A HEX CHAR\000"
 		JMP	SYS_HALT
 					;========================================================== STATE 1
-GH1		STA	GH_COUNT	;Set Count of bytes on line
+GH1:		STA	GH_COUNT	;Set Count of bytes on line
 		LXI	H,GH2
 		JMP	GH_NEXT_BYTE
 					;========================================================== STATE 2
-GH2		STA	GH_ADDR+1	;Set High Address
+GH2:		STA	GH_ADDR+1	;Set High Address
 		LXI	H,GH3
 		JMP	GH_NEXT_BYTE
 					;========================================================== STATE 3
-GH3		STA	GH_ADDR		;Set Low Address
+GH3:		STA	GH_ADDR		;Set Low Address
 		LDA	GH_VALID
 		ORA	A
 		JNZ	GH3_RET
@@ -913,14 +913,14 @@ GH3		STA	GH_ADDR		;Set Low Address
 		STA	GH_VALID
 		LHLD	GH_ADDR		;Save first address in HEX file as START address
 		SHLD	GH_START
-GH3_RET		LXI	H,GH4
-		JMP	GH_NEXT_BYTE	
+GH3_RET:		LXI	H,GH4
+		JMP	GH_NEXT_BYTE
 					;========================================================== STATE 4
-GH4		STA	GH_TYPE		;Record Type
+GH4:		STA	GH_TYPE		;Record Type
 		CPI	2
 		JP	GH_IGNORED	;Process types 00 and 01, ignore all others
 
-GH5_NEXT	LDA	GH_COUNT
+GH5_NEXT:	LDA	GH_COUNT
 		ORA	A
 		LXI	H,GH6		;Set next state depending on BYTE COUNT
 		JZ	GH_NEXT_BYTE
@@ -929,56 +929,56 @@ GH5_NEXT	LDA	GH_COUNT
 		LXI	H,GH5
 		JMP	GH_NEXT_BYTE
 					;========================================================== STATE 5
-GH5		LHLD	GH_ADDR		;Write Data (for count of bytes)
+GH5:		LHLD	GH_ADDR		;Write Data (for count of bytes)
 		MOV	M,A
 		INX	H
 		SHLD	GH_ADDR
 		JMP	GH5_NEXT	;Count down bytes
-		
-GH6		LDA	GH_CHKSUM
+
+GH6:		LDA	GH_CHKSUM
 		ORA	A
 		JNZ	CHKSUM_ERROR
 		LDA	GH_TYPE
 		CPI	1
 		JZ	GH_EXEC
-		
-GH0_NEXT	LXI	H,GH0
+
+GH0_NEXT:	LXI	H,GH0
 		SHLD	GH_STATE
 		RET
-		
-GH_IGNORED	CALL	PRINTI
-		.text "-Ignored \000"
+
+GH_IGNORED:	CALL	PRINTI
+		.ascii "-Ignored \000"
 		JMP	GH0_NEXT
 
-CHKSUM_ERROR	CALL	PRINTI
-		.text "\r\n!!! CHECKSUM ERROR\000"
+CHKSUM_ERROR:	CALL	PRINTI
+		.ascii "\r\n!!! CHECKSUM ERROR\000"
 		JMP	SYS_HALT
-		
 
-GH_EXEC		LDA	GH_VALID
+
+GH_EXEC:		LDA	GH_VALID
 		ORA	A
 		JNZ	GH_EXEC_GO
 		CALL	PRINTI
-		.text "\r\n!!! START ADDRESS NOT SET\000"
+		.ascii "\r\n!!! START ADDRESS NOT SET\000"
 		JMP	SYS_HALT
 
-GH_EXEC_GO	CALL	PRINTI
-		.text "\r\nExecute at:\000"
+GH_EXEC_GO:	CALL	PRINTI
+		.ascii "\r\nExecute at:\000"
 
 		LHLD	KILL_SHADOW	;FETCH INSTRUCTIONS TO KILL ROM AND PUT IN RAM
-		SHLD	0FFFDh		;FFFD D3 18
+		SHLD	0xFFFD		;FFFD D3 18
 		LDA	KILL_SHADOW+2
-		STA	0FFFFh		;FFFF xx
-		
+		STA	0xFFFF		;FFFF xx
+
 		LHLD	GH_START	;HL = JUMP ADDRESS
 		CALL	PUT_HL
 		CALL	PRINTI
-		.text "\r\n\000"
-		
+		.ascii "\r\n\000"
+
 		MVI	A,1		;KILL SHADOW
-		JMP	0FFFDh		;JUMP TO SET PORT & JUMP TO BIOS.HEX ENTRY
-		
-KILL_SHADOW	OUT	PPORT		;TURNS OFF SHADOW ROM
+		JMP	0xFFFD		;JUMP TO SET PORT & JUMP TO BIOS.HEX ENTRY
+
+KILL_SHADOW:	OUT	PPORT		;TURNS OFF SHADOW ROM
 		PCHL			;Execute the Get HEX
 
 
@@ -986,37 +986,37 @@ KILL_SHADOW	OUT	PPORT		;TURNS OFF SHADOW ROM
 ;in:	A = CHAR
 ;out:	A = Value of HEX Char when CY=0
 ;	A = Received (non-hex) char when CY=1
-IS_HEX_CHAR:	CPI	'0'
+IS_HEX_CHAR:	CPI	"0"
 		JM	GHC_NOT_RET
-		CPI	'9'+1
+		CPI	"9"+1
 		JM	GHC_NRET
-		CPI	'A'
+		CPI	"A"
 		JM	GHC_NOT_RET
-		CPI	'F'+1
+		CPI	"F"+1
 		JM	GHC_ARET
-		CPI	'a'
+		CPI	"a"
 		JM	GHC_NOT_RET
-		CPI	'f'+1
+		CPI	"f"+1
 		JM	GHC_ARET
-GHC_NOT_RET	STC
+GHC_NOT_RET:	STC
 		RET
-GHC_ARET	SUI	07h
-GHC_NRET	ANI	0Fh
+GHC_ARET:	SUI	0x07
+GHC_NRET:	ANI	0x0F
 		RET
 
 
 
 ;------------------------
 
-INIT_BLOCK	XTHL	;HL = Top of Stack
-IB_LP		MOV	A,M	;Copy all data up to 0x00 to SD_FCB
+INIT_BLOCK:	XTHL	;HL = Top of Stack
+IB_LP:		MOV	A,M	;Copy all data up to 0x00 to SD_FCB
 		INX	H	;Inc HL, so on finding 0x00, exit to next instruction
 		ORA	A
 		JZ	IB_RET
 		STAX	D
 		INX	D
 		JMP	IB_LP
-IB_RET		XTHL		;Move updated return address back to stack
+IB_RET:		XTHL		;Move updated return address back to stack
 		RET
 
 
@@ -1086,10 +1086,10 @@ PUT_BYTE:	PUSH	PSW
 ;pre: A register contains nibble
 ;post: A register contains ASCII char
 ;-----------------------------------------------
-PUT_HEX:	ANI	0Fh
-		ADI	90h
+PUT_HEX:	ANI	0x0F
+		ADI	0x90
 		DAA
-		ACI	40h
+		ACI	0x40
 		DAA
 		JMP	PUT_CHAR
 
@@ -1121,7 +1121,7 @@ PRINTI:		XTHL	;HL = Top of Stack
 ;===============================================
 ;PRINT B-LENGTH
 ;-----------------------------------------------
-PRINTB		MOV	A, M
+PRINTB:		MOV	A, M
 		CALL	PUT_CHAR
 		INX	H
 		DCR	B
@@ -1136,17 +1136,17 @@ GET_CHAR:	IN	UART0+5	;10	;TEST FOR RX DATA
 		JZ	GC_0	;10
 		IN	UART0
 		JMP	GC_DO
-		
-GC_0		IN	PROPELLERS
+
+GC_0:		IN	PROPELLERS
 		ANI	2
 		JZ	GET_CHAR
 		IN	PROPELLERD
 		ORA	A
 		JZ	GET_CHAR
-		CPI	0FFh
+		CPI	0xFF
 		JZ	GET_CHAR
 
-GC_DO		CPI	' '	;Do not echo control chars
+GC_DO:		CPI	" "	;Do not echo control chars
 		RM
 
 ;===============================================
@@ -1160,14 +1160,14 @@ PUT_CHAR:	PUSH	PSW
 		LDA	PC_POS
 		INR	A
 		STA	PC_POS
-PC_LP		IN	UART0+5
-		ANI	20H	;TEST FOR TX HOLD REG EMPTY
+PC_LP:		IN	UART0+5
+		ANI	0x20	;TEST FOR TX HOLD REG EMPTY
 		JZ	PC_LP
 		POP	PSW
 		OUT	UART0
 		OUT	PROPELLERD
 		RET
-PC_NL		XRA	A
+PC_NL:		XRA	A
 		STA	PC_POS
 		JMP	PC_LP
 
@@ -1214,22 +1214,22 @@ ABS_SEC		.EQU	24	;BLOCK	4	;+24 Absolute Sector of Current Relative Sector
 
 ;-----------------------------------------------------------------------------------------------------
 ;Call this routine to initialize and start the HL Pointer to the first Directory Entry
-SD_LDIR1	LXI	H,DIR_SECTOR	;SEC_PTR = DIR_SECTOR
+SD_LDIR1:	LXI	H,DIR_SECTOR	;SEC_PTR = DIR_SECTOR
 		CALL	MOV_32_HL
 		LHLD	ROOTDIR_SIZE	;ENT_COUNT = ROOTDIR_SIZE (to count down directory entries searched)
 		SHLD	ENT_COUNT
 		ORA	A		;Clear Carry, Read only if Necessary
 
-SD_FETCH	CALL	SD_READ_SEC	;Fetch a ROOT DIRECTORY sector
+SD_FETCH:	CALL	SD_READ_SEC	;Fetch a ROOT DIRECTORY sector
 		LXI	H,SD_RAM_BUFFER	;(Re)start H at start of Sector
-SD_TEST		XRA	A		;EXIT Z=0 if there is a File at this entry
+SD_TEST:	XRA	A		;EXIT Z=0 if there is a File at this entry
 		CMP	M
 		RET
 
 ;-----------------------------------------------------------------------------------------------------
 ;Call this routine to advance to the next Directory Entry (loads next sector and restarts HL as needed)
 ;-----------------------------------------------------------------------------------------------------
-SD_LDIRN	LXI	B,20h		;Advance to next file entry
+SD_LDIRN:	LXI	B,0x20		;Advance to next file entry
 		DAD	B
 		JNC	SD_TEST		;Check if extended beyond this sector
 
@@ -1254,15 +1254,15 @@ SD_LDIRN	LXI	B,20h		;Advance to next file entry
 		;Call with File Name set in FILENAME.EXT
 		;Return Z=1 File Not Found
 		;	Z=0 File Found, HL = Ptr to Directory Entry in SD_RAM_BUFFER
-SDV_FIND_FILE	LXI	H,FILENAME
+SDV_FIND_FILE:	LXI	H,FILENAME
 		CALL	PRINT_FILENAME
-SDV_FIND_FILE1	CALL	SD_FIND_FILE	;Call the Find File routine
+SDV_FIND_FILE1:	CALL	SD_FIND_FILE	;Call the Find File routine
 		JNZ	SDV_FOUND	;Print Yah or Nah
 		CALL 	PRINTI
-		.text " -NOT FOUND\000"
+		.ascii " -NOT FOUND\000"
 		RET
-SDV_FOUND	CALL 	PRINTI
-		.text " -EXISTS\000"
+SDV_FOUND:	CALL 	PRINTI
+		.ascii " -EXISTS\000"
 		RET
 
 ;-----------------------------------------------------------------------------------------------------
@@ -1270,8 +1270,8 @@ SDV_FOUND	CALL 	PRINTI
 		;Call with File Name set in RAM variable: FILENAME.EXT
 		;Return Z=1 File Not Found
 		;	Z=0 File Found, HL = Ptr to Directory Entry in SD_RAM_BUFFER
-SD_FIND_FILE	CALL	SD_LDIR1
-SDFF_LP 	RZ			;End of list
+SD_FIND_FILE:	CALL	SD_LDIR1
+SDFF_LP: 	RZ			;End of list
 		CALL	CMP_FILENAME
 		RNZ			;FILE FOUND
 		CALL	SD_LDIRN
@@ -1325,9 +1325,9 @@ SDFF_LP 	RZ			;End of list
 ;=====================================================================================================
 ;Read of Logical Disk Sector.
 ;Input:	LOGICAL_SEC = 0=First Sector
-DISK_READ	
+DISK_READ:
 ;		CALL	PRINTI
-;		.text " R-\000"
+;		.ascii " R-\000"
 ;		LHLD	LOGICAL_SEC
 ;		CALL	PUT_HL
 
@@ -1335,20 +1335,20 @@ DISK_READ
 		MOV	A,M		;Is file open?
 		ORA	A		;Test FSTAT
 		JNZ	DR_1		;Jump YES
-		
+
 ;		CALL	PRINTI
-;		.text " HL:\000"
+;		.ascii " HL:\000"
 ;		CALL	PUT_HL
-		
+
 		CALL	SD_OPEN		;ELSE, Attempt to open file
 		LDA	SDISKA		;Is file open?
 		ORA	A		;Test FSTAT
 		JNZ	DR_1		;Jump YES
 		CALL	PRINTI
-		.text " -Disk Not Loaded\000"
+		.ascii " -Disk Not Loaded\000"
 		RET			;Exit if file could not open
 
-DR_1		LXI	H,SDISKA+RFSec	;If file open, Check if Read is from same Data Sector
+DR_1:		LXI	H,SDISKA+RFSec	;If file open, Check if Read is from same Data Sector
 		MOV	E,M
 		INX	H
 		MOV	D,M		;D=RFSec
@@ -1378,7 +1378,7 @@ DR_1		LXI	H,SDISKA+RFSec	;If file open, Check if Read is from same Data Sector
 	;  loop
 	;  SSOC = (CAFClus - 2) * SEC_PER_CLUS + Start-of-Data-Area
 	;if RFClus has NOT changed, then ABS_SEC = SSOC + (RFSec MOD SEC_PER_CLUS), then read ABS_SEC into the buffer.
-DR_NEW_SEC
+DR_NEW_SEC:
 		XCHG			;D=LOGICAL_SEC = Relative File Sector (Update FCB with this new Rel-File-Sec
 		LXI	H,SDISKA+RFSec	;Set FCB(RFSec)
 		MOV	M,E		;MOV (HL),DE
@@ -1402,7 +1402,7 @@ DR_NEW_SEC
 		MOV	A,E
 		CMP	C
 		JZ	DR_SAME_CLUS	;IF they are the same, then the new sector is in the same cluster
-DR_DIFF_CLUS	JNC	DR_BIGGER_CLUS
+DR_DIFF_CLUS:	JNC	DR_BIGGER_CLUS
 
 					;If going to a smaller cluster, restart the FAT search from the begining
 		LXI	B,0		;CRFClus = 0
@@ -1410,7 +1410,7 @@ DR_DIFF_CLUS	JNC	DR_BIGGER_CLUS
 		DCX	H
 		JMP	DR_SEEK_FAT	;HL will load with AFClus0
 
-DR_BIGGER_CLUS
+DR_BIGGER_CLUS:
 		MOV	A,E		;NewRFClus = NewRFClus - FCB-RFClus,  ie Set counter for number of new FAT hops.
 		SUB	C
 		MOV	E,A
@@ -1428,26 +1428,26 @@ DR_BIGGER_CLUS
 	;      RFClus = RFClus - 1
 	;  loop
 
-DR_SEEK_FAT
+DR_SEEK_FAT:
 		CALL	LD_HL_HL	;HL = CAFClus or AFClus0
 
 ;		CALL	PRINTI
-;		.text "\r\nCAFClus=\000"
+;		.ascii "\r\nCAFClus=\000"
 ;		CALL	PUT_HL
 ;		CALL	PRINTI
-;		.text "\r\nCRFClus=\000"
+;		.ascii "\r\nCRFClus=\000"
 ;		CALL	PUT_BC
 ;		CALL	PRINTI
-;		.text "\r\nRFClus=\000"
+;		.ascii "\r\nRFClus=\000"
 ;		CALL	PUT_DE
 
 					;BC = CRFClus
-DR_SEEK_LP	MOV	A,D		;DE = RFClus
+DR_SEEK_LP:	MOV	A,D		;DE = RFClus
 		ORA	E
 		JZ	DR_SEEK_DONE
 
 ;		CALL	PRINTI
-;		.text "\r\nseek=\000"
+;		.ascii "\r\nseek=\000"
 ;		CALL	PUT_HL
 
 		INX	H		;IF CAFClus = 0xFFFF...
@@ -1456,11 +1456,11 @@ DR_SEEK_LP	MOV	A,D		;DE = RFClus
 		JNZ	DR_SEEK_1
 					;Error, File too small
 		CALL	PRINTI
-		.text " -ERROR, NO MORE ALLOCATED CLUSTERS!\000"
-		HLT
-		JMP	$-1
-		
-DR_SEEK_1	DCX	H
+		.ascii " -ERROR, NO MORE ALLOCATED CLUSTERS!\000"
+1$:		HLT
+		JMP	1$
+
+DR_SEEK_1:	DCX	H
 
 	;Here comes the FAT Hopping FUN...
 	;      CAFClus = FAT(CAFClus)
@@ -1482,7 +1482,7 @@ DR_SEEK_1	DCX	H
 		LHLD	FAT1START+2
 		JNC	DRS_0		;Test for Carry
 		INX	H		;Carry it forward
-DRS_0		MOV	B,H
+DRS_0:		MOV	B,H
 		MOV	C,L		;BCDE now have Sector of FAT desired
 		CALL	SD_READ_SEC
 		POP	D		;Fetch DE, E=Word within that FAT sector
@@ -1502,7 +1502,7 @@ DRS_0		MOV	B,H
 		DCX	D
 		JMP	DR_SEEK_LP
 
-DR_SEEK_DONE	;Write Registers to FCB
+DR_SEEK_DONE:	;Write Registers to FCB
 		;BC = CRFClus
 		;DE = RFClus - Not required (it's a counter down to zero to find the correct cluster)
 		;HL = CAFClus
@@ -1531,7 +1531,7 @@ DR_SEEK_DONE	;Write Registers to FCB
 		MVI	A,8		;Go through 8 bits
 		STA	M_COUNTER
 		LDA	SEC_PER_CLUS	;Fetch Multiplier
-DRSS_LP		RAR
+DRSS_LP:	RAR
 		STA	MUL8
 		JNC	DRSS_SHIFT
 		XCHG
@@ -1541,7 +1541,7 @@ DRSS_LP		RAR
 		ADC	B
 		MOV	C,A
 
-DRSS_SHIFT	DAD	H		;BHL=BHL*2
+DRSS_SHIFT:	DAD	H		;BHL=BHL*2
 		MOV	A,B		;
 		RAL
 		MOV	B,A
@@ -1559,7 +1559,7 @@ DRSS_SHIFT	DAD	H		;BHL=BHL*2
 		LHLD	DATASTART+2
 		JNC	DRSS_ABC
 		INX	B		;Add Carry out of 16 Bit ADD
-DRSS_ABC	DAD	B
+DRSS_ABC:	DAD	B
 		PUSH	H
 		POP	B		;BC=BC+START (MSB)
 ;-------
@@ -1569,7 +1569,7 @@ DRSS_ABC	DAD	B
 ;-------
 
 	;ABS_SEC = SSOC + (RFSec MOD SEC_PER_CLUS), then read ABS_SEC into the buffer.
-DR_SAME_CLUS				;Fetch the RFSec
+DR_SAME_CLUS:				;Fetch the RFSec
 		LXI	H,SDISKA+RFSec	;Set FCB(RFSec)
 
 		MOV	E,M		;DE=RFSec
@@ -1588,7 +1588,7 @@ DR_SAME_CLUS				;Fetch the RFSec
 		INX	H		;Advance HL to ABS_SEC
 		CALL	MOV_HL_32	;Save the ABS_SEC
 
-DR_READ_IT	CALL	SD_READ_SEC	;Fetch the Sector
+DR_READ_IT:	CALL	SD_READ_SEC	;Fetch the Sector
 
 		LXI	H,SD_RAM_BUFFER
 		RET
@@ -1597,10 +1597,10 @@ DR_READ_IT	CALL	SD_READ_SEC	;Fetch the Sector
 
 
 ;-----------------------------------------------------------------------------------------------------
-CMP_FILENAME	PUSH	H		;Save H pointer into Directory
+CMP_FILENAME:	PUSH	H		;Save H pointer into Directory
 		MVI	B,8		;Compare 8 characters
 		LXI	D,FILENAME
-CMPF_LP1	LDAX	D
+CMPF_LP1:	LDAX	D
 		CMP	M
 		JNZ	CMPF_RETFAIL	;Exit if not equal
 		INX	H
@@ -1615,7 +1615,7 @@ CMPF_LP1	LDAX	D
 
 		MVI	B,3
 		LXI	D,FILEEXT
-CMPF_LP2	LDAX	D
+CMPF_LP2:	LDAX	D
 		CMP	M
 		JNZ	CMPF_RETFAIL
 		INX	H
@@ -1625,13 +1625,13 @@ CMPF_LP2	LDAX	D
 		INR	B		;Z=0
 		POP	H
 		RET
-CMPF_RETFAIL	XRA	A		;Z=1
+CMPF_RETFAIL:	XRA	A		;Z=1
 		POP	H
 		RET
 
 ;=====================================================================================================
 ;=====================================================================================================
-INIT_FAT	;LXI	H,CLEAR_RAM	;Clear RAM
+INIT_FAT:	;LXI	H,CLEAR_RAM	;Clear RAM
 		;MVI	B,0
 		;XRA	A
 		;CALL	FILL_BLOCK
@@ -1640,7 +1640,7 @@ INIT_FAT	;LXI	H,CLEAR_RAM	;Clear RAM
 		RNZ
 
 		CALL 	PRINTI		;
-		.text "MBR\000"
+		.ascii "MBR\000"
 
 
 		LXI	B,0		;BCDE = 0x00000000
@@ -1651,23 +1651,23 @@ INIT_FAT	;LXI	H,CLEAR_RAM	;Clear RAM
 		RNZ
 
 		CALL 	PRINTI		;
-		.text " Type\000"
-		LDA	SD_RAM_BUFFER+01C2h
+		.ascii " Type\000"
+		LDA	SD_RAM_BUFFER+0x01C2
 		CALL	PUT_BYTE
 		STA	SD_PART_TYPE
 		CPI	4
 		JZ	INITFAT_PGOOD
 		CPI	6
 		JZ	INITFAT_PGOOD
-		CPI	86h
+		CPI	0x86
 		JNZ	INITFAT_FAIL
 
-INITFAT_PGOOD	LXI	H,SD_RAM_BUFFER+1C6h
+INITFAT_PGOOD:	LXI	H,SD_RAM_BUFFER+0x01C6
 		LXI	D,SD_PART_BASE
 		MVI	B,8
 		CALL	COPY_RAM	;Copy BASE & SIZE from BUFFER to RAM Variables
 		CALL 	PRINTI		;
-		.text " PBR\000"
+		.ascii " PBR\000"
 
 		LXI	H,SD_PART_BASE
 		CALL	MOV_32_HL	;Copy BASE to SEC_PTR
@@ -1675,7 +1675,7 @@ INITFAT_PGOOD	LXI	H,SD_RAM_BUFFER+1C6h
 		CALL	TEST_SIGNATURE
 		RNZ
 
-		LXI	H,SD_RAM_BUFFER+0Bh
+		LXI	H,SD_RAM_BUFFER+0x0B
 		LXI	D,BYTE_P_SEC
 		MVI	B,10
 		CALL	COPY_RAM	;Copy Description Table to RAM Variables (Up to Total Filesys Sectors)
@@ -1688,23 +1688,23 @@ INITFAT_PGOOD	LXI	H,SD_RAM_BUFFER+1C6h
 		JNZ	INITFAT_TFS_OK
 		DCX	H
 		XCHG
-		LXI	H,SD_RAM_BUFFER+020h
+		LXI	H,SD_RAM_BUFFER+0x20
 
 		CALL	COPY_RAM4
 		JMP	INITFAT_TFS_DONE
 
-INITFAT_TFS_OK	XRA	A
+INITFAT_TFS_OK:	XRA	A
 		INX	H
 		MOV	M,A
 		INX	H
 		MOV	M,A
 		INX	H
 		XCHG
-INITFAT_TFS_DONE
+INITFAT_TFS_DONE:
 
-		LXI	H,SD_RAM_BUFFER+01Ch
+		LXI	H,SD_RAM_BUFFER+0x1C
 		CALL	COPY_RAM4	;Copy HIDDEN_SECTORS to RAM Variables
-		LXI	H,SD_RAM_BUFFER+016h
+		LXI	H,SD_RAM_BUFFER+0x16
 		CALL	COPY_RAM2	;Copy SECTORS_PER_FAT to RAM Variables
 
 ;BS.fat1Start = MBR.part1Start + BS.reservedSectors;
@@ -1716,7 +1716,7 @@ INITFAT_TFS_DONE
 		LHLD	SD_PART_BASE+2
 		JNC	INITFAT_C1_DONE
 		INX	H
-INITFAT_C1_DONE	SHLD	FAT1START+2
+INITFAT_C1_DONE:	SHLD	FAT1START+2
 
 ;firstDirSector = BS.fat1Start + (BS.fatCopies * BS.sectorsPerFAT);
 		LDA	FAT_COPIES
@@ -1724,7 +1724,7 @@ INITFAT_C1_DONE	SHLD	FAT1START+2
 		LHLD	SEC_PER_FAT
 		XCHG
 		LXI	H,0
-INITFAT_C2_LP	DAD	D
+INITFAT_C2_LP:	DAD	D
 		DCR	B
 		JNZ	INITFAT_C2_LP	;H = FAT_COPIES * SEC_PER_FAT
 		XCHG			;D = H
@@ -1734,7 +1734,7 @@ INITFAT_C2_LP	DAD	D
 		LHLD	FAT1START+2
 		JNC	INITFAT_C2_DONE
 		INX	H
-INITFAT_C2_DONE	SHLD	DIR_SECTOR+2
+INITFAT_C2_DONE:	SHLD	DIR_SECTOR+2
 
 ;DATASTART = DIR_SECTOR + LEN(Directory)
 ;          = DIR_SECTOR + ROOTDIR_SIZE * 32 / BYTE_P_SEC
@@ -1742,7 +1742,7 @@ INITFAT_C2_DONE	SHLD	DIR_SECTOR+2
 		LHLD	BYTE_P_SEC	;To fit math into 16 bits, let's reduce "ROOTDIR_SIZE / BYTE_P_SEC"
 		XCHG			;Divide each by 2 while dividable
 		LHLD	ROOTDIR_SIZE	;H=ROOTDIR_SIZE, D=BYTE_P_SEC
-INITFAT_C3_LP	MOV	A,E
+INITFAT_C3_LP:	MOV	A,E
 		RAR
 		JC	INITFAT_C3_0	;If lsb of D is 1, no more Reduction possible
 		MOV	A,L
@@ -1762,11 +1762,11 @@ INITFAT_C3_LP	MOV	A,E
 		MOV	L,A
 		DCR	B
 		JNZ	INITFAT_C3_LP
-INITFAT_C3_ERR	CALL 	PRINTI		;
-		.text " Error DATASTART\000"
+INITFAT_C3_ERR:	CALL 	PRINTI		;
+		.ascii " Error DATASTART\000"
 		RET
-INITFAT_C3_0	MVI	B,5		;5 shifts = Multiply 32
-INITFAT_C3_LP2	DAD	H		;Double H
+INITFAT_C3_0:	MVI	B,5		;5 shifts = Multiply 32
+INITFAT_C3_LP2:	DAD	H		;Double H
 		JC	INITFAT_C3_ERR
 		DCR	B
 		JNZ	INITFAT_C3_LP2
@@ -1778,8 +1778,8 @@ INITFAT_C3_LP2	DAD	H		;Double H
 		CMA
 		MOV	B,A
 		INX	B
-		LXI	D,0FFFFh	;Start with -1
-INITFAT_C3_LP3	DAD	B		;Divide by counting Subtractions
+		LXI	D,0xFFFF	;Start with -1
+INITFAT_C3_LP3:	DAD	B		;Divide by counting Subtractions
 		INX	D
 		JC	INITFAT_C3_LP3
 		LHLD	DIR_SECTOR	;Add the Dword at DIR_SECTOR
@@ -1788,19 +1788,19 @@ INITFAT_C3_LP3	DAD	B		;Divide by counting Subtractions
 		LHLD	DIR_SECTOR+2
 		JNC	INITFAT_C3_1
 		INX	H
-INITFAT_C3_1	SHLD	DATASTART+2
+INITFAT_C3_1:	SHLD	DATASTART+2
 
 		LDA	SEC_PER_CLUS	;Determine the best way to divide Sectors into cluster#
 		DCR	A
 		STA	MODMASK
 		INR	A
 		JZ	INITFAT_FAIL1
-		LXI	B,0800h
-INITFAT_C4_LP	RAR
+		LXI	B,0x0800
+INITFAT_C4_LP:	RAR
 		JNC	INITFAT_C4_1
 		MOV	D,B		;Save location of "1" bit
 		INR	C		;Count of 1 bits.
-INITFAT_C4_1	DCR	B
+INITFAT_C4_1:	DCR	B
 		JNZ	INITFAT_C4_LP
 		MVI	A,1
 		CMP	C
@@ -1813,56 +1813,56 @@ INITFAT_C4_1	DCR	B
 		LXI	D,MODBYMASK
 		JMP	INITFAT_C4_3
 
-INITFAT_C4_2	LXI	H,DIV16BY8SPC	;Use Full Divide function for Sectors Per Cluster
+INITFAT_C4_2:	LXI	H,DIV16BY8SPC	;Use Full Divide function for Sectors Per Cluster
 		PUSH	H
 		POP	D
-INITFAT_C4_3	SHLD	DIVIDE_FUNC
+INITFAT_C4_3:	SHLD	DIVIDE_FUNC
 		XCHG
 		SHLD	MOD_FUNC
 
 		CALL 	PRINTI		;
-		.text " VOL=\000"
-		LXI	H,0FE2Bh
+		.ascii " VOL=\000"
+		LXI	H,0x0FE2B
 		MVI	B,11
 		CALL	PRINTB
 		CALL 	PRINTI		;
-		.text " SYS=\000"
+		.ascii " SYS=\000"
 		MVI	B,8
 		CALL	PRINTB
 		RET
 
-INITFAT_FAIL1	CALL 	PRINTI		;
-		.text "\r\nError=0 Sec/Clus\000"
-INITFAT_FAIL	CALL 	PRINTI		;
-		.text "\r\nFAT Init FAILED\000"
+INITFAT_FAIL1:	CALL 	PRINTI		;
+		.ascii "\r\nError=0 Sec/Clus\000"
+INITFAT_FAIL:	CALL 	PRINTI		;
+		.ascii "\r\nFAT Init FAILED\000"
 		RET
 
-;SD_CARD_TYPE	.BLOCK	1	;SD CARD TYPE
-;SDC_STATUS	.BLOCK	1	;SD Status Code returned
-;SD_PARAM	.BLOCK	4	;32 bit address parameter for SD Commands
-;SD_PART_TYPE	.BLOCK	1	;SD PARTITION TYPE
-;SD_PART_BASE	.BLOCK	4	;SD PARTITION STARTING RECORD
-;SD_PART_SIZE	.BLOCK	4	;SD PARTITION SIZE (Must follow SD_PART_BASE)
-;SEC_PER_CLUS	.BLOCK	1	;0x0D
-;RESERVED_SEC	.BLOCK	2	;0x0E - 0x0F
-;FAT_COPIES	.BLOCK	1	;0x10
-;RT_DIR_ENTRIES	.BLOCK	2	;0x11 - 0x12
-;TOT_FILESYS_SEC.BLOCK	4	;0x13 - 0x14 or 0x20 - 0x23
-;HIDDEN_SECTORS	.BLOCK	4	;0x1C - 0x1F
-;SEC_PER_FAT	.BLOCK	2	;0x16 - 0x17
-;FAT1START	.BLOCK	4	;Calculated
-;DIR_SECTOR	.BLOCK	4	;Calculated
-;DATASTART	.BLOCK	4	;Calculated
+;SD_CARD_TYPE	.blkb	1	;SD CARD TYPE
+;SDC_STATUS	.blkb	1	;SD Status Code returned
+;SD_PARAM	.blkb	4	;32 bit address parameter for SD Commands
+;SD_PART_TYPE	.blkb	1	;SD PARTITION TYPE
+;SD_PART_BASE	.blkb	4	;SD PARTITION STARTING RECORD
+;SD_PART_SIZE	.blkb	4	;SD PARTITION SIZE (Must follow SD_PART_BASE)
+;SEC_PER_CLUS	.blkb	1	;0x0D
+;RESERVED_SEC	.blkb	2	;0x0E - 0x0F
+;FAT_COPIES	.blkb	1	;0x10
+;RT_DIR_ENTRIES	.blkb	2	;0x11 - 0x12
+;TOT_FILESYS_SEC.blkb	4	;0x13 - 0x14 or 0x20 - 0x23
+;HIDDEN_SECTORS	.blkb	4	;0x1C - 0x1F
+;SEC_PER_FAT	.blkb	2	;0x16 - 0x17
+;FAT1START	.blkb	4	;Calculated
+;DIR_SECTOR	.blkb	4	;Calculated
+;DATASTART	.blkb	4	;Calculated
 
 ;-------------------------------------------------
-TEST_SIGNATURE	CALL 	PRINTI		;
-		.text " S\000"
+TEST_SIGNATURE:	CALL 	PRINTI		;
+		.ascii " S\000"
 		DCX	H
-		MVI	A,0AAh
+		MVI	A,0xAA
 		CMP	M
 		JNZ	INITFAT_FAIL
 		DCX	H
-		MVI	A,055h
+		MVI	A,0x55
 		CMP	M
 		JNZ	INITFAT_FAIL
 		RET
@@ -1876,14 +1876,14 @@ TEST_SIGNATURE	CALL 	PRINTI		;
 ;Read to the SD_RAM_BUFFER from the SD Card at Sector BCDE
 ;-----------------------------------------------------------------------------------------------------
 		;Sector in SEC_PTR
-SD_READ_SEC	LXI	H,SEC_PTR	;READ SECTOR
+SD_READ_SEC:	LXI	H,SEC_PTR	;READ SECTOR
 		JC	SD_RS_FORCED
 		CALL	CMP_HL_32
 		RZ			;Return if no change to sector being read/written
 
-SD_RS_FORCED
+SD_RS_FORCED:
 		;CALL	PRINTI		;DEBUG
-		;.text " Read:\000"
+		;.ascii " Read:\000"
 		;CALL	PUT_BC
 		;CALL	PUT_DE
 
@@ -1891,7 +1891,7 @@ SD_RS_FORCED
 		CALL	MOV_HL_32	;Save Sector in SEC_PTR
 		CALL	SET_PARAM	;READ SECTOR
 		MVI	B,5	;5 Retries to read
-SD_RS_LP0	MVI	A,17 	;Read Sector Command
+SD_RS_LP0:	MVI	A,17 	;Read Sector Command
 		CALL	SD_CMD
 		JZ	SD_RS_0
 		DCR	B
@@ -1900,17 +1900,17 @@ SD_RS_LP0	MVI	A,17 	;Read Sector Command
 		DCR	B	;Clear Zero flag
 		CALL	SD_DESELECT	;Deselect card
 		RET
-SD_RS_0		MVI	B,0		;256 Attempts to recieve the DATASTART
-SD_RS_LP1	CALL	SPI_RX
-		CPI	0FEh		;IS DATASTART?
+SD_RS_0:	MVI	B,0		;256 Attempts to recieve the DATASTART
+SD_RS_LP1:	CALL	SPI_RX
+		CPI	0xFE		;IS DATASTART?
 		JZ	SD_RS_1
 		DCR	B
 		JNZ	SD_RS_LP1
 		CALL	SD_DESELECT	;Deselect card
 		RET
 
-SD_RS_1		LXI	B,0200h
-SD_RS_LP2	CALL	SPI_RX	;Fetch 512 Bytes to M(HL)
+SD_RS_1:	LXI	B,0x0200
+SD_RS_LP2:	CALL	SPI_RX	;Fetch 512 Bytes to M(HL)
 		MOV	M,A
 		INX	H
 		DCR	C
@@ -1926,7 +1926,7 @@ SD_RS_LP2	CALL	SPI_RX	;Fetch 512 Bytes to M(HL)
 
 ;-----------------------------------------------------------------------------------------------------
 ;Input:	Sector in 32 bit register BCDE
-SET_PARAM	LDA	SD_CARD_TYPE	;IF CARD_TYPE <> 3 THEN SHIFT SECTOR << 9 Bits
+SET_PARAM:	LDA	SD_CARD_TYPE	;IF CARD_TYPE <> 3 THEN SHIFT SECTOR << 9 Bits
 		CPI	3
 		JZ	SP_RET
 
@@ -1939,7 +1939,7 @@ SET_PARAM	LDA	SD_CARD_TYPE	;IF CARD_TYPE <> 3 THEN SHIFT SECTOR << 9 Bits
 		MOV	D,L
 		MVI	E,0
 
-SP_RET		LXI	H,SD_PARAM
+SP_RET:		LXI	H,SD_PARAM
 		CALL	MOV_HL_32	;Save Parameter
 		LXI	H,SD_RAM_BUFFER	;Set buffer space
 		RET
@@ -1949,37 +1949,37 @@ SP_RET		LXI	H,SD_PARAM
 ;SD Memory Car Routines, Low Level, INIT CARD, Send/Recieve Data, Send Commands
 ;=====================================================================================================
 ;-------------------------------- INIT SDCARD --------------------------------
-INIT_SDCARD	CALL	SD_DESELECT	;Deselect and clock the card many cycles
-		MVI	C,080H
-		MVI	A,0FFH
+INIT_SDCARD:	CALL	SD_DESELECT	;Deselect and clock the card many cycles
+		MVI	C,0x80
+		MVI	A,0xFF
 		STA	SD_CARD_TYPE
-ISD_0		OUT	SPI		;CLOCK many cycles
+ISD_0:		OUT	SPI		;CLOCK many cycles
 		DCR	C
 		JNZ	ISD_0
 		CALL	SD_SELECT
 
 		CALL 	PRINTI		;
-		.text "\r\nInit SD\000"
+		.ascii "\r\nInit SD\000"
 
 		CALL	SD_CLEAR_ARG	;Fetch the 01 response
 		MVI	B,0		;256 retries
-ISD_LP1		MVI	A,0		;CMD 0
+ISD_LP1:		MVI	A,0		;CMD 0
 		CALL	SD_CMD
 		CPI	1		;Test 01 response
 		JZ	ISD_1
 		DCR	B
 		JNZ	ISD_LP1
 		;JMP	INIT_FAIL
-INIT_FAIL	CALL 	PRINTI		;
-		.text "-FAILED\000"
+INIT_FAIL:	CALL 	PRINTI		;
+		.ascii "-FAILED\000"
 		CALL	SD_DESELECT
 		XRA	A		;Return Zero Flag cleared = Failure
 		DCR	A
 		RET
 
-ISD_1		CALL 	PRINTI		;
-		.text " Type#\000"
-		LXI	H,01AAh		;Deterimine Card Type
+ISD_1:		CALL 	PRINTI		;
+		.ascii " Type#\000"
+		LXI	H,0x01AA		;Deterimine Card Type
 		SHLD	SD_PARAM
 		MVI	A,8		;CMD 8
 		CALL	SD_CMD
@@ -1989,24 +1989,24 @@ ISD_1		CALL 	PRINTI		;
 		STA	SD_CARD_TYPE
 		JMP	ISD_3
 
-ISD_2		CALL	SPI_RX
+ISD_2:		CALL	SPI_RX
 		CALL	SPI_RX
 		CALL	SPI_RX
 		CALL	SPI_RX
 		STA	SDC_STATUS
-		CPI	0AAh
-		MVI	A,0AAh		;Error code
+		CPI	0xAA
+		MVI	A,0xAA		;Error code
 		JNZ	INIT_FAIL
 		MVI	A,2
 		STA	SD_CARD_TYPE
 
-ISD_3		CALL	PUT_HEX
+ISD_3:		CALL	PUT_HEX
 		CALL 	PRINTI		;
-		.text " ACMD41\000"
+		.ascii " ACMD41\000"
 		CALL	SD_CLEAR_ARG
 
 		MVI	B,0
-ISD_LP2		MVI	A,55		;CMD 55 (ACMD)
+ISD_LP2:		MVI	A,55		;CMD 55 (ACMD)
 		CALL	SD_CMD
 		MVI	A,41		;CMD 41
 		CALL	SD_CMD
@@ -2018,8 +2018,8 @@ ISD_LP2		MVI	A,55		;CMD 55 (ACMD)
 		JNZ	ISD_LP2
 		JMP	INIT_FAIL
 
-ISD_4		CALL 	PRINTI		;
-		.text "+\000"
+ISD_4:		CALL 	PRINTI		;
+		.ascii "+\000"
 		LDA	SD_CARD_TYPE
 		CPI	2
 		JNZ	ISD_6
@@ -2028,30 +2028,30 @@ ISD_4		CALL 	PRINTI		;
 		CPI	0
 		JNZ	INIT_FAIL
 		CALL	SPI_RX
-		ANI	0C0h
-		CPI	0C0h
+		ANI	0xC0
+		CPI	0xC0
 		JNZ	ISD_5
 		MVI	A,3
 		STA	SD_CARD_TYPE
 		CALL 	PRINTI		;
-		.text " Type#3\000"
-ISD_5		CALL	SPI_RX
+		.ascii " Type#3\000"
+ISD_5:		CALL	SPI_RX
 		CALL	SPI_RX
 		CALL	SPI_RX
 
-ISD_6		CALL	SD_DESELECT
+ISD_6:		CALL	SD_DESELECT
 		XRA	A		;Set Zero Flag = Success
 		RET
 
 ;-----------------------------------------------------------------------------------------------------
-SD_DESELECT	PUSH	PSW
+SD_DESELECT:	PUSH	PSW
 		MVI	A,1	;Deselect SDCARD
 		OUT	SPI_SS
 		POP	PSW
 		RET
 
 ;-----------------------------------------------------------------------------------------------------
-SD_SELECT	PUSH	PSW
+SD_SELECT:	PUSH	PSW
 		MVI	A,0	;Select SDCARD
 		OUT	SPI_SS
 		CALL	SD_DELAY100
@@ -2059,27 +2059,27 @@ SD_SELECT	PUSH	PSW
 		RET
 
 ;-----------------------------------------------------------------------------------------------------
-SD_DELAY100	MVI	A,13	 ;Small delay after selecting card
-SD_DELAY	DCR	A	 ;5
+SD_DELAY100:	MVI	A,13	 ;Small delay after selecting card
+SD_DELAY:	DCR	A	 ;5
 		JNZ	SD_DELAY ;10    15*13 ~= 200 ~= 100uSec
 		RET
 
 ;-----------------------------------------------------------------------------------------------------
 ;Send command to SD card
-SD_CMD		PUSH	B
+SD_CMD:		PUSH	B
 		CALL	SD_SELECT
 		CALL	WAIT_NOT_BUSY
 
-		MVI	B,0FFh	;Default CRC
+		MVI	B,0xFF	;Default CRC
 		CPI	0
 		JNZ	SDC_1
-		MVI	B,095h
-SDC_1		CPI	8
+		MVI	B,0x95
+SDC_1:		CPI	8
 		JNZ	SDC_2
-		MVI	B,087h
-SDC_2
+		MVI	B,0x87
+SDC_2:
 
-		ORI	040H	;All Commands start with 40h
+		ORI	0x40	;All Commands start with 40h
 		OUT	SPI
 		LDA	SD_PARAM+3
 		OUT	SPI
@@ -2094,19 +2094,19 @@ SDC_2
 		OUT	SPI
 
 		MVI	B,0
-SDC_LP		CALL	SPI_RX	;Read Respsonse?
+SDC_LP:		CALL	SPI_RX	;Read Respsonse?
 		STA	SDC_STATUS
 		ORA	A
 		JP	SDC_RET
 		DCR	B
 		JNZ	SDC_LP
 		ORA	A
-SDC_RET		POP	B
+SDC_RET:	POP	B
 		RET
 
 ;-----------------------------------------------------------------------------------------------------
 ;------------------------------- Receive a byte from SPI
-SPI_RX		MVI	A,0FFH	;Read Respsonse
+SPI_RX:		MVI	A,0xFF	;Read Respsonse
 		OUT	SPI
 		NOP		;4
 		IN	SPI	;10
@@ -2114,11 +2114,11 @@ SPI_RX		MVI	A,0FFH	;Read Respsonse
 
 ;-----------------------------------------------------------------------------------------------------
 ;------------------------------- Wait until FF's come back from Card (ie NOT BUSY)
-WAIT_NOT_BUSY	PUSH	PSW	;Do not destroy Acc
+WAIT_NOT_BUSY:	PUSH	PSW	;Do not destroy Acc
 		PUSH	B	;Fetch 1 consecutive FF's to be sure SD card NOT BUSY
 		MVI	B,0
-WNB_LP		MVI	C,1	;Set count for 1 trys
-WNB_LP2		CALL	SPI_RX
+WNB_LP:		MVI	C,1	;Set count for 1 trys
+WNB_LP2:	CALL	SPI_RX
 		INR	A
 		JNZ	WNB_0	;NOT FF RETURNED, JUMP TO COUNT DOWN TRYS
 		DCR	C	;Count Down Consecutive FF's
@@ -2129,7 +2129,7 @@ WNB_LP2		CALL	SPI_RX
 		CMC
 		RET
 
-WNB_0		XRA	A
+WNB_0:		XRA	A
 		CALL	SD_DELAY
 		DCR	B	;Count Down Trys
 		JNZ	WNB_LP
@@ -2139,7 +2139,7 @@ WNB_0		XRA	A
 		RET
 
 ;-----------------------------------------------------------------------------------------------------
-SD_CLEAR_ARG	XRA	A
+SD_CLEAR_ARG:	XRA	A
 		STA	SD_PARAM
 		STA	SD_PARAM+1
 		STA	SD_PARAM+2
@@ -2152,7 +2152,7 @@ SD_CLEAR_ARG	XRA	A
 ;=====================================================================================================
 
 ;-----------------------------------------------------------------------------------------------------
-GET_STRING	CALL	GET_CHAR
+GET_STRING:	CALL	GET_CHAR
 		CPI	27
 		STC			;Set Carry to indicate Abort
 		RZ
@@ -2161,7 +2161,7 @@ GET_STRING	CALL	GET_CHAR
 		CMP	C		;Exit on Selectable Char (dot for file input)
 		RZ
 		CALL	TO_UPPER
-		CPI	' '+1		;Test if ACC is Control or Space
+		CPI	" "+1		;Test if ACC is Control or Space
 		JC	GET_STRING	;Skip such characters
 		DCR	B
 		INR	B		;Exit if B charcters are already inputed
@@ -2172,45 +2172,45 @@ GET_STRING	CALL	GET_CHAR
 		JMP	GET_STRING
 
 ;-----------------------------------------------------------------------------------------------------
-TO_UPPER	CPI	'a'
+TO_UPPER:	CPI	"a"
 		RC		;Return if ACC < 'a'
-		CPI	'z'+1
+		CPI	"z"+1
 		RNC		;Return if ACC > 'z'
-		ANI	5Fh	;Flag upper case
+		ANI	0x5F	;Flag upper case
 		RET
 
 
 ;-----------------------------------------------------------------------------------------------------
 ;	Prints Filename at HL
 ;-----------------------------------------------------------------------------------------------------
-PRINT_FILENAME	PUSH	H
+PRINT_FILENAME:	PUSH	H
 		MVI	B,8
-PF_LP1		MOV	A,M		;PRINT 8 CHARS OR UP TO EITHER A NULL OR SPACE.
+PF_LP1:		MOV	A,M		;PRINT 8 CHARS OR UP TO EITHER A NULL OR SPACE.
 		ORA	A
 		JZ	PFE
-		CPI	' '
+		CPI	" "
 		JZ	PFE
 		CALL	PUT_CHAR
 		INX	H
 		DCR	B
 		JNZ	PF_LP1
-PFE		MVI	A,'.'
+PFE:		MVI	A,"."
 		CALL	PUT_CHAR
 		POP	H
 		PUSH	H
 		LXI	B,8
 		DAD	B
 		MVI	B,3
-PF_LP2		MOV	A,M
+PF_LP2:		MOV	A,M
 		ORA	A
 		JZ	PF_RET
-		CPI	' '
+		CPI	" "
 		JZ	PF_RET
 		CALL	PUT_CHAR
 		INX	H
 		DCR	B
 		JNZ	PF_LP2
-PF_RET		POP	H
+PF_RET:		POP	H
 		RET
 
 
@@ -2219,7 +2219,7 @@ PF_RET		POP	H
 ;=====================================================================================================
 
 ;------------------------- Move (HL) to 32 bit register BCDE
-MOV_32_HL	MOV	E,M
+MOV_32_HL:	MOV	E,M
 		INX	H
 		MOV	D,M
 		INX	H
@@ -2229,7 +2229,7 @@ MOV_32_HL	MOV	E,M
 		RET
 
 ;------------------------- Move 32 bit register BCDE to (HL)
-MOV_HL_32	MOV	M,E
+MOV_HL_32:	MOV	M,E
 		INX	H
 		MOV	M,D
 		INX	H
@@ -2239,7 +2239,7 @@ MOV_HL_32	MOV	M,E
 		RET
 
 ;------------------------- ADD (HL) to 32 bit register BCDE
-ADD_32_HL	MOV	A,E
+ADD_32_HL:	MOV	A,E
 		ADD	M
 		MOV	E,A
 		INX	H
@@ -2257,7 +2257,7 @@ ADD_32_HL	MOV	A,E
 		RET
 
 ;-----------------------------------------------------------------------------------------------------
-INC_32		INX	D
+INC_32:		INX	D
 		MOV	A,D
 		ORA	E
 		RNZ
@@ -2265,28 +2265,28 @@ INC_32		INX	D
 		RET
 
 ;-----------------------------------------------------------------------------------------------------
-DEC_32		MOV	A,D
+DEC_32:		MOV	A,D
 		ORA	E
 		JNZ	DEC_32NOBORROW
 		DCX	B
-DEC_32NOBORROW	DCX	D
+DEC_32NOBORROW:	DCX	D
 		RET
-		
+
 ;-----------------------------------------------------------------------------------------------------
-TSTZ_32		MOV	A,D
+TSTZ_32:		MOV	A,D
 		ORA	E
 		RNZ
 		ORA	C
 		RNZ
 		ORA	B
 		RET
-		
-				
-		
+
+
+
 
 ;-----------------------------------------------------------------------------------------------------
 ;Compare BCDE with 32bit word at HL
-CMP_HL_32	INX	H		;Point to MSB
+CMP_HL_32:	INX	H		;Point to MSB
 		INX	H
 		INX	H
 		MOV	A,B		;Compare with B
@@ -2304,13 +2304,13 @@ CMP_HL_32	INX	H		;Point to MSB
 		MOV	A,E
 		CMP	M
 		RET
-CH3_R1		DCX	H
-CH3_R2		DCX	H
-CH3_R3		DCX	H
+CH3_R1:		DCX	H
+CH3_R2:		DCX	H
+CH3_R3:		DCX	H
 		RET
 
 ;------------------------- COMPARE DE WITH HL
-CMP_DE_HL	MOV	A,D		;Compare the MSB first
+CMP_DE_HL:	MOV	A,D		;Compare the MSB first
 		CMP	H
 		RNZ
 		MOV	A,E
@@ -2318,10 +2318,10 @@ CMP_DE_HL	MOV	A,D		;Compare the MSB first
 		RET
 
 ;-----------------------------------------------------------------------------------------------------
-COPY_RAM2	MVI	B,2	;2 BYTES
+COPY_RAM2:	MVI	B,2	;2 BYTES
 		JMP	COPY_RAM
-COPY_RAM4	MVI	B,4	;4 BYTES PER WORD
-COPY_RAM	MOV	A,M
+COPY_RAM4:	MVI	B,4	;4 BYTES PER WORD
+COPY_RAM:	MOV	A,M
 		STAX	D
 		INX	H
 		INX	D
@@ -2331,7 +2331,7 @@ COPY_RAM	MOV	A,M
 
 ;-----------------------------------------------------------------------------------------------------
 		;HL = (HL) word at memory location HL
-LD_HL_HL	MOV	A,M		;Fetch L from (HL)
+LD_HL_HL:	MOV	A,M		;Fetch L from (HL)
 		INX	H
 		MOV	H,M		;Fetch H from (HL+1)
 		MOV	L,A
@@ -2343,10 +2343,10 @@ LD_HL_HL	MOV	A,M		;Fetch L from (HL)
 ;		HL = Start Address
 ;		B = Length of Fill (MAX = 0 = 256 bytes)
 ;-----------------------------------------------------------------------------------------------------
-FILL_BLOCK	PUSH	PSW
+FILL_BLOCK:	PUSH	PSW
 		PUSH	B
 		PUSH	H
-FB_LP		MOV	M,A
+FB_LP:		MOV	M,A
 		INX	H
 		DCR	B
 		JNZ	FB_LP
@@ -2356,21 +2356,21 @@ FB_LP		MOV	M,A
 		RET
 
 ;-----------------------------------------------------------------------------------------------------
-VCALL		PCHL		;Jump to HL
+VCALL:		PCHL		;Jump to HL
 
 ;-----------------------------------------------------------------------------------------------------
 ;Maximum number to divide is Logical Sector 2001/4 = 500
 ;If dividing by powers of 2, then we can shift the number for fast divide
-DIV16BY8SPC	LDA	SEC_PER_CLUS
+DIV16BY8SPC:	LDA	SEC_PER_CLUS
 ;Input:	DE=Dividend, A=Divisor
 ;Out:	DE=Result, A=Remainder
-DIV16BY8	XCHG		; HL = Dividend
+DIV16BY8:	XCHG		; HL = Dividend
 		MVI	E,00	; Quotient = 0
 		;LHLD	2200H	; Get Dividend
 		;LDA	2300	; Get Divisor
 		MOV	B, A	; Store        Divisor
 		MVI	C, 08	; Count = 8
-DIV16BY8_LP	DAD H		; Dividend = Dividend x 2
+DIV16BY8_LP:	DAD H		; Dividend = Dividend x 2
 		MOV	A, E
 		RLC
 		MOV	E, A	; Quotient = Quotient x 2
@@ -2379,7 +2379,7 @@ DIV16BY8_LP	DAD H		; Dividend = Dividend x 2
 		JC	DIV16BY8_SK	; No, go to Next step
 		MOV	H, A	; Yes, subtract divisor
 		INR	E	; and Quotient = Quotient + 1
-DIV16BY8_SK	DCR	C	; Count = Count - 1
+DIV16BY8_SK:	DCR	C	; Count = Count - 1
 		JNZ	DIV16BY8_LP ; Is count =0 repeat
 		;MOV	A, E
 		;STA	2401H	; Store Quotient
@@ -2389,9 +2389,9 @@ DIV16BY8_SK	DCR	C	; Count = Count - 1
 		RET
 
 ;-----------------------------------------------------------------------------------------------------
-DIVBYSHIFT	LDA	DF_SHIFTCNT	; DE = Dividend
+DIVBYSHIFT:	LDA	DF_SHIFTCNT	; DE = Dividend
 		MOV	B,A
-DBS_LP		DCR	B
+DBS_LP:		DCR	B
 		RZ
 		ORA	A	;Clear Carry
 		MOV	A,D
@@ -2403,7 +2403,7 @@ DBS_LP		DCR	B
 		JMP	DBS_LP
 
 ;-----------------------------------------------------------------------------------------------------
-MODBYMASK	LDA	MODMASK
+MODBYMASK:	LDA	MODMASK
 		ANA	E
 		RET
 
@@ -2414,79 +2414,79 @@ MODBYMASK	LDA	MODMASK
 ;>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>;
 ;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<;
 ;----------------------------------------------------------------------------------------------------; RAM SPACE
-		.ORG	0FD00H
-		.DSEG
-HIGHSTACK			;Stack starts saveing at FCFFh and grows downward
+		.ORG	0xFD00
+;		.DSEG
+HIGHSTACK:			;Stack starts saveing at FCFFh and grows downward
 
 ;SDFCB:
-;FSTAT		.BLOCK	1	;+0  Status of FCB, 00=File Not Open
-;FNAME		.BLOCK	11	;+1
-;AFClus0	.BLOCK	2	;+12 First Cluster of File as given by the Directory Entry.
-;CRFClus	.BLOCK	2	;+14 Current Relative Cluster location in file, (0 to F for a system with 32 Sectors per Cluster)
-;CAFClus	.BLOCK	2	;+16 Current Absolute Cluster location in file, set to AFClus0, then updated with FAT
-;RFSec		.BLOCK	2	;+18 Relative Sector being addressed (0 to 500, based 26 sectors per track and 77 tracks Divide by 4)
-;SSOC		.BLOCK	4	;+20 Starting Sector of Cluster, this is the first Sector for that Cluster
-;ABS_SEC	.BLOCK	4	;+24 Absolute Sector of Current Relative Sector
-;RESV		.BLOCK	4	;Filler for 32 bytes
-SDISKA		.BLOCK	32	;File Control Block
-FSIZE		.BLOCK	4	;File Size
+;FSTAT		.blkb	1	;+0  Status of FCB, 00=File Not Open
+;FNAME		.blkb	11	;+1
+;AFClus0	.blkb	2	;+12 First Cluster of File as given by the Directory Entry.
+;CRFClus	.blkb	2	;+14 Current Relative Cluster location in file, (0 to F for a system with 32 Sectors per Cluster)
+;CAFClus	.blkb	2	;+16 Current Absolute Cluster location in file, set to AFClus0, then updated with FAT
+;RFSec		.blkb	2	;+18 Relative Sector being addressed (0 to 500, based 26 sectors per track and 77 tracks Divide by 4)
+;SSOC		.blkb	4	;+20 Starting Sector of Cluster, this is the first Sector for that Cluster
+;ABS_SEC	.blkb	4	;+24 Absolute Sector of Current Relative Sector
+;RESV		.blkb	4	;Filler for 32 bytes
+SDISKA:		.blkb	32	;File Control Block
+FSIZE:		.blkb	4	;File Size
 
-GH_VIEW		.BLOCK	1	;View File Load
+GH_VIEW:	.blkb	1	;View File Load
 
 ; SPECIAL FLAGS.
 
-CLEAR_RAM	.EQU	$	;Clear all RAM after this point on INIT
+CLEAR_RAM	.EQU	.	;Clear all RAM after this point on INIT
 
-INB_PTR		.BLOCK	2	;Pointer to In Byte
-GH_STATE	.BLOCK	2	;Pointer to Get HEX State
-GH_ERR_CNT	.BLOCK	1	;Count of ERRORS
-GH_STATE2	.BLOCK	2	;Pointer to Get HEX State
-GH_BYTE		.BLOCK	1	;Temp to hold MSD
-GH_CHKSUM	.BLOCK	1	;HEX File, record Checksum
-GH_COUNT	.BLOCK	1	;HEX File, record data count
-GH_ADDR		.BLOCK	2	;HEX File, record address
-GH_TYPE		.BLOCK	1	;HEX File, record type
-GH_START	.BLOCK	2	;HEX File, start address
-GH_VALID	.BLOCK	1	;HEX File, start address valid (set)
-PC_POS		.BLOCK	1
+INB_PTR:	.blkb	2	;Pointer to In Byte
+GH_STATE:	.blkb	2	;Pointer to Get HEX State
+GH_ERR_CNT:	.blkb	1	;Count of ERRORS
+GH_STATE2:	.blkb	2	;Pointer to Get HEX State
+GH_BYTE:	.blkb	1	;Temp to hold MSD
+GH_CHKSUM:	.blkb	1	;HEX File, record Checksum
+GH_COUNT:	.blkb	1	;HEX File, record data count
+GH_ADDR:	.blkb	2	;HEX File, record address
+GH_TYPE:	.blkb	1	;HEX File, record type
+GH_START:	.blkb	2	;HEX File, start address
+GH_VALID:	.blkb	1	;HEX File, start address valid (set)
+PC_POS:		.blkb	1
 
-DIVIDE_FUNC	.BLOCK	2	;Pointer to the Divide Function
-DF_SHIFTCNT	.BLOCK	1	;Count of shifts required for Fast Divide
-MUL8		.BLOCK	1	;8 bit multiplier
-M_COUNTER	.BLOCK	1	;8 bit counter for multiply routine
-MOD_FUNC	.BLOCK	2	;Pointer to the Mod Function
-MODMASK		.BLOCK	1	;8 bit mask to get Relative Sector within a cluster from a Relative File sector
+DIVIDE_FUNC:	.blkb	2	;Pointer to the Divide Function
+DF_SHIFTCNT:	.blkb	1	;Count of shifts required for Fast Divide
+MUL8:		.blkb	1	;8 bit multiplier
+M_COUNTER:	.blkb	1	;8 bit counter for multiply routine
+MOD_FUNC:	.blkb	2	;Pointer to the Mod Function
+MODMASK:	.blkb	1	;8 bit mask to get Relative Sector within a cluster from a Relative File sector
 
-LOGICAL_SEC	.BLOCK	2	;Logical Sector for next Read/Write Operation
+LOGICAL_SEC:	.blkb	2	;Logical Sector for next Read/Write Operation
 
-SD_CARD_TYPE	.BLOCK	1	;SD CARD TYPE
-SDC_STATUS	.BLOCK	1	;SD Status Code returned
-SD_PARAM	.BLOCK	4	;32 bit address parameter for SD Commands
-SD_PART_TYPE	.BLOCK	1	;SD PARTITION TYPE
-SD_PART_BASE	.BLOCK	4	;SD PARTITION STARTING RECORD
-SD_PART_SIZE	.BLOCK	4	;SD PARTITION SIZE (Must follow SD_PART_BASE)
-BYTE_P_SEC	.BLOCK	2	;0x0B Bytes per Sector (Almost always 512)
-SEC_PER_CLUS	.BLOCK	1	;0x0D
-RESERVED_SEC	.BLOCK	2	;0x0E - 0x0F
-FAT_COPIES	.BLOCK	1	;0x10
-ROOTDIR_SIZE	.BLOCK	2	;0x11 - 0x12
-FILESYS_SEC	.BLOCK	4	;0x13 - 0x14 or 0x20 - 0x23
-HIDDEN_SEC	.BLOCK	4	;0x1C - 0x1F
-SEC_PER_FAT	.BLOCK	2	;0x16 - 0x17
-FAT1START	.BLOCK	4	;Calculated Sector to FAT1
-DIR_SECTOR	.BLOCK	4	;Calculated Sector to Root Directory
-DATASTART	.BLOCK	4	;Calculated Sector to Data Area
-FILENAME	.BLOCK	8	;File Name
-FILEEXT		.BLOCK	3	;File Extension
-SEC_PTR		.BLOCK	4	;Sector Pointer, general use variable that holds the last sector read
-DIRTY_DATA	.BLOCK	1	;Indicates when data Read has been altered, ie. Requires flushing back to SD Card
-ENT_COUNT	.BLOCK	2	;Directory Entry Counter, Counts down maximum directory entries in Find File
-
-
+SD_CARD_TYPE:	.blkb	1	;SD CARD TYPE
+SDC_STATUS:	.blkb	1	;SD Status Code returned
+SD_PARAM:	.blkb	4	;32 bit address parameter for SD Commands
+SD_PART_TYPE:	.blkb	1	;SD PARTITION TYPE
+SD_PART_BASE:	.blkb	4	;SD PARTITION STARTING RECORD
+SD_PART_SIZE:	.blkb	4	;SD PARTITION SIZE (Must follow SD_PART_BASE)
+BYTE_P_SEC:	.blkb	2	;0x0B Bytes per Sector (Almost always 512)
+SEC_PER_CLUS:	.blkb	1	;0x0D
+RESERVED_SEC:	.blkb	2	;0x0E - 0x0F
+FAT_COPIES:	.blkb	1	;0x10
+ROOTDIR_SIZE:	.blkb	2	;0x11 - 0x12
+FILESYS_SEC:	.blkb	4	;0x13 - 0x14 or 0x20 - 0x23
+HIDDEN_SEC:	.blkb	4	;0x1C - 0x1F
+SEC_PER_FAT:	.blkb	2	;0x16 - 0x17
+FAT1START:	.blkb	4	;Calculated Sector to FAT1
+DIR_SECTOR:	.blkb	4	;Calculated Sector to Root Directory
+DATASTART:	.blkb	4	;Calculated Sector to Data Area
+FILENAME:	.blkb	8	;File Name
+FILEEXT:	.blkb	3	;File Extension
+SEC_PTR:	.blkb	4	;Sector Pointer, general use variable that holds the last sector read
+DIRTY_DATA:	.blkb	1	;Indicates when data Read has been altered, ie. Requires flushing back to SD Card
+ENT_COUNT:	.blkb	2	;Directory Entry Counter, Counts down maximum directory entries in Find File
 
 
-		.ORG	0FE00H
-SD_RAM_BUFFER	.BLOCK	512		;512 BYTE SD CARD BUFFER
+
+
+		.ORG	0xFE00
+SD_RAM_BUFFER:	.blkb	512		;512 BYTE SD CARD BUFFER
 
 
 		.end
