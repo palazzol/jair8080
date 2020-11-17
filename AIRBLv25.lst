@@ -1,5 +1,5 @@
 ASxxxx Assembler V05.31  (Intel 8085)                                   Page 1
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -59,7 +59,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    0010 3E 80         [ 7]   54 		MVI	A,0x80	;Set baud rate
    0012 D3 23         [10]   55 		OUT	UART0+3
 ASxxxx Assembler V05.31  (Intel 8085)                                   Page 2
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -119,7 +119,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    00CF C3 E4 00      [10]   90 		JMP	DDLP4
                              91 
 ASxxxx Assembler V05.31  (Intel 8085)                                   Page 3
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -179,7 +179,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    0149 7E            [ 7]  142 		MOV	A,M
    014A FE 21         [ 7]  143 		CPI	33
 ASxxxx Assembler V05.31  (Intel 8085)                                   Page 4
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -195,7 +195,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    015C E1            [10]  153 		POP	H
    015D CA 81 01      [10]  154 		JZ	DD_NEXT
                             155 
-   0160 CD AF 0D      [18]  156 		CALL	PRINT_FILENAME
+   0160 CD B4 0D      [18]  156 		CALL	PRINT_FILENAME
                             157 
                             158 ;		CALL	PRINTI
                             159 ;		.ascii "\r\n\000"
@@ -227,19 +227,19 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    01A2 21 6D FD      [10]  182 		LXI	H,FILENAME
    01A5 06 0B         [ 7]  183 		MVI	B,11
    01A7 3E 20         [ 7]  184 		MVI	A," "
-   01A9 CD 51 0E      [18]  185 		CALL	FILL_BLOCK
+   01A9 CD 56 0E      [18]  185 		CALL	FILL_BLOCK
    01AC 0E 2E         [ 7]  186 		MVI	C,"."
    01AE 06 08         [ 7]  187 		MVI	B,8
-   01B0 CD 89 0D      [18]  188 		CALL	GET_STRING
+   01B0 CD 8E 0D      [18]  188 		CALL	GET_STRING
    01B3 DA 87 01      [10]  189 		JC	INPUT_FNAME
    01B6 FE 0D         [ 7]  190 		CPI	13
    01B8 CA C3 01      [10]  191 		JZ	LOADIT
    01BB 21 75 FD      [10]  192 		LXI	H,FILEEXT
    01BE 06 03         [ 7]  193 		MVI	B,3
-   01C0 CD 89 0D      [18]  194 		CALL	GET_STRING
+   01C0 CD 8E 0D      [18]  194 		CALL	GET_STRING
    01C3 CD 90 07      [18]  195 LOADIT:		CALL 	PRINTI
 ASxxxx Assembler V05.31  (Intel 8085)                                   Page 5
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -299,7 +299,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    0211 7B            [ 4]  242 RT1_LP1:	MOV	A,E		;CLEAR A
    0212 2F            [ 4]  243 		CMA
 ASxxxx Assembler V05.31  (Intel 8085)                                   Page 6
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -359,7 +359,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
                             297 
    0252 7A            [ 4]  298 		MOV	A,D
 ASxxxx Assembler V05.31  (Intel 8085)                                   Page 7
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -419,7 +419,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    0292 77            [ 7]  348 RT2_LP2:	MOV	M,A		;WRITE PAGE
    0293 2C            [ 4]  349 		INR	L
 ASxxxx Assembler V05.31  (Intel 8085)                                   Page 8
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -479,7 +479,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    02E5 1E FF         [ 7]  399 		MVI	E,0xFF		;E selects the polarity of the test, ie March a page of 1'S or 0's
                             400 
 ASxxxx Assembler V05.31  (Intel 8085)                                   Page 9
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -539,7 +539,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    0320 C2 26 04      [10]  454 		JNZ	RT_FAIL
                             455 
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 10
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -599,7 +599,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
                             506 
                             507 
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 11
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -659,7 +659,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
         53 45 51 55 45 4E
         43 45 20 54 45 53
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 12
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -719,7 +719,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
                             612 
    0412 1C            [ 4]  613 		INR	E
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 13
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -779,7 +779,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    0464 0F            [ 4]  664 		RRC
    0465 0F            [ 4]  665 		RRC
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 14
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -839,7 +839,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
                             716 
                             717 
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 15
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -894,26 +894,26 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    0504 23            [ 6]  759 		INX	H		;+1 = FNAME
    0505 11 6D FD      [10]  760 		LXI	D,FILENAME	;Write FCB File name to FILENAME for finding
    0508 06 0B         [ 7]  761 		MVI	B,11
-   050A CD 43 0E      [18]  762 		CALL	COPY_RAM
+   050A CD 48 0E      [18]  762 		CALL	COPY_RAM
    050D CD 21 08      [18]  763 SD_MANUAL:	CALL	SDV_FIND_FILE	;H=Directory Entry  ;PRINT FILE NAME, FOUND OR NOT
    0510 CA 1C 01      [10]  764 		JZ	DO_DIR		;Exit if file not found
                             765 
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 16
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
    0513 E5            [12]  766 SDO_DO:		PUSH	H
    0514 01 1C 00      [10]  767 		LXI	B,0x1C		;File Size Offset (into Directory Entry)
    0517 09            [10]  768 		DAD	B
-   0518 CD E5 0D      [18]  769 		CALL	MOV_32_HL	;Move (HL) to 32 bit register BCDE
+   0518 CD EA 0D      [18]  769 		CALL	MOV_32_HL	;Move (HL) to 32 bit register BCDE
    051B 21 20 FD      [10]  770 		LXI	H,FSIZE
-   051E CD ED 0D      [18]  771 		CALL	MOV_HL_32	;Save 32 bits to RAM at HL
+   051E CD F2 0D      [18]  771 		CALL	MOV_HL_32	;Save 32 bits to RAM at HL
                             772 
    0521 E1            [10]  773 		POP	H
    0522 01 1A 00      [10]  774 		LXI	B,0x1A		;H=(START CLUSTER)
    0525 09            [10]  775 		DAD	B
-   0526 CD 4C 0E      [18]  776 		CALL	LD_HL_HL	;Fetch Starting Custer
+   0526 CD 51 0E      [18]  776 		CALL	LD_HL_HL	;Fetch Starting Custer
    0529 EB            [ 4]  777 		XCHG			;D=Starting Cluster
    052A 21 00 FD      [10]  778 		LXI	H,SDISKA	;H=FCB
    052D 36 01         [10]  779 		MVI	M,1		;FSTAT=1
@@ -924,7 +924,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    0535 23            [ 6]  784 		INX	H
    0536 06 0E         [ 7]  785 		MVI	B,14
    0538 3E FF         [ 7]  786 		MVI	A,0xFF
-   053A CD 51 0E      [18]  787 		CALL	FILL_BLOCK	;Fill 14 bytes of FF (Nuke pointers to force new calculations)
+   053A CD 56 0E      [18]  787 		CALL	FILL_BLOCK	;Fill 14 bytes of FF (Nuke pointers to force new calculations)
                             788 
    053D CD 90 07      [18]  789 		CALL	PRINTI
    0540 0D 0A 46 49 4C 45   790 		.ascii "\r\nFILE SIZE=0x\000"
@@ -951,19 +951,19 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    0575 22 27 FD      [16]  809 		SHLD	GH_STATE
                             810 
    0578 21 20 FD      [10]  811 READ_FILE_LOOP:	LXI	H,FSIZE
-   057B CD E5 0D      [18]  812 		CALL	MOV_32_HL	;Fetch File Size (count)
+   057B CD EA 0D      [18]  812 		CALL	MOV_32_HL	;Fetch File Size (count)
                             813 
-   057E CD 13 0E      [18]  814 		CALL	TSTZ_32
+   057E CD 18 0E      [18]  814 		CALL	TSTZ_32
    0581 CA BA 05      [10]  815 		JZ	DO_EOF		;END OF FILE REACHED
                             816 
-   0584 CD 0B 0E      [18]  817 		CALL	DEC_32		;Decrement count of bytes
+   0584 CD 10 0E      [18]  817 		CALL	DEC_32		;Decrement count of bytes
    0587 21 20 FD      [10]  818 		LXI	H,FSIZE
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 17
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
-   058A CD ED 0D      [18]  819 		CALL	MOV_HL_32	;Save count
+   058A CD F2 0D      [18]  819 		CALL	MOV_HL_32	;Save count
                             820 
                             821 
                             822 		;Input:	LOGICAL_SEC = 0=First Sector
@@ -1019,7 +1019,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
                             871 					;- - - - - - - - - - - - FETCH MSD
    05DC CD 18 07      [18]  872 GH_MSD:		CALL	IS_HEX_CHAR	;Process MSD char
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 18
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -1079,7 +1079,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
                             922 
    065E 3A 2E FD      [13]  923 GH5_NEXT:	LDA	GH_COUNT
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 19
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -1139,7 +1139,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
                             967 
    06F8 2A 15 07      [16]  968 		LHLD	KILL_SHADOW	;FETCH INSTRUCTIONS TO KILL ROM AND PUT IN RAM
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 20
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -1199,7 +1199,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
                            1022 
                            1023 
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 21
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -1259,7 +1259,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    0774 F1            [10] 1077 		POP	PSW
    0775 F5            [12] 1078 		PUSH	PSW
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 22
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -1319,7 +1319,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
                            1132 ;GET_CHAR -- Get a char from the console
                            1133 ;-----------------------------------------------
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 23
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -1379,7 +1379,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
                            1187 ;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<;
                            1188 ;>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>;
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 24
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -1412,12 +1412,12 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
                            1215 ;-----------------------------------------------------------------------------------------------------
                            1216 ;Call this routine to initialize and start the HL Pointer to the first Directory Entry
    07E9 21 65 FD      [10] 1217 SD_LDIR1:	LXI	H,DIR_SECTOR	;SEC_PTR = DIR_SECTOR
-   07EC CD E5 0D      [18] 1218 		CALL	MOV_32_HL
+   07EC CD EA 0D      [18] 1218 		CALL	MOV_32_HL
    07EF 2A 55 FD      [16] 1219 		LHLD	ROOTDIR_SIZE	;ENT_COUNT = ROOTDIR_SIZE (to count down directory entries searched)
    07F2 22 7D FD      [16] 1220 		SHLD	ENT_COUNT
    07F5 B7            [ 4] 1221 		ORA	A		;Clear Carry, Read only if Necessary
                            1222 
-   07F6 CD 98 0B      [18] 1223 SD_FETCH:	CALL	SD_READ_SEC	;Fetch a ROOT DIRECTORY sector
+   07F6 CD 9D 0B      [18] 1223 SD_FETCH:	CALL	SD_READ_SEC	;Fetch a ROOT DIRECTORY sector
    07F9 21 00 FE      [10] 1224 		LXI	H,SD_RAM_BUFFER	;(Re)start H at start of Sector
    07FC AF            [ 4] 1225 SD_TEST:	XRA	A		;EXIT Z=0 if there is a File at this entry
    07FD BE            [ 7] 1226 		CMP	M
@@ -1439,15 +1439,15 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    0812 7C            [ 4] 1242 		MOV	A,H
    0813 B5            [ 4] 1243 		ORA	L
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 25
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
    0814 C8            [12] 1244 		RZ			;Out of Directory entries
                            1245 
    0815 21 78 FD      [10] 1246 		LXI	H,SEC_PTR	;Advance to next SECTOR
-   0818 CD E5 0D      [18] 1247 		CALL	MOV_32_HL
-   081B CD 05 0E      [18] 1248 		CALL	INC_32
+   0818 CD EA 0D      [18] 1247 		CALL	MOV_32_HL
+   081B CD 0A 0E      [18] 1248 		CALL	INC_32
    081E C3 F6 07      [10] 1249 		JMP	SD_FETCH
                            1250 
                            1251 ;-----------------------------------------------------------------------------------------------------
@@ -1457,7 +1457,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
                            1255 		;Return Z=1 File Not Found
                            1256 		;	Z=0 File Found, HL = Ptr to Directory Entry in SD_RAM_BUFFER
    0821 21 6D FD      [10] 1257 SDV_FIND_FILE:	LXI	H,FILENAME
-   0824 CD AF 0D      [18] 1258 		CALL	PRINT_FILENAME
+   0824 CD B4 0D      [18] 1258 		CALL	PRINT_FILENAME
    0827 CD 4A 08      [18] 1259 SDV_FIND_FILE1:	CALL	SD_FIND_FILE	;Call the Find File routine
    082A C2 3D 08      [10] 1260 		JNZ	SDV_FOUND	;Print Yah or Nah
    082D CD 90 07      [18] 1261 		CALL 	PRINTI
@@ -1499,7 +1499,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
                            1295 	;RFSec is the Relative File Sector, it spans from 0 to 500 (this accomodates 501 SD Sectors or 256,512 bytes)
                            1296 	;If RFSec = DISK_SEC / 4 Then...
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 26
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -1559,7 +1559,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
         6F 61 64 65 64 00
    087F C9            [10] 1349 		RET			;Exit if file could not open
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 27
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -1569,13 +1569,13 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    0884 23            [ 6] 1353 		INX	H
    0885 56            [ 4] 1354 		MOV	D,M		;D=RFSec
    0886 2A 3E FD      [16] 1355 		LHLD	LOGICAL_SEC	;Fetch sector to be read
-   0889 CD 36 0E      [18] 1356 		CALL	CMP_DE_HL
+   0889 CD 3B 0E      [18] 1356 		CALL	CMP_DE_HL
    088C C2 98 08      [10] 1357 		JNZ	DR_NEW_SEC	;Jump if Read is from a different Data Sector
                            1358 
                            1359 					;LOGICAL SECTOR = LAST READ SECTOR, Fetch Absolute Sector and read it to RAM (if wasn't last read)
    088F 21 18 FD      [10] 1360 		LXI	H,SDISKA+ABS_SEC ;H=FCB(ABS_SEC)
                            1361 
-   0892 CD E5 0D      [18] 1362 		CALL	MOV_32_HL
+   0892 CD EA 0D      [18] 1362 		CALL	MOV_32_HL
    0895 C3 A4 09      [10] 1363 		JMP	DR_READ_IT
                            1364 
                            1365 
@@ -1602,10 +1602,10 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    089E 72            [ 7] 1386 		MOV	M,D
                            1387 
    089F 2A 36 FD      [16] 1388 		LHLD	DIVIDE_FUNC	;DE = DE / Sectors-Per-Cluster
-   08A2 CD 5E 0E      [18] 1389 		CALL	VCALL
+   08A2 CD 63 0E      [18] 1389 		CALL	VCALL
    08A5 21 0E FD      [10] 1390 		LXI	H,SDISKA+CRFClus ;H=FCB(CRFClus)
    08A8 E5            [12] 1391 		PUSH	H
-   08A9 CD 4C 0E      [18] 1392 		CALL	LD_HL_HL
+   08A9 CD 51 0E      [18] 1392 		CALL	LD_HL_HL
    08AC 44            [ 4] 1393 		MOV	B,H		;BC = CRFClus
    08AD 4D            [ 4] 1394 		MOV	C,L
                            1395 
@@ -1619,7 +1619,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    08B5 B9            [ 4] 1403 		CMP	C
    08B6 CA 88 09      [10] 1404 		JZ	DR_SAME_CLUS	;IF they are the same, then the new sector is in the same cluster
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 28
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -1650,7 +1650,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
                            1429 	;  loop
                            1430 
    08CC                    1431 DR_SEEK_FAT:
-   08CC CD 4C 0E      [18] 1432 		CALL	LD_HL_HL	;HL = CAFClus or AFClus0
+   08CC CD 51 0E      [18] 1432 		CALL	LD_HL_HL	;HL = CAFClus or AFClus0
                            1433 
                            1434 ;		CALL	PRINTI
                            1435 ;		.ascii "\r\nCAFClus=\000"
@@ -1679,7 +1679,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    08DA CD 90 07      [18] 1458 		CALL	PRINTI
    08DD 20 2D 45 52 52 4F  1459 		.ascii " -ERROR, NO MORE ALLOCATED CLUSTERS!\000"
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 29
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -1716,7 +1716,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    091B 23            [ 6] 1484 		INX	H		;Carry it forward
    091C 44            [ 4] 1485 DRS_0:		MOV	B,H
    091D 4D            [ 4] 1486 		MOV	C,L		;BCDE now have Sector of FAT desired
-   091E CD 98 0B      [18] 1487 		CALL	SD_READ_SEC
+   091E CD 9D 0B      [18] 1487 		CALL	SD_READ_SEC
    0921 D1            [10] 1488 		POP	D		;Fetch DE, E=Word within that FAT sector
    0922 21 00 FE      [10] 1489 		LXI	H,SD_RAM_BUFFER
    0925 B7            [ 4] 1490 		ORA	A		;Clear Carry
@@ -1726,7 +1726,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    0929 7C            [ 4] 1494 		MOV	A,H
    092A CE 00         [ 7] 1495 		ACI	0
    092C 67            [ 7] 1496 		MOV	H,A		;HL -> FAT Entry
-   092D CD 4C 0E      [18] 1497 		CALL	LD_HL_HL	;HL = FAT Entry
+   092D CD 51 0E      [18] 1497 		CALL	LD_HL_HL	;HL = FAT Entry
    0930 D1            [10] 1498 		POP	D
    0931 C1            [10] 1499 		POP	B
                            1500 
@@ -1739,7 +1739,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
                            1507 		;DE = RFClus - Not required (it's a counter down to zero to find the correct cluster)
                            1508 		;HL = CAFClus
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 30
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -1799,7 +1799,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    097F 09            [10] 1562 DRSS_ABC:	DAD	B
    0980 E5            [12] 1563 		PUSH	H
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 31
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -1807,7 +1807,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
                            1565 ;-------
                            1566 					;Save the result to RAM variable SSOC
    0982 21 14 FD      [10] 1567 		LXI	H,SDISKA+SSOC	;Set FCB(SSOC)
-   0985 CD ED 0D      [18] 1568 		CALL	MOV_HL_32	;Save the 32 bit register BCDE to (HL)
+   0985 CD F2 0D      [18] 1568 		CALL	MOV_HL_32	;Save the 32 bit register BCDE to (HL)
                            1569 ;-------
                            1570 
                            1571 	;ABS_SEC = SSOC + (RFSec MOD SEC_PER_CLUS), then read ABS_SEC into the buffer.
@@ -1819,18 +1819,18 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    098D 56            [ 4] 1577 		MOV	D,M
                            1578 
    098E 2A 3B FD      [16] 1579 		LHLD	MOD_FUNC	;DE = DE % Sectors-Per-Cluster
-   0991 CD 5E 0E      [18] 1580 		CALL	VCALL		;A = RFSec MOD SEC_PER_CLUS
+   0991 CD 63 0E      [18] 1580 		CALL	VCALL		;A = RFSec MOD SEC_PER_CLUS
                            1581 
    0994 21 14 FD      [10] 1582 		LXI	H,SDISKA+SSOC	;Set FCB(SSOC)
    0997 01 00 00      [10] 1583 		LXI	B,0		;BCDE = (RFSec MOD SEC_PER_CLUS)
    099A 16 00         [ 7] 1584 		MVI	D,0
    099C 5F            [ 4] 1585 		MOV	E,A
-   099D CD F5 0D      [18] 1586 		CALL	ADD_32_HL	;BCDE = SSOC + (RFSec MOD SEC_PER_CLUS)
+   099D CD FA 0D      [18] 1586 		CALL	ADD_32_HL	;BCDE = SSOC + (RFSec MOD SEC_PER_CLUS)
                            1587 
    09A0 23            [ 6] 1588 		INX	H		;Advance HL to ABS_SEC
-   09A1 CD ED 0D      [18] 1589 		CALL	MOV_HL_32	;Save the ABS_SEC
+   09A1 CD F2 0D      [18] 1589 		CALL	MOV_HL_32	;Save the ABS_SEC
                            1590 
-   09A4 CD 98 0B      [18] 1591 DR_READ_IT:	CALL	SD_READ_SEC	;Fetch the Sector
+   09A4 CD 9D 0B      [18] 1591 DR_READ_IT:	CALL	SD_READ_SEC	;Fetch the Sector
                            1592 
    09A7 21 00 FE      [10] 1593 		LXI	H,SD_RAM_BUFFER
    09AA C9            [10] 1594 		RET
@@ -1859,7 +1859,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    09C4 11 75 FD      [10] 1617 		LXI	D,FILEEXT
    09C7 1A            [ 7] 1618 CMPF_LP2:	LDAX	D
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 32
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
@@ -1883,7 +1883,7 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
                            1636 		;XRA	A
                            1637 		;CALL	FILL_BLOCK
                            1638 
-   09D8 CD 06 0C      [18] 1639 		CALL	INIT_SDCARD
+   09D8 CD 0B 0C      [18] 1639 		CALL	INIT_SDCARD
    09DB C0            [12] 1640 		RNZ
                            1641 
    09DC CD 90 07      [18] 1642 		CALL 	PRINTI		;
@@ -1893,8 +1893,8 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    09E3 01 00 00      [10] 1646 		LXI	B,0		;BCDE = 0x00000000
    09E6 11 00 00      [10] 1647 		LXI	D,0
    09E9 37            [ 4] 1648 		STC			;Force Read
-   09EA CD 98 0B      [18] 1649 		CALL	SD_READ_SEC	;READ MBR
-   09ED CD 83 0B      [18] 1650 		CALL	TEST_SIGNATURE
+   09EA CD 9D 0B      [18] 1649 		CALL	SD_READ_SEC	;READ MBR
+   09ED CD 88 0B      [18] 1650 		CALL	TEST_SIGNATURE
    09F0 C0            [12] 1651 		RNZ
                            1652 
    09F1 CD 90 07      [18] 1653 		CALL 	PRINTI		;
@@ -1903,938 +1903,938 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
    09FD CD 6C 07      [18] 1656 		CALL	PUT_BYTE
    0A00 32 46 FD      [13] 1657 		STA	SD_PART_TYPE
    0A03 FE 04         [ 7] 1658 		CPI	4
-   0A05 CA 12 0A      [10] 1659 		JZ	INITFAT_PGOOD
+   0A05 CA 17 0A      [10] 1659 		JZ	INITFAT_PGOOD
    0A08 FE 06         [ 7] 1660 		CPI	6
-   0A0A CA 12 0A      [10] 1661 		JZ	INITFAT_PGOOD
+   0A0A CA 17 0A      [10] 1661 		JZ	INITFAT_PGOOD
    0A0D FE 86         [ 7] 1662 		CPI	0x86
-   0A0F C2 6D 0B      [10] 1663 		JNZ	INITFAT_FAIL
-                           1664 
-   0A12 21 C6 FF      [10] 1665 INITFAT_PGOOD:	LXI	H,SD_RAM_BUFFER+0x01C6
-   0A15 11 47 FD      [10] 1666 		LXI	D,SD_PART_BASE
-   0A18 06 08         [ 7] 1667 		MVI	B,8
-   0A1A CD 43 0E      [18] 1668 		CALL	COPY_RAM	;Copy BASE & SIZE from BUFFER to RAM Variables
-   0A1D CD 90 07      [18] 1669 		CALL 	PRINTI		;
-   0A20 20 50 42 52 00     1670 		.ascii " PBR\000"
-                           1671 
-   0A25 21 47 FD      [10] 1672 		LXI	H,SD_PART_BASE
-   0A28 CD E5 0D      [18] 1673 		CALL	MOV_32_HL	;Copy BASE to SEC_PTR
+   0A0F CA 17 0A      [10] 1663 		JZ	INITFAT_PGOOD
+   0A12 FE 0E         [ 7] 1664 		CPI	0x0E
+   0A14 C2 72 0B      [10] 1665 		JNZ	INITFAT_FAIL
+                           1666 
+   0A17 21 C6 FF      [10] 1667 INITFAT_PGOOD:	LXI	H,SD_RAM_BUFFER+0x01C6
+   0A1A 11 47 FD      [10] 1668 		LXI	D,SD_PART_BASE
+   0A1D 06 08         [ 7] 1669 		MVI	B,8
+   0A1F CD 48 0E      [18] 1670 		CALL	COPY_RAM	;Copy BASE & SIZE from BUFFER to RAM Variables
+   0A22 CD 90 07      [18] 1671 		CALL 	PRINTI		;
+   0A25 20 50 42 52 00     1672 		.ascii " PBR\000"
+                           1673 
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 33
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
-   0A2B CD 98 0B      [18] 1674 		CALL	SD_READ_SEC	;READ BOOT RECORD OF PARTITION
-   0A2E CD 83 0B      [18] 1675 		CALL	TEST_SIGNATURE
-   0A31 C0            [12] 1676 		RNZ
-                           1677 
-   0A32 21 0B FE      [10] 1678 		LXI	H,SD_RAM_BUFFER+0x0B
-   0A35 11 4F FD      [10] 1679 		LXI	D,BYTE_P_SEC
-   0A38 06 0A         [ 7] 1680 		MVI	B,10
-   0A3A CD 43 0E      [18] 1681 		CALL	COPY_RAM	;Copy Description Table to RAM Variables (Up to Total Filesys Sectors)
-   0A3D EB            [ 4] 1682 		XCHG			;Test TOTAL_FILESYS_SECTORS = 0
-   0A3E 2B            [ 6] 1683 		DCX	H
-   0A3F 2B            [ 6] 1684 		DCX	H
-   0A40 7E            [ 7] 1685 		MOV	A,M
-   0A41 23            [ 6] 1686 		INX	H
-   0A42 B6            [ 7] 1687 		ORA	M
-   0A43 C2 51 0A      [10] 1688 		JNZ	INITFAT_TFS_OK
-   0A46 2B            [ 6] 1689 		DCX	H
-   0A47 EB            [ 4] 1690 		XCHG
-   0A48 21 20 FE      [10] 1691 		LXI	H,SD_RAM_BUFFER+0x20
-                           1692 
-   0A4B CD 41 0E      [18] 1693 		CALL	COPY_RAM4
-   0A4E C3 58 0A      [10] 1694 		JMP	INITFAT_TFS_DONE
-                           1695 
-   0A51 AF            [ 4] 1696 INITFAT_TFS_OK:	XRA	A
-   0A52 23            [ 6] 1697 		INX	H
-   0A53 77            [ 7] 1698 		MOV	M,A
-   0A54 23            [ 6] 1699 		INX	H
-   0A55 77            [ 7] 1700 		MOV	M,A
-   0A56 23            [ 6] 1701 		INX	H
-   0A57 EB            [ 4] 1702 		XCHG
-   0A58                    1703 INITFAT_TFS_DONE:
-                           1704 
-   0A58 21 1C FE      [10] 1705 		LXI	H,SD_RAM_BUFFER+0x1C
-   0A5B CD 41 0E      [18] 1706 		CALL	COPY_RAM4	;Copy HIDDEN_SECTORS to RAM Variables
-   0A5E 21 16 FE      [10] 1707 		LXI	H,SD_RAM_BUFFER+0x16
-   0A61 CD 3C 0E      [18] 1708 		CALL	COPY_RAM2	;Copy SECTORS_PER_FAT to RAM Variables
-                           1709 
-                           1710 ;BS.fat1Start = MBR.part1Start + BS.reservedSectors;
-   0A64 2A 52 FD      [16] 1711 		LHLD	RESERVED_SEC	;H=Reserved Sectors
-   0A67 EB            [ 4] 1712 		XCHG
-   0A68 2A 47 FD      [16] 1713 		LHLD	SD_PART_BASE	;FAT1START = SD_PART_BASE + RESERVED_SEC
-   0A6B 19            [10] 1714 		DAD	D
-   0A6C 22 61 FD      [16] 1715 		SHLD	FAT1START
-   0A6F 2A 49 FD      [16] 1716 		LHLD	SD_PART_BASE+2
-   0A72 D2 76 0A      [10] 1717 		JNC	INITFAT_C1_DONE
-   0A75 23            [ 6] 1718 		INX	H
-   0A76 22 63 FD      [16] 1719 INITFAT_C1_DONE:	SHLD	FAT1START+2
-                           1720 
-                           1721 ;firstDirSector = BS.fat1Start + (BS.fatCopies * BS.sectorsPerFAT);
-   0A79 3A 54 FD      [13] 1722 		LDA	FAT_COPIES
-   0A7C 47            [ 7] 1723 		MOV	B,A
-   0A7D 2A 5F FD      [16] 1724 		LHLD	SEC_PER_FAT
-   0A80 EB            [ 4] 1725 		XCHG
-   0A81 21 00 00      [10] 1726 		LXI	H,0
-   0A84 19            [10] 1727 INITFAT_C2_LP:	DAD	D
-   0A85 05            [ 4] 1728 		DCR	B
+   0A2A 21 47 FD      [10] 1674 		LXI	H,SD_PART_BASE
+   0A2D CD EA 0D      [18] 1675 		CALL	MOV_32_HL	;Copy BASE to SEC_PTR
+   0A30 CD 9D 0B      [18] 1676 		CALL	SD_READ_SEC	;READ BOOT RECORD OF PARTITION
+   0A33 CD 88 0B      [18] 1677 		CALL	TEST_SIGNATURE
+   0A36 C0            [12] 1678 		RNZ
+                           1679 
+   0A37 21 0B FE      [10] 1680 		LXI	H,SD_RAM_BUFFER+0x0B
+   0A3A 11 4F FD      [10] 1681 		LXI	D,BYTE_P_SEC
+   0A3D 06 0A         [ 7] 1682 		MVI	B,10
+   0A3F CD 48 0E      [18] 1683 		CALL	COPY_RAM	;Copy Description Table to RAM Variables (Up to Total Filesys Sectors)
+   0A42 EB            [ 4] 1684 		XCHG			;Test TOTAL_FILESYS_SECTORS = 0
+   0A43 2B            [ 6] 1685 		DCX	H
+   0A44 2B            [ 6] 1686 		DCX	H
+   0A45 7E            [ 7] 1687 		MOV	A,M
+   0A46 23            [ 6] 1688 		INX	H
+   0A47 B6            [ 7] 1689 		ORA	M
+   0A48 C2 56 0A      [10] 1690 		JNZ	INITFAT_TFS_OK
+   0A4B 2B            [ 6] 1691 		DCX	H
+   0A4C EB            [ 4] 1692 		XCHG
+   0A4D 21 20 FE      [10] 1693 		LXI	H,SD_RAM_BUFFER+0x20
+                           1694 
+   0A50 CD 46 0E      [18] 1695 		CALL	COPY_RAM4
+   0A53 C3 5D 0A      [10] 1696 		JMP	INITFAT_TFS_DONE
+                           1697 
+   0A56 AF            [ 4] 1698 INITFAT_TFS_OK:	XRA	A
+   0A57 23            [ 6] 1699 		INX	H
+   0A58 77            [ 7] 1700 		MOV	M,A
+   0A59 23            [ 6] 1701 		INX	H
+   0A5A 77            [ 7] 1702 		MOV	M,A
+   0A5B 23            [ 6] 1703 		INX	H
+   0A5C EB            [ 4] 1704 		XCHG
+   0A5D                    1705 INITFAT_TFS_DONE:
+                           1706 
+   0A5D 21 1C FE      [10] 1707 		LXI	H,SD_RAM_BUFFER+0x1C
+   0A60 CD 46 0E      [18] 1708 		CALL	COPY_RAM4	;Copy HIDDEN_SECTORS to RAM Variables
+   0A63 21 16 FE      [10] 1709 		LXI	H,SD_RAM_BUFFER+0x16
+   0A66 CD 41 0E      [18] 1710 		CALL	COPY_RAM2	;Copy SECTORS_PER_FAT to RAM Variables
+                           1711 
+                           1712 ;BS.fat1Start = MBR.part1Start + BS.reservedSectors;
+   0A69 2A 52 FD      [16] 1713 		LHLD	RESERVED_SEC	;H=Reserved Sectors
+   0A6C EB            [ 4] 1714 		XCHG
+   0A6D 2A 47 FD      [16] 1715 		LHLD	SD_PART_BASE	;FAT1START = SD_PART_BASE + RESERVED_SEC
+   0A70 19            [10] 1716 		DAD	D
+   0A71 22 61 FD      [16] 1717 		SHLD	FAT1START
+   0A74 2A 49 FD      [16] 1718 		LHLD	SD_PART_BASE+2
+   0A77 D2 7B 0A      [10] 1719 		JNC	INITFAT_C1_DONE
+   0A7A 23            [ 6] 1720 		INX	H
+   0A7B 22 63 FD      [16] 1721 INITFAT_C1_DONE:	SHLD	FAT1START+2
+                           1722 
+                           1723 ;firstDirSector = BS.fat1Start + (BS.fatCopies * BS.sectorsPerFAT);
+   0A7E 3A 54 FD      [13] 1724 		LDA	FAT_COPIES
+   0A81 47            [ 7] 1725 		MOV	B,A
+   0A82 2A 5F FD      [16] 1726 		LHLD	SEC_PER_FAT
+   0A85 EB            [ 4] 1727 		XCHG
+   0A86 21 00 00      [10] 1728 		LXI	H,0
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 34
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
-   0A86 C2 84 0A      [10] 1729 		JNZ	INITFAT_C2_LP	;H = FAT_COPIES * SEC_PER_FAT
-   0A89 EB            [ 4] 1730 		XCHG			;D = H
-   0A8A 2A 61 FD      [16] 1731 		LHLD	FAT1START
-   0A8D 19            [10] 1732 		DAD	D		;DIR_SECTOR = FAT1START + FAT_COPIES * SEC_PER_FAT
-   0A8E 22 65 FD      [16] 1733 		SHLD	DIR_SECTOR
-   0A91 2A 63 FD      [16] 1734 		LHLD	FAT1START+2
-   0A94 D2 98 0A      [10] 1735 		JNC	INITFAT_C2_DONE
-   0A97 23            [ 6] 1736 		INX	H
-   0A98 22 67 FD      [16] 1737 INITFAT_C2_DONE:	SHLD	DIR_SECTOR+2
-                           1738 
-                           1739 ;DATASTART = DIR_SECTOR + LEN(Directory)
-                           1740 ;          = DIR_SECTOR + ROOTDIR_SIZE * 32 / BYTE_P_SEC
-   0A9B 06 10         [ 7] 1741 		MVI	B,16		;Maximum # of Reductions
-   0A9D 2A 4F FD      [16] 1742 		LHLD	BYTE_P_SEC	;To fit math into 16 bits, let's reduce "ROOTDIR_SIZE / BYTE_P_SEC"
-   0AA0 EB            [ 4] 1743 		XCHG			;Divide each by 2 while dividable
-   0AA1 2A 55 FD      [16] 1744 		LHLD	ROOTDIR_SIZE	;H=ROOTDIR_SIZE, D=BYTE_P_SEC
-   0AA4 7B            [ 4] 1745 INITFAT_C3_LP:	MOV	A,E
-   0AA5 1F            [ 4] 1746 		RAR
-   0AA6 DA D3 0A      [10] 1747 		JC	INITFAT_C3_0	;If lsb of D is 1, no more Reduction possible
-   0AA9 7D            [ 4] 1748 		MOV	A,L
-   0AAA 1F            [ 4] 1749 		RAR
-   0AAB DA D3 0A      [10] 1750 		JC	INITFAT_C3_0	;If lsb of H is 1, no more Reduction possible
-   0AAE 7A            [ 4] 1751 		MOV	A,D
-   0AAF 1F            [ 4] 1752 		RAR
-   0AB0 57            [ 7] 1753 		MOV	D,A
-   0AB1 7B            [ 4] 1754 		MOV	A,E
-   0AB2 1F            [ 4] 1755 		RAR
-   0AB3 5F            [ 4] 1756 		MOV	E,A
-   0AB4 7C            [ 4] 1757 		MOV	A,H
-   0AB5 1F            [ 4] 1758 		RAR
-   0AB6 67            [ 7] 1759 		MOV	H,A
-   0AB7 7D            [ 4] 1760 		MOV	A,L
-   0AB8 1F            [ 4] 1761 		RAR
-   0AB9 6F            [ 4] 1762 		MOV	L,A
-   0ABA 05            [ 4] 1763 		DCR	B
-   0ABB C2 A4 0A      [10] 1764 		JNZ	INITFAT_C3_LP
-   0ABE CD 90 07      [18] 1765 INITFAT_C3_ERR:	CALL 	PRINTI		;
-   0AC1 20 45 72 72 6F 72  1766 		.ascii " Error DATASTART\000"
+   0A89 19            [10] 1729 INITFAT_C2_LP:	DAD	D
+   0A8A 05            [ 4] 1730 		DCR	B
+   0A8B C2 89 0A      [10] 1731 		JNZ	INITFAT_C2_LP	;H = FAT_COPIES * SEC_PER_FAT
+   0A8E EB            [ 4] 1732 		XCHG			;D = H
+   0A8F 2A 61 FD      [16] 1733 		LHLD	FAT1START
+   0A92 19            [10] 1734 		DAD	D		;DIR_SECTOR = FAT1START + FAT_COPIES * SEC_PER_FAT
+   0A93 22 65 FD      [16] 1735 		SHLD	DIR_SECTOR
+   0A96 2A 63 FD      [16] 1736 		LHLD	FAT1START+2
+   0A99 D2 9D 0A      [10] 1737 		JNC	INITFAT_C2_DONE
+   0A9C 23            [ 6] 1738 		INX	H
+   0A9D 22 67 FD      [16] 1739 INITFAT_C2_DONE:	SHLD	DIR_SECTOR+2
+                           1740 
+                           1741 ;DATASTART = DIR_SECTOR + LEN(Directory)
+                           1742 ;          = DIR_SECTOR + ROOTDIR_SIZE * 32 / BYTE_P_SEC
+   0AA0 06 10         [ 7] 1743 		MVI	B,16		;Maximum # of Reductions
+   0AA2 2A 4F FD      [16] 1744 		LHLD	BYTE_P_SEC	;To fit math into 16 bits, let's reduce "ROOTDIR_SIZE / BYTE_P_SEC"
+   0AA5 EB            [ 4] 1745 		XCHG			;Divide each by 2 while dividable
+   0AA6 2A 55 FD      [16] 1746 		LHLD	ROOTDIR_SIZE	;H=ROOTDIR_SIZE, D=BYTE_P_SEC
+   0AA9 7B            [ 4] 1747 INITFAT_C3_LP:	MOV	A,E
+   0AAA 1F            [ 4] 1748 		RAR
+   0AAB DA D8 0A      [10] 1749 		JC	INITFAT_C3_0	;If lsb of D is 1, no more Reduction possible
+   0AAE 7D            [ 4] 1750 		MOV	A,L
+   0AAF 1F            [ 4] 1751 		RAR
+   0AB0 DA D8 0A      [10] 1752 		JC	INITFAT_C3_0	;If lsb of H is 1, no more Reduction possible
+   0AB3 7A            [ 4] 1753 		MOV	A,D
+   0AB4 1F            [ 4] 1754 		RAR
+   0AB5 57            [ 7] 1755 		MOV	D,A
+   0AB6 7B            [ 4] 1756 		MOV	A,E
+   0AB7 1F            [ 4] 1757 		RAR
+   0AB8 5F            [ 4] 1758 		MOV	E,A
+   0AB9 7C            [ 4] 1759 		MOV	A,H
+   0ABA 1F            [ 4] 1760 		RAR
+   0ABB 67            [ 7] 1761 		MOV	H,A
+   0ABC 7D            [ 4] 1762 		MOV	A,L
+   0ABD 1F            [ 4] 1763 		RAR
+   0ABE 6F            [ 4] 1764 		MOV	L,A
+   0ABF 05            [ 4] 1765 		DCR	B
+   0AC0 C2 A9 0A      [10] 1766 		JNZ	INITFAT_C3_LP
+   0AC3 CD 90 07      [18] 1767 INITFAT_C3_ERR:	CALL 	PRINTI		;
+   0AC6 20 45 72 72 6F 72  1768 		.ascii " Error DATASTART\000"
         20 44 41 54 41 53
         54 41 52 54 00
-   0AD2 C9            [10] 1767 		RET
-   0AD3 06 05         [ 7] 1768 INITFAT_C3_0:	MVI	B,5		;5 shifts = Multiply 32
-   0AD5 29            [10] 1769 INITFAT_C3_LP2:	DAD	H		;Double H
-   0AD6 DA BE 0A      [10] 1770 		JC	INITFAT_C3_ERR
-   0AD9 05            [ 4] 1771 		DCR	B
-   0ADA C2 D5 0A      [10] 1772 		JNZ	INITFAT_C3_LP2
-                           1773 
-   0ADD 7B            [ 4] 1774 		MOV	A,E		;2'S Complement BYTE_P_SEC
-   0ADE 2F            [ 4] 1775 		CMA
-   0ADF 4F            [ 4] 1776 		MOV	C,A
-   0AE0 7A            [ 4] 1777 		MOV	A,D
-   0AE1 2F            [ 4] 1778 		CMA
-   0AE2 47            [ 7] 1779 		MOV	B,A
-   0AE3 03            [ 6] 1780 		INX	B
-   0AE4 11 FF FF      [10] 1781 		LXI	D,0xFFFF	;Start with -1
+   0AD7 C9            [10] 1769 		RET
+   0AD8 06 05         [ 7] 1770 INITFAT_C3_0:	MVI	B,5		;5 shifts = Multiply 32
+   0ADA 29            [10] 1771 INITFAT_C3_LP2:	DAD	H		;Double H
+   0ADB DA C3 0A      [10] 1772 		JC	INITFAT_C3_ERR
+   0ADE 05            [ 4] 1773 		DCR	B
+   0ADF C2 DA 0A      [10] 1774 		JNZ	INITFAT_C3_LP2
+                           1775 
+   0AE2 7B            [ 4] 1776 		MOV	A,E		;2'S Complement BYTE_P_SEC
+   0AE3 2F            [ 4] 1777 		CMA
+   0AE4 4F            [ 4] 1778 		MOV	C,A
+   0AE5 7A            [ 4] 1779 		MOV	A,D
+   0AE6 2F            [ 4] 1780 		CMA
+   0AE7 47            [ 7] 1781 		MOV	B,A
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 35
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
-   0AE7 09            [10] 1782 INITFAT_C3_LP3:	DAD	B		;Divide by counting Subtractions
-   0AE8 13            [ 6] 1783 		INX	D
-   0AE9 DA E7 0A      [10] 1784 		JC	INITFAT_C3_LP3
-   0AEC 2A 65 FD      [16] 1785 		LHLD	DIR_SECTOR	;Add the Dword at DIR_SECTOR
-   0AEF 19            [10] 1786 		DAD	D
-   0AF0 22 69 FD      [16] 1787 		SHLD	DATASTART
-   0AF3 2A 67 FD      [16] 1788 		LHLD	DIR_SECTOR+2
-   0AF6 D2 FA 0A      [10] 1789 		JNC	INITFAT_C3_1
-   0AF9 23            [ 6] 1790 		INX	H
-   0AFA 22 6B FD      [16] 1791 INITFAT_C3_1:	SHLD	DATASTART+2
-                           1792 
-   0AFD 3A 51 FD      [13] 1793 		LDA	SEC_PER_CLUS	;Determine the best way to divide Sectors into cluster#
-   0B00 3D            [ 4] 1794 		DCR	A
-   0B01 32 3D FD      [13] 1795 		STA	MODMASK
-   0B04 3C            [ 4] 1796 		INR	A
-   0B05 CA 57 0B      [10] 1797 		JZ	INITFAT_FAIL1
-   0B08 01 00 08      [10] 1798 		LXI	B,0x0800
-   0B0B 1F            [ 4] 1799 INITFAT_C4_LP:	RAR
-   0B0C D2 11 0B      [10] 1800 		JNC	INITFAT_C4_1
-   0B0F 50            [ 4] 1801 		MOV	D,B		;Save location of "1" bit
-   0B10 0C            [ 4] 1802 		INR	C		;Count of 1 bits.
-   0B11 05            [ 4] 1803 INITFAT_C4_1:	DCR	B
-   0B12 C2 0B 0B      [10] 1804 		JNZ	INITFAT_C4_LP
-   0B15 3E 01         [ 7] 1805 		MVI	A,1
-   0B17 B9            [ 4] 1806 		CMP	C
-   0B18 C2 2B 0B      [10] 1807 		JNZ	INITFAT_C4_2	;More than 1 "1" bit, cannot do divide by simple shift.
-   0B1B 7A            [ 4] 1808 		MOV	A,D		;Fetch position of the 1 bit.  8=lsb, 1=msb
-   0B1C 2F            [ 4] 1809 		CMA
-   0B1D C6 0A         [ 7] 1810 		ADI	10		;Re-adjust to make 1=lsb AND 8=msb  A=9-A
-   0B1F 32 38 FD      [13] 1811 		STA	DF_SHIFTCNT
-   0B22 21 7B 0E      [10] 1812 		LXI	H,DIVBYSHIFT	;Use fast shift divider
-   0B25 11 8B 0E      [10] 1813 		LXI	D,MODBYMASK
-   0B28 C3 30 0B      [10] 1814 		JMP	INITFAT_C4_3
-                           1815 
-   0B2B 21 5F 0E      [10] 1816 INITFAT_C4_2:	LXI	H,DIV16BY8SPC	;Use Full Divide function for Sectors Per Cluster
-   0B2E E5            [12] 1817 		PUSH	H
-   0B2F D1            [10] 1818 		POP	D
-   0B30 22 36 FD      [16] 1819 INITFAT_C4_3:	SHLD	DIVIDE_FUNC
-   0B33 EB            [ 4] 1820 		XCHG
-   0B34 22 3B FD      [16] 1821 		SHLD	MOD_FUNC
-                           1822 
-   0B37 CD 90 07      [18] 1823 		CALL 	PRINTI		;
-   0B3A 20 56 4F 4C 3D 00  1824 		.ascii " VOL=\000"
-   0B40 21 2B FE      [10] 1825 		LXI	H,0x0FE2B
-   0B43 06 0B         [ 7] 1826 		MVI	B,11
-   0B45 CD 98 07      [18] 1827 		CALL	PRINTB
-   0B48 CD 90 07      [18] 1828 		CALL 	PRINTI		;
-   0B4B 20 53 59 53 3D 00  1829 		.ascii " SYS=\000"
-   0B51 06 08         [ 7] 1830 		MVI	B,8
-   0B53 CD 98 07      [18] 1831 		CALL	PRINTB
-   0B56 C9            [10] 1832 		RET
-                           1833 
-   0B57 CD 90 07      [18] 1834 INITFAT_FAIL1:	CALL 	PRINTI		;
-   0B5A 0D 0A 45 72 72 6F  1835 		.ascii "\r\nError=0 Sec/Clus\000"
-        72 3D 30 20 53 65
+   0AE8 03            [ 6] 1782 		INX	B
+   0AE9 11 FF FF      [10] 1783 		LXI	D,0xFFFF	;Start with -1
+   0AEC 09            [10] 1784 INITFAT_C3_LP3:	DAD	B		;Divide by counting Subtractions
+   0AED 13            [ 6] 1785 		INX	D
+   0AEE DA EC 0A      [10] 1786 		JC	INITFAT_C3_LP3
+   0AF1 2A 65 FD      [16] 1787 		LHLD	DIR_SECTOR	;Add the Dword at DIR_SECTOR
+   0AF4 19            [10] 1788 		DAD	D
+   0AF5 22 69 FD      [16] 1789 		SHLD	DATASTART
+   0AF8 2A 67 FD      [16] 1790 		LHLD	DIR_SECTOR+2
+   0AFB D2 FF 0A      [10] 1791 		JNC	INITFAT_C3_1
+   0AFE 23            [ 6] 1792 		INX	H
+   0AFF 22 6B FD      [16] 1793 INITFAT_C3_1:	SHLD	DATASTART+2
+                           1794 
+   0B02 3A 51 FD      [13] 1795 		LDA	SEC_PER_CLUS	;Determine the best way to divide Sectors into cluster#
+   0B05 3D            [ 4] 1796 		DCR	A
+   0B06 32 3D FD      [13] 1797 		STA	MODMASK
+   0B09 3C            [ 4] 1798 		INR	A
+   0B0A CA 5C 0B      [10] 1799 		JZ	INITFAT_FAIL1
+   0B0D 01 00 08      [10] 1800 		LXI	B,0x0800
+   0B10 1F            [ 4] 1801 INITFAT_C4_LP:	RAR
+   0B11 D2 16 0B      [10] 1802 		JNC	INITFAT_C4_1
+   0B14 50            [ 4] 1803 		MOV	D,B		;Save location of "1" bit
+   0B15 0C            [ 4] 1804 		INR	C		;Count of 1 bits.
+   0B16 05            [ 4] 1805 INITFAT_C4_1:	DCR	B
+   0B17 C2 10 0B      [10] 1806 		JNZ	INITFAT_C4_LP
+   0B1A 3E 01         [ 7] 1807 		MVI	A,1
+   0B1C B9            [ 4] 1808 		CMP	C
+   0B1D C2 30 0B      [10] 1809 		JNZ	INITFAT_C4_2	;More than 1 "1" bit, cannot do divide by simple shift.
+   0B20 7A            [ 4] 1810 		MOV	A,D		;Fetch position of the 1 bit.  8=lsb, 1=msb
+   0B21 2F            [ 4] 1811 		CMA
+   0B22 C6 0A         [ 7] 1812 		ADI	10		;Re-adjust to make 1=lsb AND 8=msb  A=9-A
+   0B24 32 38 FD      [13] 1813 		STA	DF_SHIFTCNT
+   0B27 21 80 0E      [10] 1814 		LXI	H,DIVBYSHIFT	;Use fast shift divider
+   0B2A 11 90 0E      [10] 1815 		LXI	D,MODBYMASK
+   0B2D C3 35 0B      [10] 1816 		JMP	INITFAT_C4_3
+                           1817 
+   0B30 21 64 0E      [10] 1818 INITFAT_C4_2:	LXI	H,DIV16BY8SPC	;Use Full Divide function for Sectors Per Cluster
+   0B33 E5            [12] 1819 		PUSH	H
+   0B34 D1            [10] 1820 		POP	D
+   0B35 22 36 FD      [16] 1821 INITFAT_C4_3:	SHLD	DIVIDE_FUNC
+   0B38 EB            [ 4] 1822 		XCHG
+   0B39 22 3B FD      [16] 1823 		SHLD	MOD_FUNC
+                           1824 
+   0B3C CD 90 07      [18] 1825 		CALL 	PRINTI		;
+   0B3F 20 56 4F 4C 3D 00  1826 		.ascii " VOL=\000"
+   0B45 21 2B FE      [10] 1827 		LXI	H,0x0FE2B
+   0B48 06 0B         [ 7] 1828 		MVI	B,11
+   0B4A CD 98 07      [18] 1829 		CALL	PRINTB
+   0B4D CD 90 07      [18] 1830 		CALL 	PRINTI		;
+   0B50 20 53 59 53 3D 00  1831 		.ascii " SYS=\000"
+   0B56 06 08         [ 7] 1832 		MVI	B,8
+   0B58 CD 98 07      [18] 1833 		CALL	PRINTB
+   0B5B C9            [10] 1834 		RET
+                           1835 
+   0B5C CD 90 07      [18] 1836 INITFAT_FAIL1:	CALL 	PRINTI		;
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 36
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
+   0B5F 0D 0A 45 72 72 6F  1837 		.ascii "\r\nError=0 Sec/Clus\000"
+        72 3D 30 20 53 65
         63 2F 43 6C 75 73
         00
-   0B6D CD 90 07      [18] 1836 INITFAT_FAIL:	CALL 	PRINTI		;
-   0B70 0D 0A 46 41 54 20  1837 		.ascii "\r\nFAT Init FAILED\000"
+   0B72 CD 90 07      [18] 1838 INITFAT_FAIL:	CALL 	PRINTI		;
+   0B75 0D 0A 46 41 54 20  1839 		.ascii "\r\nFAT Init FAILED\000"
         49 6E 69 74 20 46
         41 49 4C 45 44 00
-   0B82 C9            [10] 1838 		RET
-                           1839 
-                           1840 ;SD_CARD_TYPE	.blkb	1	;SD CARD TYPE
-                           1841 ;SDC_STATUS	.blkb	1	;SD Status Code returned
-                           1842 ;SD_PARAM	.blkb	4	;32 bit address parameter for SD Commands
-                           1843 ;SD_PART_TYPE	.blkb	1	;SD PARTITION TYPE
-                           1844 ;SD_PART_BASE	.blkb	4	;SD PARTITION STARTING RECORD
-                           1845 ;SD_PART_SIZE	.blkb	4	;SD PARTITION SIZE (Must follow SD_PART_BASE)
-                           1846 ;SEC_PER_CLUS	.blkb	1	;0x0D
-                           1847 ;RESERVED_SEC	.blkb	2	;0x0E - 0x0F
-                           1848 ;FAT_COPIES	.blkb	1	;0x10
-                           1849 ;RT_DIR_ENTRIES	.blkb	2	;0x11 - 0x12
-                           1850 ;TOT_FILESYS_SEC.blkb	4	;0x13 - 0x14 or 0x20 - 0x23
-                           1851 ;HIDDEN_SECTORS	.blkb	4	;0x1C - 0x1F
-                           1852 ;SEC_PER_FAT	.blkb	2	;0x16 - 0x17
-                           1853 ;FAT1START	.blkb	4	;Calculated
-                           1854 ;DIR_SECTOR	.blkb	4	;Calculated
-                           1855 ;DATASTART	.blkb	4	;Calculated
-                           1856 
-                           1857 ;-------------------------------------------------
-   0B83 CD 90 07      [18] 1858 TEST_SIGNATURE:	CALL 	PRINTI		;
-   0B86 20 53 00           1859 		.ascii " S\000"
-   0B89 2B            [ 6] 1860 		DCX	H
-   0B8A 3E AA         [ 7] 1861 		MVI	A,0xAA
-   0B8C BE            [ 7] 1862 		CMP	M
-   0B8D C2 6D 0B      [10] 1863 		JNZ	INITFAT_FAIL
-   0B90 2B            [ 6] 1864 		DCX	H
-   0B91 3E 55         [ 7] 1865 		MVI	A,0x55
-   0B93 BE            [ 7] 1866 		CMP	M
-   0B94 C2 6D 0B      [10] 1867 		JNZ	INITFAT_FAIL
-   0B97 C9            [10] 1868 		RET
-                           1869 
-                           1870 
-                           1871 ;=====================================================================================================
-                           1872 ;SD Memory Car Routines, Mid Level, Send/Recieve Data Sectors (Writes out Dirty Data)
+   0B87 C9            [10] 1840 		RET
+                           1841 
+                           1842 ;SD_CARD_TYPE	.blkb	1	;SD CARD TYPE
+                           1843 ;SDC_STATUS	.blkb	1	;SD Status Code returned
+                           1844 ;SD_PARAM	.blkb	4	;32 bit address parameter for SD Commands
+                           1845 ;SD_PART_TYPE	.blkb	1	;SD PARTITION TYPE
+                           1846 ;SD_PART_BASE	.blkb	4	;SD PARTITION STARTING RECORD
+                           1847 ;SD_PART_SIZE	.blkb	4	;SD PARTITION SIZE (Must follow SD_PART_BASE)
+                           1848 ;SEC_PER_CLUS	.blkb	1	;0x0D
+                           1849 ;RESERVED_SEC	.blkb	2	;0x0E - 0x0F
+                           1850 ;FAT_COPIES	.blkb	1	;0x10
+                           1851 ;RT_DIR_ENTRIES	.blkb	2	;0x11 - 0x12
+                           1852 ;TOT_FILESYS_SEC.blkb	4	;0x13 - 0x14 or 0x20 - 0x23
+                           1853 ;HIDDEN_SECTORS	.blkb	4	;0x1C - 0x1F
+                           1854 ;SEC_PER_FAT	.blkb	2	;0x16 - 0x17
+                           1855 ;FAT1START	.blkb	4	;Calculated
+                           1856 ;DIR_SECTOR	.blkb	4	;Calculated
+                           1857 ;DATASTART	.blkb	4	;Calculated
+                           1858 
+                           1859 ;-------------------------------------------------
+   0B88 CD 90 07      [18] 1860 TEST_SIGNATURE:	CALL 	PRINTI		;
+   0B8B 20 53 00           1861 		.ascii " S\000"
+   0B8E 2B            [ 6] 1862 		DCX	H
+   0B8F 3E AA         [ 7] 1863 		MVI	A,0xAA
+   0B91 BE            [ 7] 1864 		CMP	M
+   0B92 C2 72 0B      [10] 1865 		JNZ	INITFAT_FAIL
+   0B95 2B            [ 6] 1866 		DCX	H
+   0B96 3E 55         [ 7] 1867 		MVI	A,0x55
+   0B98 BE            [ 7] 1868 		CMP	M
+   0B99 C2 72 0B      [10] 1869 		JNZ	INITFAT_FAIL
+   0B9C C9            [10] 1870 		RET
+                           1871 
+                           1872 
                            1873 ;=====================================================================================================
-                           1874 
-                           1875 ;-----------------------------------------------------------------------------------------------------
-                           1876 ;Read to the SD_RAM_BUFFER from the SD Card at Sector BCDE
+                           1874 ;SD Memory Car Routines, Mid Level, Send/Recieve Data Sectors (Writes out Dirty Data)
+                           1875 ;=====================================================================================================
+                           1876 
                            1877 ;-----------------------------------------------------------------------------------------------------
-                           1878 		;Sector in SEC_PTR
-   0B98 21 78 FD      [10] 1879 SD_READ_SEC:	LXI	H,SEC_PTR	;READ SECTOR
-   0B9B DA A2 0B      [10] 1880 		JC	SD_RS_FORCED
-   0B9E CD 1A 0E      [18] 1881 		CALL	CMP_HL_32
-   0BA1 C8            [12] 1882 		RZ			;Return if no change to sector being read/written
-                           1883 
-   0BA2                    1884 SD_RS_FORCED:
-                           1885 		;CALL	PRINTI		;DEBUG
-                           1886 		;.ascii " Read:\000"
+                           1878 ;Read to the SD_RAM_BUFFER from the SD Card at Sector BCDE
+                           1879 ;-----------------------------------------------------------------------------------------------------
+                           1880 		;Sector in SEC_PTR
+   0B9D 21 78 FD      [10] 1881 SD_READ_SEC:	LXI	H,SEC_PTR	;READ SECTOR
+   0BA0 DA A7 0B      [10] 1882 		JC	SD_RS_FORCED
+   0BA3 CD 1F 0E      [18] 1883 		CALL	CMP_HL_32
+   0BA6 C8            [12] 1884 		RZ			;Return if no change to sector being read/written
+                           1885 
+   0BA7                    1886 SD_RS_FORCED:
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 37
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
-                           1887 		;CALL	PUT_BC
-                           1888 		;CALL	PUT_DE
-                           1889 
-   0BA2 21 78 FD      [10] 1890 		LXI	H,SEC_PTR
-   0BA5 CD ED 0D      [18] 1891 		CALL	MOV_HL_32	;Save Sector in SEC_PTR
-   0BA8 CD EB 0B      [18] 1892 		CALL	SET_PARAM	;READ SECTOR
-   0BAB 06 05         [ 7] 1893 		MVI	B,5	;5 Retries to read
-   0BAD 3E 11         [ 7] 1894 SD_RS_LP0:	MVI	A,17 	;Read Sector Command
-   0BAF CD 0B 0D      [18] 1895 		CALL	SD_CMD
-   0BB2 CA BE 0B      [10] 1896 		JZ	SD_RS_0
-   0BB5 05            [ 4] 1897 		DCR	B
-   0BB6 C2 AD 0B      [10] 1898 		JNZ	SD_RS_LP0
-                           1899 				;Read failed
-   0BB9 05            [ 4] 1900 		DCR	B	;Clear Zero flag
-   0BBA CD F3 0C      [18] 1901 		CALL	SD_DESELECT	;Deselect card
-   0BBD C9            [10] 1902 		RET
-   0BBE 06 00         [ 7] 1903 SD_RS_0:	MVI	B,0		;256 Attempts to recieve the DATASTART
-   0BC0 CD 51 0D      [18] 1904 SD_RS_LP1:	CALL	SPI_RX
-   0BC3 FE FE         [ 7] 1905 		CPI	0xFE		;IS DATASTART?
-   0BC5 CA D0 0B      [10] 1906 		JZ	SD_RS_1
-   0BC8 05            [ 4] 1907 		DCR	B
-   0BC9 C2 C0 0B      [10] 1908 		JNZ	SD_RS_LP1
-   0BCC CD F3 0C      [18] 1909 		CALL	SD_DESELECT	;Deselect card
-   0BCF C9            [10] 1910 		RET
-                           1911 
-   0BD0 01 00 02      [10] 1912 SD_RS_1:	LXI	B,0x0200
-   0BD3 CD 51 0D      [18] 1913 SD_RS_LP2:	CALL	SPI_RX	;Fetch 512 Bytes to M(HL)
-   0BD6 77            [ 7] 1914 		MOV	M,A
-   0BD7 23            [ 6] 1915 		INX	H
-   0BD8 0D            [ 4] 1916 		DCR	C
-   0BD9 C2 D3 0B      [10] 1917 		JNZ	SD_RS_LP2
-   0BDC 05            [ 4] 1918 		DCR	B
-   0BDD C2 D3 0B      [10] 1919 		JNZ	SD_RS_LP2
-                           1920 
-   0BE0 CD 51 0D      [18] 1921 		CALL	SPI_RX	;BURN 2 BYTES (CRC)
-   0BE3 CD 51 0D      [18] 1922 		CALL	SPI_RX	;
-   0BE6 CD F3 0C      [18] 1923 		CALL	SD_DESELECT	;Deselect card
-   0BE9 AF            [ 4] 1924 		XRA	A
-   0BEA C9            [10] 1925 		RET
-                           1926 
-                           1927 ;-----------------------------------------------------------------------------------------------------
-                           1928 ;Input:	Sector in 32 bit register BCDE
-   0BEB 3A 40 FD      [13] 1929 SET_PARAM:	LDA	SD_CARD_TYPE	;IF CARD_TYPE <> 3 THEN SHIFT SECTOR << 9 Bits
-   0BEE FE 03         [ 7] 1930 		CPI	3
-   0BF0 CA FC 0B      [10] 1931 		JZ	SP_RET
-                           1932 
-   0BF3 79            [ 4] 1933 		MOV	A,C
-   0BF4 EB            [ 4] 1934 		XCHG
-   0BF5 29            [10] 1935 		DAD	H
-   0BF6 17            [ 4] 1936 		RAL
-   0BF7 47            [ 7] 1937 		MOV	B,A
-   0BF8 4C            [ 4] 1938 		MOV	C,H
-   0BF9 55            [ 4] 1939 		MOV	D,L
-   0BFA 1E 00         [ 7] 1940 		MVI	E,0
-                           1941 
+                           1887 		;CALL	PRINTI		;DEBUG
+                           1888 		;.ascii " Read:\000"
+                           1889 		;CALL	PUT_BC
+                           1890 		;CALL	PUT_DE
+                           1891 
+   0BA7 21 78 FD      [10] 1892 		LXI	H,SEC_PTR
+   0BAA CD F2 0D      [18] 1893 		CALL	MOV_HL_32	;Save Sector in SEC_PTR
+   0BAD CD F0 0B      [18] 1894 		CALL	SET_PARAM	;READ SECTOR
+   0BB0 06 05         [ 7] 1895 		MVI	B,5	;5 Retries to read
+   0BB2 3E 11         [ 7] 1896 SD_RS_LP0:	MVI	A,17 	;Read Sector Command
+   0BB4 CD 10 0D      [18] 1897 		CALL	SD_CMD
+   0BB7 CA C3 0B      [10] 1898 		JZ	SD_RS_0
+   0BBA 05            [ 4] 1899 		DCR	B
+   0BBB C2 B2 0B      [10] 1900 		JNZ	SD_RS_LP0
+                           1901 				;Read failed
+   0BBE 05            [ 4] 1902 		DCR	B	;Clear Zero flag
+   0BBF CD F8 0C      [18] 1903 		CALL	SD_DESELECT	;Deselect card
+   0BC2 C9            [10] 1904 		RET
+   0BC3 06 00         [ 7] 1905 SD_RS_0:	MVI	B,0		;256 Attempts to recieve the DATASTART
+   0BC5 CD 56 0D      [18] 1906 SD_RS_LP1:	CALL	SPI_RX
+   0BC8 FE FE         [ 7] 1907 		CPI	0xFE		;IS DATASTART?
+   0BCA CA D5 0B      [10] 1908 		JZ	SD_RS_1
+   0BCD 05            [ 4] 1909 		DCR	B
+   0BCE C2 C5 0B      [10] 1910 		JNZ	SD_RS_LP1
+   0BD1 CD F8 0C      [18] 1911 		CALL	SD_DESELECT	;Deselect card
+   0BD4 C9            [10] 1912 		RET
+                           1913 
+   0BD5 01 00 02      [10] 1914 SD_RS_1:	LXI	B,0x0200
+   0BD8 CD 56 0D      [18] 1915 SD_RS_LP2:	CALL	SPI_RX	;Fetch 512 Bytes to M(HL)
+   0BDB 77            [ 7] 1916 		MOV	M,A
+   0BDC 23            [ 6] 1917 		INX	H
+   0BDD 0D            [ 4] 1918 		DCR	C
+   0BDE C2 D8 0B      [10] 1919 		JNZ	SD_RS_LP2
+   0BE1 05            [ 4] 1920 		DCR	B
+   0BE2 C2 D8 0B      [10] 1921 		JNZ	SD_RS_LP2
+                           1922 
+   0BE5 CD 56 0D      [18] 1923 		CALL	SPI_RX	;BURN 2 BYTES (CRC)
+   0BE8 CD 56 0D      [18] 1924 		CALL	SPI_RX	;
+   0BEB CD F8 0C      [18] 1925 		CALL	SD_DESELECT	;Deselect card
+   0BEE AF            [ 4] 1926 		XRA	A
+   0BEF C9            [10] 1927 		RET
+                           1928 
+                           1929 ;-----------------------------------------------------------------------------------------------------
+                           1930 ;Input:	Sector in 32 bit register BCDE
+   0BF0 3A 40 FD      [13] 1931 SET_PARAM:	LDA	SD_CARD_TYPE	;IF CARD_TYPE <> 3 THEN SHIFT SECTOR << 9 Bits
+   0BF3 FE 03         [ 7] 1932 		CPI	3
+   0BF5 CA 01 0C      [10] 1933 		JZ	SP_RET
+                           1934 
+   0BF8 79            [ 4] 1935 		MOV	A,C
+   0BF9 EB            [ 4] 1936 		XCHG
+   0BFA 29            [10] 1937 		DAD	H
+   0BFB 17            [ 4] 1938 		RAL
+   0BFC 47            [ 7] 1939 		MOV	B,A
+   0BFD 4C            [ 4] 1940 		MOV	C,H
+   0BFE 55            [ 4] 1941 		MOV	D,L
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 38
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
-   0BFC 21 42 FD      [10] 1942 SP_RET:		LXI	H,SD_PARAM
-   0BFF CD ED 0D      [18] 1943 		CALL	MOV_HL_32	;Save Parameter
-   0C02 21 00 FE      [10] 1944 		LXI	H,SD_RAM_BUFFER	;Set buffer space
-   0C05 C9            [10] 1945 		RET
-                           1946 
-                           1947 
-                           1948 ;=====================================================================================================
-                           1949 ;SD Memory Car Routines, Low Level, INIT CARD, Send/Recieve Data, Send Commands
+   0BFF 1E 00         [ 7] 1942 		MVI	E,0
+                           1943 
+   0C01 21 42 FD      [10] 1944 SP_RET:		LXI	H,SD_PARAM
+   0C04 CD F2 0D      [18] 1945 		CALL	MOV_HL_32	;Save Parameter
+   0C07 21 00 FE      [10] 1946 		LXI	H,SD_RAM_BUFFER	;Set buffer space
+   0C0A C9            [10] 1947 		RET
+                           1948 
+                           1949 
                            1950 ;=====================================================================================================
-                           1951 ;-------------------------------- INIT SDCARD --------------------------------
-   0C06 CD F3 0C      [18] 1952 INIT_SDCARD:	CALL	SD_DESELECT	;Deselect and clock the card many cycles
-   0C09 0E 80         [ 7] 1953 		MVI	C,0x80
-   0C0B 3E FF         [ 7] 1954 		MVI	A,0xFF
-   0C0D 32 40 FD      [13] 1955 		STA	SD_CARD_TYPE
-   0C10 D3 30         [10] 1956 ISD_0:		OUT	SPI		;CLOCK many cycles
-   0C12 0D            [ 4] 1957 		DCR	C
-   0C13 C2 10 0C      [10] 1958 		JNZ	ISD_0
-   0C16 CD FA 0C      [18] 1959 		CALL	SD_SELECT
-                           1960 
-   0C19 CD 90 07      [18] 1961 		CALL 	PRINTI		;
-   0C1C 0D 0A 49 6E 69 74  1962 		.ascii "\r\nInit SD\000"
+                           1951 ;SD Memory Car Routines, Low Level, INIT CARD, Send/Recieve Data, Send Commands
+                           1952 ;=====================================================================================================
+                           1953 ;-------------------------------- INIT SDCARD --------------------------------
+   0C0B CD F8 0C      [18] 1954 INIT_SDCARD:	CALL	SD_DESELECT	;Deselect and clock the card many cycles
+   0C0E 0E 80         [ 7] 1955 		MVI	C,0x80
+   0C10 3E FF         [ 7] 1956 		MVI	A,0xFF
+   0C12 32 40 FD      [13] 1957 		STA	SD_CARD_TYPE
+   0C15 D3 30         [10] 1958 ISD_0:		OUT	SPI		;CLOCK many cycles
+   0C17 0D            [ 4] 1959 		DCR	C
+   0C18 C2 15 0C      [10] 1960 		JNZ	ISD_0
+   0C1B CD FF 0C      [18] 1961 		CALL	SD_SELECT
+                           1962 
+   0C1E CD 90 07      [18] 1963 		CALL 	PRINTI		;
+   0C21 0D 0A 49 6E 69 74  1964 		.ascii "\r\nInit SD\000"
         20 53 44 00
-                           1963 
-   0C26 CD 7B 0D      [18] 1964 		CALL	SD_CLEAR_ARG	;Fetch the 01 response
-   0C29 06 00         [ 7] 1965 		MVI	B,0		;256 retries
-   0C2B 3E 00         [ 7] 1966 ISD_LP1:		MVI	A,0		;CMD 0
-   0C2D CD 0B 0D      [18] 1967 		CALL	SD_CMD
-   0C30 FE 01         [ 7] 1968 		CPI	1		;Test 01 response
-   0C32 CA 4A 0C      [10] 1969 		JZ	ISD_1
-   0C35 05            [ 4] 1970 		DCR	B
-   0C36 C2 2B 0C      [10] 1971 		JNZ	ISD_LP1
-                           1972 		;JMP	INIT_FAIL
-   0C39 CD 90 07      [18] 1973 INIT_FAIL:	CALL 	PRINTI		;
-   0C3C 2D 46 41 49 4C 45  1974 		.ascii "-FAILED\000"
+                           1965 
+   0C2B CD 80 0D      [18] 1966 		CALL	SD_CLEAR_ARG	;Fetch the 01 response
+   0C2E 06 00         [ 7] 1967 		MVI	B,0		;256 retries
+   0C30 3E 00         [ 7] 1968 ISD_LP1:		MVI	A,0		;CMD 0
+   0C32 CD 10 0D      [18] 1969 		CALL	SD_CMD
+   0C35 FE 01         [ 7] 1970 		CPI	1		;Test 01 response
+   0C37 CA 4F 0C      [10] 1971 		JZ	ISD_1
+   0C3A 05            [ 4] 1972 		DCR	B
+   0C3B C2 30 0C      [10] 1973 		JNZ	ISD_LP1
+                           1974 		;JMP	INIT_FAIL
+   0C3E CD 90 07      [18] 1975 INIT_FAIL:	CALL 	PRINTI		;
+   0C41 2D 46 41 49 4C 45  1976 		.ascii "-FAILED\000"
         44 00
-   0C44 CD F3 0C      [18] 1975 		CALL	SD_DESELECT
-   0C47 AF            [ 4] 1976 		XRA	A		;Return Zero Flag cleared = Failure
-   0C48 3D            [ 4] 1977 		DCR	A
-   0C49 C9            [10] 1978 		RET
-                           1979 
-   0C4A CD 90 07      [18] 1980 ISD_1:		CALL 	PRINTI		;
-   0C4D 20 54 79 70 65 23  1981 		.ascii " Type#\000"
+   0C49 CD F8 0C      [18] 1977 		CALL	SD_DESELECT
+   0C4C AF            [ 4] 1978 		XRA	A		;Return Zero Flag cleared = Failure
+   0C4D 3D            [ 4] 1979 		DCR	A
+   0C4E C9            [10] 1980 		RET
+                           1981 
+   0C4F CD 90 07      [18] 1982 ISD_1:		CALL 	PRINTI		;
+   0C52 20 54 79 70 65 23  1983 		.ascii " Type#\000"
         00
-   0C54 21 AA 01      [10] 1982 		LXI	H,0x01AA		;Deterimine Card Type
-   0C57 22 42 FD      [16] 1983 		SHLD	SD_PARAM
-   0C5A 3E 08         [ 7] 1984 		MVI	A,8		;CMD 8
-   0C5C CD 0B 0D      [18] 1985 		CALL	SD_CMD
-   0C5F E6 04         [ 7] 1986 		ANI	4
-   0C61 CA 6C 0C      [10] 1987 		JZ	ISD_2
-   0C64 3E 01         [ 7] 1988 		MVI	A,1		;If CMD8 is Illegal Cmd, CARD_TYPE=1
-   0C66 32 40 FD      [13] 1989 		STA	SD_CARD_TYPE
-   0C69 C3 87 0C      [10] 1990 		JMP	ISD_3
-                           1991 
-   0C6C CD 51 0D      [18] 1992 ISD_2:		CALL	SPI_RX
-   0C6F CD 51 0D      [18] 1993 		CALL	SPI_RX
+   0C59 21 AA 01      [10] 1984 		LXI	H,0x01AA		;Deterimine Card Type
+   0C5C 22 42 FD      [16] 1985 		SHLD	SD_PARAM
+   0C5F 3E 08         [ 7] 1986 		MVI	A,8		;CMD 8
+   0C61 CD 10 0D      [18] 1987 		CALL	SD_CMD
+   0C64 E6 04         [ 7] 1988 		ANI	4
+   0C66 CA 71 0C      [10] 1989 		JZ	ISD_2
+   0C69 3E 01         [ 7] 1990 		MVI	A,1		;If CMD8 is Illegal Cmd, CARD_TYPE=1
+   0C6B 32 40 FD      [13] 1991 		STA	SD_CARD_TYPE
+   0C6E C3 8C 0C      [10] 1992 		JMP	ISD_3
+                           1993 
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 39
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
-   0C72 CD 51 0D      [18] 1994 		CALL	SPI_RX
-   0C75 CD 51 0D      [18] 1995 		CALL	SPI_RX
-   0C78 32 41 FD      [13] 1996 		STA	SDC_STATUS
-   0C7B FE AA         [ 7] 1997 		CPI	0xAA
-   0C7D 3E AA         [ 7] 1998 		MVI	A,0xAA		;Error code
-   0C7F C2 39 0C      [10] 1999 		JNZ	INIT_FAIL
-   0C82 3E 02         [ 7] 2000 		MVI	A,2
-   0C84 32 40 FD      [13] 2001 		STA	SD_CARD_TYPE
-                           2002 
-   0C87 CD 7B 07      [18] 2003 ISD_3:		CALL	PUT_HEX
-   0C8A CD 90 07      [18] 2004 		CALL 	PRINTI		;
-   0C8D 20 41 43 4D 44 34  2005 		.ascii " ACMD41\000"
+   0C71 CD 56 0D      [18] 1994 ISD_2:		CALL	SPI_RX
+   0C74 CD 56 0D      [18] 1995 		CALL	SPI_RX
+   0C77 CD 56 0D      [18] 1996 		CALL	SPI_RX
+   0C7A CD 56 0D      [18] 1997 		CALL	SPI_RX
+   0C7D 32 41 FD      [13] 1998 		STA	SDC_STATUS
+   0C80 FE AA         [ 7] 1999 		CPI	0xAA
+   0C82 3E AA         [ 7] 2000 		MVI	A,0xAA		;Error code
+   0C84 C2 3E 0C      [10] 2001 		JNZ	INIT_FAIL
+   0C87 3E 02         [ 7] 2002 		MVI	A,2
+   0C89 32 40 FD      [13] 2003 		STA	SD_CARD_TYPE
+                           2004 
+   0C8C CD 7B 07      [18] 2005 ISD_3:		CALL	PUT_HEX
+   0C8F CD 90 07      [18] 2006 		CALL 	PRINTI		;
+   0C92 20 41 43 4D 44 34  2007 		.ascii " ACMD41\000"
         31 00
-   0C95 CD 7B 0D      [18] 2006 		CALL	SD_CLEAR_ARG
-                           2007 
-   0C98 06 00         [ 7] 2008 		MVI	B,0
-   0C9A 3E 37         [ 7] 2009 ISD_LP2:		MVI	A,55		;CMD 55 (ACMD)
-   0C9C CD 0B 0D      [18] 2010 		CALL	SD_CMD
-   0C9F 3E 29         [ 7] 2011 		MVI	A,41		;CMD 41
-   0CA1 CD 0B 0D      [18] 2012 		CALL	SD_CMD
-   0CA4 FE 00         [ 7] 2013 		CPI	0
-   0CA6 CA B4 0C      [10] 2014 		JZ	ISD_4
-   0CA9 AF            [ 4] 2015 		XRA	A		;256 ~= 2mSec Delay
-   0CAA CD 06 0D      [18] 2016 		CALL	SD_DELAY
-   0CAD 05            [ 4] 2017 		DCR	B
-   0CAE C2 9A 0C      [10] 2018 		JNZ	ISD_LP2
-   0CB1 C3 39 0C      [10] 2019 		JMP	INIT_FAIL
-                           2020 
-   0CB4 CD 90 07      [18] 2021 ISD_4:		CALL 	PRINTI		;
-   0CB7 2B 00              2022 		.ascii "+\000"
-   0CB9 3A 40 FD      [13] 2023 		LDA	SD_CARD_TYPE
-   0CBC FE 02         [ 7] 2024 		CPI	2
-   0CBE C2 EE 0C      [10] 2025 		JNZ	ISD_6
-   0CC1 3E 3A         [ 7] 2026 		MVI	A,58		;CMD 58
-   0CC3 CD 0B 0D      [18] 2027 		CALL	SD_CMD
-   0CC6 FE 00         [ 7] 2028 		CPI	0
-   0CC8 C2 39 0C      [10] 2029 		JNZ	INIT_FAIL
-   0CCB CD 51 0D      [18] 2030 		CALL	SPI_RX
-   0CCE E6 C0         [ 7] 2031 		ANI	0xC0
-   0CD0 FE C0         [ 7] 2032 		CPI	0xC0
-   0CD2 C2 E5 0C      [10] 2033 		JNZ	ISD_5
-   0CD5 3E 03         [ 7] 2034 		MVI	A,3
-   0CD7 32 40 FD      [13] 2035 		STA	SD_CARD_TYPE
-   0CDA CD 90 07      [18] 2036 		CALL 	PRINTI		;
-   0CDD 20 54 79 70 65 23  2037 		.ascii " Type#3\000"
+   0C9A CD 80 0D      [18] 2008 		CALL	SD_CLEAR_ARG
+                           2009 
+   0C9D 06 00         [ 7] 2010 		MVI	B,0
+   0C9F 3E 37         [ 7] 2011 ISD_LP2:		MVI	A,55		;CMD 55 (ACMD)
+   0CA1 CD 10 0D      [18] 2012 		CALL	SD_CMD
+   0CA4 3E 29         [ 7] 2013 		MVI	A,41		;CMD 41
+   0CA6 CD 10 0D      [18] 2014 		CALL	SD_CMD
+   0CA9 FE 00         [ 7] 2015 		CPI	0
+   0CAB CA B9 0C      [10] 2016 		JZ	ISD_4
+   0CAE AF            [ 4] 2017 		XRA	A		;256 ~= 2mSec Delay
+   0CAF CD 0B 0D      [18] 2018 		CALL	SD_DELAY
+   0CB2 05            [ 4] 2019 		DCR	B
+   0CB3 C2 9F 0C      [10] 2020 		JNZ	ISD_LP2
+   0CB6 C3 3E 0C      [10] 2021 		JMP	INIT_FAIL
+                           2022 
+   0CB9 CD 90 07      [18] 2023 ISD_4:		CALL 	PRINTI		;
+   0CBC 2B 00              2024 		.ascii "+\000"
+   0CBE 3A 40 FD      [13] 2025 		LDA	SD_CARD_TYPE
+   0CC1 FE 02         [ 7] 2026 		CPI	2
+   0CC3 C2 F3 0C      [10] 2027 		JNZ	ISD_6
+   0CC6 3E 3A         [ 7] 2028 		MVI	A,58		;CMD 58
+   0CC8 CD 10 0D      [18] 2029 		CALL	SD_CMD
+   0CCB FE 00         [ 7] 2030 		CPI	0
+   0CCD C2 3E 0C      [10] 2031 		JNZ	INIT_FAIL
+   0CD0 CD 56 0D      [18] 2032 		CALL	SPI_RX
+   0CD3 E6 C0         [ 7] 2033 		ANI	0xC0
+   0CD5 FE C0         [ 7] 2034 		CPI	0xC0
+   0CD7 C2 EA 0C      [10] 2035 		JNZ	ISD_5
+   0CDA 3E 03         [ 7] 2036 		MVI	A,3
+   0CDC 32 40 FD      [13] 2037 		STA	SD_CARD_TYPE
+   0CDF CD 90 07      [18] 2038 		CALL 	PRINTI		;
+   0CE2 20 54 79 70 65 23  2039 		.ascii " Type#3\000"
         33 00
-   0CE5 CD 51 0D      [18] 2038 ISD_5:		CALL	SPI_RX
-   0CE8 CD 51 0D      [18] 2039 		CALL	SPI_RX
-   0CEB CD 51 0D      [18] 2040 		CALL	SPI_RX
-                           2041 
-   0CEE CD F3 0C      [18] 2042 ISD_6:		CALL	SD_DESELECT
-   0CF1 AF            [ 4] 2043 		XRA	A		;Set Zero Flag = Success
-   0CF2 C9            [10] 2044 		RET
-                           2045 
-                           2046 ;-----------------------------------------------------------------------------------------------------
+   0CEA CD 56 0D      [18] 2040 ISD_5:		CALL	SPI_RX
+   0CED CD 56 0D      [18] 2041 		CALL	SPI_RX
+   0CF0 CD 56 0D      [18] 2042 		CALL	SPI_RX
+                           2043 
+   0CF3 CD F8 0C      [18] 2044 ISD_6:		CALL	SD_DESELECT
+   0CF6 AF            [ 4] 2045 		XRA	A		;Set Zero Flag = Success
+   0CF7 C9            [10] 2046 		RET
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 40
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
-   0CF3 F5            [12] 2047 SD_DESELECT:	PUSH	PSW
-   0CF4 3E 01         [ 7] 2048 		MVI	A,1	;Deselect SDCARD
-   0CF6 D3 31         [10] 2049 		OUT	SPI_SS
-   0CF8 F1            [10] 2050 		POP	PSW
-   0CF9 C9            [10] 2051 		RET
-                           2052 
-                           2053 ;-----------------------------------------------------------------------------------------------------
-   0CFA F5            [12] 2054 SD_SELECT:	PUSH	PSW
-   0CFB 3E 00         [ 7] 2055 		MVI	A,0	;Select SDCARD
-   0CFD D3 31         [10] 2056 		OUT	SPI_SS
-   0CFF CD 04 0D      [18] 2057 		CALL	SD_DELAY100
-   0D02 F1            [10] 2058 		POP	PSW
-   0D03 C9            [10] 2059 		RET
-                           2060 
-                           2061 ;-----------------------------------------------------------------------------------------------------
-   0D04 3E 0D         [ 7] 2062 SD_DELAY100:	MVI	A,13	 ;Small delay after selecting card
-   0D06 3D            [ 4] 2063 SD_DELAY:	DCR	A	 ;5
-   0D07 C2 06 0D      [10] 2064 		JNZ	SD_DELAY ;10    15*13 ~= 200 ~= 100uSec
-   0D0A C9            [10] 2065 		RET
-                           2066 
-                           2067 ;-----------------------------------------------------------------------------------------------------
-                           2068 ;Send command to SD card
-   0D0B C5            [12] 2069 SD_CMD:		PUSH	B
-   0D0C CD FA 0C      [18] 2070 		CALL	SD_SELECT
-   0D0F CD 59 0D      [18] 2071 		CALL	WAIT_NOT_BUSY
-                           2072 
-   0D12 06 FF         [ 7] 2073 		MVI	B,0xFF	;Default CRC
-   0D14 FE 00         [ 7] 2074 		CPI	0
-   0D16 C2 1B 0D      [10] 2075 		JNZ	SDC_1
-   0D19 06 95         [ 7] 2076 		MVI	B,0x95
-   0D1B FE 08         [ 7] 2077 SDC_1:		CPI	8
-   0D1D C2 22 0D      [10] 2078 		JNZ	SDC_2
-   0D20 06 87         [ 7] 2079 		MVI	B,0x87
-   0D22                    2080 SDC_2:
-                           2081 
-   0D22 F6 40         [ 7] 2082 		ORI	0x40	;All Commands start with 40h
-   0D24 D3 30         [10] 2083 		OUT	SPI
-   0D26 3A 45 FD      [13] 2084 		LDA	SD_PARAM+3
+                           2047 
+                           2048 ;-----------------------------------------------------------------------------------------------------
+   0CF8 F5            [12] 2049 SD_DESELECT:	PUSH	PSW
+   0CF9 3E 01         [ 7] 2050 		MVI	A,1	;Deselect SDCARD
+   0CFB D3 31         [10] 2051 		OUT	SPI_SS
+   0CFD F1            [10] 2052 		POP	PSW
+   0CFE C9            [10] 2053 		RET
+                           2054 
+                           2055 ;-----------------------------------------------------------------------------------------------------
+   0CFF F5            [12] 2056 SD_SELECT:	PUSH	PSW
+   0D00 3E 00         [ 7] 2057 		MVI	A,0	;Select SDCARD
+   0D02 D3 31         [10] 2058 		OUT	SPI_SS
+   0D04 CD 09 0D      [18] 2059 		CALL	SD_DELAY100
+   0D07 F1            [10] 2060 		POP	PSW
+   0D08 C9            [10] 2061 		RET
+                           2062 
+                           2063 ;-----------------------------------------------------------------------------------------------------
+   0D09 3E 0D         [ 7] 2064 SD_DELAY100:	MVI	A,13	 ;Small delay after selecting card
+   0D0B 3D            [ 4] 2065 SD_DELAY:	DCR	A	 ;5
+   0D0C C2 0B 0D      [10] 2066 		JNZ	SD_DELAY ;10    15*13 ~= 200 ~= 100uSec
+   0D0F C9            [10] 2067 		RET
+                           2068 
+                           2069 ;-----------------------------------------------------------------------------------------------------
+                           2070 ;Send command to SD card
+   0D10 C5            [12] 2071 SD_CMD:		PUSH	B
+   0D11 CD FF 0C      [18] 2072 		CALL	SD_SELECT
+   0D14 CD 5E 0D      [18] 2073 		CALL	WAIT_NOT_BUSY
+                           2074 
+   0D17 06 FF         [ 7] 2075 		MVI	B,0xFF	;Default CRC
+   0D19 FE 00         [ 7] 2076 		CPI	0
+   0D1B C2 20 0D      [10] 2077 		JNZ	SDC_1
+   0D1E 06 95         [ 7] 2078 		MVI	B,0x95
+   0D20 FE 08         [ 7] 2079 SDC_1:		CPI	8
+   0D22 C2 27 0D      [10] 2080 		JNZ	SDC_2
+   0D25 06 87         [ 7] 2081 		MVI	B,0x87
+   0D27                    2082 SDC_2:
+                           2083 
+   0D27 F6 40         [ 7] 2084 		ORI	0x40	;All Commands start with 40h
    0D29 D3 30         [10] 2085 		OUT	SPI
-   0D2B 3A 44 FD      [13] 2086 		LDA	SD_PARAM+2
+   0D2B 3A 45 FD      [13] 2086 		LDA	SD_PARAM+3
    0D2E D3 30         [10] 2087 		OUT	SPI
-   0D30 3A 43 FD      [13] 2088 		LDA	SD_PARAM+1
+   0D30 3A 44 FD      [13] 2088 		LDA	SD_PARAM+2
    0D33 D3 30         [10] 2089 		OUT	SPI
-   0D35 3A 42 FD      [13] 2090 		LDA	SD_PARAM
+   0D35 3A 43 FD      [13] 2090 		LDA	SD_PARAM+1
    0D38 D3 30         [10] 2091 		OUT	SPI
-   0D3A 00            [ 4] 2092 		NOP
-   0D3B 78            [ 4] 2093 		MOV	A,B
-   0D3C D3 30         [10] 2094 		OUT	SPI
-                           2095 
-   0D3E 06 00         [ 7] 2096 		MVI	B,0
-   0D40 CD 51 0D      [18] 2097 SDC_LP:		CALL	SPI_RX	;Read Respsonse?
-   0D43 32 41 FD      [13] 2098 		STA	SDC_STATUS
-   0D46 B7            [ 4] 2099 		ORA	A
-   0D47 F2 4F 0D      [10] 2100 		JP	SDC_RET
-   0D4A 05            [ 4] 2101 		DCR	B
+   0D3A 3A 42 FD      [13] 2092 		LDA	SD_PARAM
+   0D3D D3 30         [10] 2093 		OUT	SPI
+   0D3F 00            [ 4] 2094 		NOP
+   0D40 78            [ 4] 2095 		MOV	A,B
+   0D41 D3 30         [10] 2096 		OUT	SPI
+                           2097 
+   0D43 06 00         [ 7] 2098 		MVI	B,0
+   0D45 CD 56 0D      [18] 2099 SDC_LP:		CALL	SPI_RX	;Read Respsonse?
+   0D48 32 41 FD      [13] 2100 		STA	SDC_STATUS
+   0D4B B7            [ 4] 2101 		ORA	A
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 41
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
-   0D4B C2 40 0D      [10] 2102 		JNZ	SDC_LP
-   0D4E B7            [ 4] 2103 		ORA	A
-   0D4F C1            [10] 2104 SDC_RET:	POP	B
-   0D50 C9            [10] 2105 		RET
-                           2106 
-                           2107 ;-----------------------------------------------------------------------------------------------------
-                           2108 ;------------------------------- Receive a byte from SPI
-   0D51 3E FF         [ 7] 2109 SPI_RX:		MVI	A,0xFF	;Read Respsonse
-   0D53 D3 30         [10] 2110 		OUT	SPI
-   0D55 00            [ 4] 2111 		NOP		;4
-   0D56 DB 30         [10] 2112 		IN	SPI	;10
-   0D58 C9            [10] 2113 		RET
-                           2114 
-                           2115 ;-----------------------------------------------------------------------------------------------------
-                           2116 ;------------------------------- Wait until FF's come back from Card (ie NOT BUSY)
-   0D59 F5            [12] 2117 WAIT_NOT_BUSY:	PUSH	PSW	;Do not destroy Acc
-   0D5A C5            [12] 2118 		PUSH	B	;Fetch 1 consecutive FF's to be sure SD card NOT BUSY
-   0D5B 06 00         [ 7] 2119 		MVI	B,0
-   0D5D 0E 01         [ 7] 2120 WNB_LP:		MVI	C,1	;Set count for 1 trys
-   0D5F CD 51 0D      [18] 2121 WNB_LP2:	CALL	SPI_RX
-   0D62 3C            [ 4] 2122 		INR	A
-   0D63 C2 6F 0D      [10] 2123 		JNZ	WNB_0	;NOT FF RETURNED, JUMP TO COUNT DOWN TRYS
-   0D66 0D            [ 4] 2124 		DCR	C	;Count Down Consecutive FF's
-   0D67 C2 5F 0D      [10] 2125 		JNZ	WNB_LP2
-   0D6A C1            [10] 2126 		POP	B
-   0D6B F1            [10] 2127 		POP	PSW
-   0D6C 37            [ 4] 2128 		STC		;Return NOT BUSY (Clear Carry)
-   0D6D 3F            [ 4] 2129 		CMC
-   0D6E C9            [10] 2130 		RET
-                           2131 
-   0D6F AF            [ 4] 2132 WNB_0:		XRA	A
-   0D70 CD 06 0D      [18] 2133 		CALL	SD_DELAY
-   0D73 05            [ 4] 2134 		DCR	B	;Count Down Trys
-   0D74 C2 5D 0D      [10] 2135 		JNZ	WNB_LP
-   0D77 C1            [10] 2136 		POP	B
-   0D78 F1            [10] 2137 		POP	PSW
-   0D79 37            [ 4] 2138 		STC		;Return STILL BUSY (Set Carry)
-   0D7A C9            [10] 2139 		RET
-                           2140 
-                           2141 ;-----------------------------------------------------------------------------------------------------
-   0D7B AF            [ 4] 2142 SD_CLEAR_ARG:	XRA	A
-   0D7C 32 42 FD      [13] 2143 		STA	SD_PARAM
-   0D7F 32 43 FD      [13] 2144 		STA	SD_PARAM+1
-   0D82 32 44 FD      [13] 2145 		STA	SD_PARAM+2
-   0D85 32 45 FD      [13] 2146 		STA	SD_PARAM+3
-   0D88 C9            [10] 2147 		RET
-                           2148 
-                           2149 
-                           2150 ;=====================================================================================================
-                           2151 ;General Support Routines, Strings
+   0D4C F2 54 0D      [10] 2102 		JP	SDC_RET
+   0D4F 05            [ 4] 2103 		DCR	B
+   0D50 C2 45 0D      [10] 2104 		JNZ	SDC_LP
+   0D53 B7            [ 4] 2105 		ORA	A
+   0D54 C1            [10] 2106 SDC_RET:	POP	B
+   0D55 C9            [10] 2107 		RET
+                           2108 
+                           2109 ;-----------------------------------------------------------------------------------------------------
+                           2110 ;------------------------------- Receive a byte from SPI
+   0D56 3E FF         [ 7] 2111 SPI_RX:		MVI	A,0xFF	;Read Respsonse
+   0D58 D3 30         [10] 2112 		OUT	SPI
+   0D5A 00            [ 4] 2113 		NOP		;4
+   0D5B DB 30         [10] 2114 		IN	SPI	;10
+   0D5D C9            [10] 2115 		RET
+                           2116 
+                           2117 ;-----------------------------------------------------------------------------------------------------
+                           2118 ;------------------------------- Wait until FF's come back from Card (ie NOT BUSY)
+   0D5E F5            [12] 2119 WAIT_NOT_BUSY:	PUSH	PSW	;Do not destroy Acc
+   0D5F C5            [12] 2120 		PUSH	B	;Fetch 1 consecutive FF's to be sure SD card NOT BUSY
+   0D60 06 00         [ 7] 2121 		MVI	B,0
+   0D62 0E 01         [ 7] 2122 WNB_LP:		MVI	C,1	;Set count for 1 trys
+   0D64 CD 56 0D      [18] 2123 WNB_LP2:	CALL	SPI_RX
+   0D67 3C            [ 4] 2124 		INR	A
+   0D68 C2 74 0D      [10] 2125 		JNZ	WNB_0	;NOT FF RETURNED, JUMP TO COUNT DOWN TRYS
+   0D6B 0D            [ 4] 2126 		DCR	C	;Count Down Consecutive FF's
+   0D6C C2 64 0D      [10] 2127 		JNZ	WNB_LP2
+   0D6F C1            [10] 2128 		POP	B
+   0D70 F1            [10] 2129 		POP	PSW
+   0D71 37            [ 4] 2130 		STC		;Return NOT BUSY (Clear Carry)
+   0D72 3F            [ 4] 2131 		CMC
+   0D73 C9            [10] 2132 		RET
+                           2133 
+   0D74 AF            [ 4] 2134 WNB_0:		XRA	A
+   0D75 CD 0B 0D      [18] 2135 		CALL	SD_DELAY
+   0D78 05            [ 4] 2136 		DCR	B	;Count Down Trys
+   0D79 C2 62 0D      [10] 2137 		JNZ	WNB_LP
+   0D7C C1            [10] 2138 		POP	B
+   0D7D F1            [10] 2139 		POP	PSW
+   0D7E 37            [ 4] 2140 		STC		;Return STILL BUSY (Set Carry)
+   0D7F C9            [10] 2141 		RET
+                           2142 
+                           2143 ;-----------------------------------------------------------------------------------------------------
+   0D80 AF            [ 4] 2144 SD_CLEAR_ARG:	XRA	A
+   0D81 32 42 FD      [13] 2145 		STA	SD_PARAM
+   0D84 32 43 FD      [13] 2146 		STA	SD_PARAM+1
+   0D87 32 44 FD      [13] 2147 		STA	SD_PARAM+2
+   0D8A 32 45 FD      [13] 2148 		STA	SD_PARAM+3
+   0D8D C9            [10] 2149 		RET
+                           2150 
+                           2151 
                            2152 ;=====================================================================================================
-                           2153 
-                           2154 ;-----------------------------------------------------------------------------------------------------
-   0D89 CD A2 07      [18] 2155 GET_STRING:	CALL	GET_CHAR
-   0D8C FE 1B         [ 7] 2156 		CPI	27
+                           2153 ;General Support Routines, Strings
+                           2154 ;=====================================================================================================
+                           2155 
+                           2156 ;-----------------------------------------------------------------------------------------------------
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 42
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
-   0D8E 37            [ 4] 2157 		STC			;Set Carry to indicate Abort
-   0D8F C8            [12] 2158 		RZ
-   0D90 FE 0D         [ 7] 2159 		CPI	13		;Exit on <CR>
-   0D92 C8            [12] 2160 		RZ
-   0D93 B9            [ 4] 2161 		CMP	C		;Exit on Selectable Char (dot for file input)
-   0D94 C8            [12] 2162 		RZ
-   0D95 CD A6 0D      [18] 2163 		CALL	TO_UPPER
-   0D98 FE 21         [ 7] 2164 		CPI	" "+1		;Test if ACC is Control or Space
-   0D9A DA 89 0D      [10] 2165 		JC	GET_STRING	;Skip such characters
-   0D9D 05            [ 4] 2166 		DCR	B
-   0D9E 04            [ 4] 2167 		INR	B		;Exit if B charcters are already inputed
-   0D9F C8            [12] 2168 		RZ			;Exit if no more characters allowed
-   0DA0 77            [ 7] 2169 		MOV	M,A
-   0DA1 23            [ 6] 2170 		INX	H
-   0DA2 05            [ 4] 2171 		DCR	B
-   0DA3 C3 89 0D      [10] 2172 		JMP	GET_STRING
-                           2173 
-                           2174 ;-----------------------------------------------------------------------------------------------------
-   0DA6 FE 61         [ 7] 2175 TO_UPPER:	CPI	"a"
-   0DA8 D8            [12] 2176 		RC		;Return if ACC < 'a'
-   0DA9 FE 7B         [ 7] 2177 		CPI	"z"+1
-   0DAB D0            [12] 2178 		RNC		;Return if ACC > 'z'
-   0DAC E6 5F         [ 7] 2179 		ANI	0x5F	;Flag upper case
-   0DAE C9            [10] 2180 		RET
-                           2181 
-                           2182 
-                           2183 ;-----------------------------------------------------------------------------------------------------
-                           2184 ;	Prints Filename at HL
+   0D8E CD A2 07      [18] 2157 GET_STRING:	CALL	GET_CHAR
+   0D91 FE 1B         [ 7] 2158 		CPI	27
+   0D93 37            [ 4] 2159 		STC			;Set Carry to indicate Abort
+   0D94 C8            [12] 2160 		RZ
+   0D95 FE 0D         [ 7] 2161 		CPI	13		;Exit on <CR>
+   0D97 C8            [12] 2162 		RZ
+   0D98 B9            [ 4] 2163 		CMP	C		;Exit on Selectable Char (dot for file input)
+   0D99 C8            [12] 2164 		RZ
+   0D9A CD AB 0D      [18] 2165 		CALL	TO_UPPER
+   0D9D FE 21         [ 7] 2166 		CPI	" "+1		;Test if ACC is Control or Space
+   0D9F DA 8E 0D      [10] 2167 		JC	GET_STRING	;Skip such characters
+   0DA2 05            [ 4] 2168 		DCR	B
+   0DA3 04            [ 4] 2169 		INR	B		;Exit if B charcters are already inputed
+   0DA4 C8            [12] 2170 		RZ			;Exit if no more characters allowed
+   0DA5 77            [ 7] 2171 		MOV	M,A
+   0DA6 23            [ 6] 2172 		INX	H
+   0DA7 05            [ 4] 2173 		DCR	B
+   0DA8 C3 8E 0D      [10] 2174 		JMP	GET_STRING
+                           2175 
+                           2176 ;-----------------------------------------------------------------------------------------------------
+   0DAB FE 61         [ 7] 2177 TO_UPPER:	CPI	"a"
+   0DAD D8            [12] 2178 		RC		;Return if ACC < 'a'
+   0DAE FE 7B         [ 7] 2179 		CPI	"z"+1
+   0DB0 D0            [12] 2180 		RNC		;Return if ACC > 'z'
+   0DB1 E6 5F         [ 7] 2181 		ANI	0x5F	;Flag upper case
+   0DB3 C9            [10] 2182 		RET
+                           2183 
+                           2184 
                            2185 ;-----------------------------------------------------------------------------------------------------
-   0DAF E5            [12] 2186 PRINT_FILENAME:	PUSH	H
-   0DB0 06 08         [ 7] 2187 		MVI	B,8
-   0DB2 7E            [ 7] 2188 PF_LP1:		MOV	A,M		;PRINT 8 CHARS OR UP TO EITHER A NULL OR SPACE.
-   0DB3 B7            [ 4] 2189 		ORA	A
-   0DB4 CA C4 0D      [10] 2190 		JZ	PFE
-   0DB7 FE 20         [ 7] 2191 		CPI	" "
-   0DB9 CA C4 0D      [10] 2192 		JZ	PFE
-   0DBC CD C3 07      [18] 2193 		CALL	PUT_CHAR
-   0DBF 23            [ 6] 2194 		INX	H
-   0DC0 05            [ 4] 2195 		DCR	B
-   0DC1 C2 B2 0D      [10] 2196 		JNZ	PF_LP1
-   0DC4 3E 2E         [ 7] 2197 PFE:		MVI	A,"."
-   0DC6 CD C3 07      [18] 2198 		CALL	PUT_CHAR
-   0DC9 E1            [10] 2199 		POP	H
-   0DCA E5            [12] 2200 		PUSH	H
-   0DCB 01 08 00      [10] 2201 		LXI	B,8
-   0DCE 09            [10] 2202 		DAD	B
-   0DCF 06 03         [ 7] 2203 		MVI	B,3
-   0DD1 7E            [ 7] 2204 PF_LP2:		MOV	A,M
-   0DD2 B7            [ 4] 2205 		ORA	A
-   0DD3 CA E3 0D      [10] 2206 		JZ	PF_RET
-   0DD6 FE 20         [ 7] 2207 		CPI	" "
-   0DD8 CA E3 0D      [10] 2208 		JZ	PF_RET
-   0DDB CD C3 07      [18] 2209 		CALL	PUT_CHAR
-   0DDE 23            [ 6] 2210 		INX	H
-   0DDF 05            [ 4] 2211 		DCR	B
+                           2186 ;	Prints Filename at HL
+                           2187 ;-----------------------------------------------------------------------------------------------------
+   0DB4 E5            [12] 2188 PRINT_FILENAME:	PUSH	H
+   0DB5 06 08         [ 7] 2189 		MVI	B,8
+   0DB7 7E            [ 7] 2190 PF_LP1:		MOV	A,M		;PRINT 8 CHARS OR UP TO EITHER A NULL OR SPACE.
+   0DB8 B7            [ 4] 2191 		ORA	A
+   0DB9 CA C9 0D      [10] 2192 		JZ	PFE
+   0DBC FE 20         [ 7] 2193 		CPI	" "
+   0DBE CA C9 0D      [10] 2194 		JZ	PFE
+   0DC1 CD C3 07      [18] 2195 		CALL	PUT_CHAR
+   0DC4 23            [ 6] 2196 		INX	H
+   0DC5 05            [ 4] 2197 		DCR	B
+   0DC6 C2 B7 0D      [10] 2198 		JNZ	PF_LP1
+   0DC9 3E 2E         [ 7] 2199 PFE:		MVI	A,"."
+   0DCB CD C3 07      [18] 2200 		CALL	PUT_CHAR
+   0DCE E1            [10] 2201 		POP	H
+   0DCF E5            [12] 2202 		PUSH	H
+   0DD0 01 08 00      [10] 2203 		LXI	B,8
+   0DD3 09            [10] 2204 		DAD	B
+   0DD4 06 03         [ 7] 2205 		MVI	B,3
+   0DD6 7E            [ 7] 2206 PF_LP2:		MOV	A,M
+   0DD7 B7            [ 4] 2207 		ORA	A
+   0DD8 CA E8 0D      [10] 2208 		JZ	PF_RET
+   0DDB FE 20         [ 7] 2209 		CPI	" "
+   0DDD CA E8 0D      [10] 2210 		JZ	PF_RET
+   0DE0 CD C3 07      [18] 2211 		CALL	PUT_CHAR
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 43
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
-   0DE0 C2 D1 0D      [10] 2212 		JNZ	PF_LP2
-   0DE3 E1            [10] 2213 PF_RET:		POP	H
-   0DE4 C9            [10] 2214 		RET
-                           2215 
-                           2216 
-                           2217 ;=====================================================================================================
-                           2218 ;General Support Routines, 32 Bit stuff and other math
+   0DE3 23            [ 6] 2212 		INX	H
+   0DE4 05            [ 4] 2213 		DCR	B
+   0DE5 C2 D6 0D      [10] 2214 		JNZ	PF_LP2
+   0DE8 E1            [10] 2215 PF_RET:		POP	H
+   0DE9 C9            [10] 2216 		RET
+                           2217 
+                           2218 
                            2219 ;=====================================================================================================
-                           2220 
-                           2221 ;------------------------- Move (HL) to 32 bit register BCDE
-   0DE5 5E            [ 7] 2222 MOV_32_HL:	MOV	E,M
-   0DE6 23            [ 6] 2223 		INX	H
-   0DE7 56            [ 4] 2224 		MOV	D,M
-   0DE8 23            [ 6] 2225 		INX	H
-   0DE9 4E            [ 7] 2226 		MOV	C,M
-   0DEA 23            [ 6] 2227 		INX	H
-   0DEB 46            [ 4] 2228 		MOV	B,M
-   0DEC C9            [10] 2229 		RET
-                           2230 
-                           2231 ;------------------------- Move 32 bit register BCDE to (HL)
-   0DED 73            [ 7] 2232 MOV_HL_32:	MOV	M,E
-   0DEE 23            [ 6] 2233 		INX	H
-   0DEF 72            [ 7] 2234 		MOV	M,D
-   0DF0 23            [ 6] 2235 		INX	H
-   0DF1 71            [ 7] 2236 		MOV	M,C
-   0DF2 23            [ 6] 2237 		INX	H
-   0DF3 70            [ 7] 2238 		MOV	M,B
-   0DF4 C9            [10] 2239 		RET
-                           2240 
-                           2241 ;------------------------- ADD (HL) to 32 bit register BCDE
-   0DF5 7B            [ 4] 2242 ADD_32_HL:	MOV	A,E
-   0DF6 86            [ 7] 2243 		ADD	M
-   0DF7 5F            [ 4] 2244 		MOV	E,A
-   0DF8 23            [ 6] 2245 		INX	H
-   0DF9 7A            [ 4] 2246 		MOV	A,D
-   0DFA 8E            [ 7] 2247 		ADC	M
-   0DFB 57            [ 7] 2248 		MOV	D,A
-   0DFC 23            [ 6] 2249 		INX	H
-   0DFD 79            [ 4] 2250 		MOV	A,C
-   0DFE 8E            [ 7] 2251 		ADC	M
-   0DFF 4F            [ 4] 2252 		MOV	C,A
-   0E00 23            [ 6] 2253 		INX	H
-   0E01 78            [ 4] 2254 		MOV	A,B
-   0E02 8E            [ 7] 2255 		ADC	M
-   0E03 47            [ 7] 2256 		MOV	B,A
-   0E04 C9            [10] 2257 		RET
-                           2258 
-                           2259 ;-----------------------------------------------------------------------------------------------------
-   0E05 13            [ 6] 2260 INC_32:		INX	D
-   0E06 7A            [ 4] 2261 		MOV	A,D
-   0E07 B3            [ 4] 2262 		ORA	E
-   0E08 C0            [12] 2263 		RNZ
-   0E09 03            [ 6] 2264 		INX	B
-   0E0A C9            [10] 2265 		RET
-                           2266 
+                           2220 ;General Support Routines, 32 Bit stuff and other math
+                           2221 ;=====================================================================================================
+                           2222 
+                           2223 ;------------------------- Move (HL) to 32 bit register BCDE
+   0DEA 5E            [ 7] 2224 MOV_32_HL:	MOV	E,M
+   0DEB 23            [ 6] 2225 		INX	H
+   0DEC 56            [ 4] 2226 		MOV	D,M
+   0DED 23            [ 6] 2227 		INX	H
+   0DEE 4E            [ 7] 2228 		MOV	C,M
+   0DEF 23            [ 6] 2229 		INX	H
+   0DF0 46            [ 4] 2230 		MOV	B,M
+   0DF1 C9            [10] 2231 		RET
+                           2232 
+                           2233 ;------------------------- Move 32 bit register BCDE to (HL)
+   0DF2 73            [ 7] 2234 MOV_HL_32:	MOV	M,E
+   0DF3 23            [ 6] 2235 		INX	H
+   0DF4 72            [ 7] 2236 		MOV	M,D
+   0DF5 23            [ 6] 2237 		INX	H
+   0DF6 71            [ 7] 2238 		MOV	M,C
+   0DF7 23            [ 6] 2239 		INX	H
+   0DF8 70            [ 7] 2240 		MOV	M,B
+   0DF9 C9            [10] 2241 		RET
+                           2242 
+                           2243 ;------------------------- ADD (HL) to 32 bit register BCDE
+   0DFA 7B            [ 4] 2244 ADD_32_HL:	MOV	A,E
+   0DFB 86            [ 7] 2245 		ADD	M
+   0DFC 5F            [ 4] 2246 		MOV	E,A
+   0DFD 23            [ 6] 2247 		INX	H
+   0DFE 7A            [ 4] 2248 		MOV	A,D
+   0DFF 8E            [ 7] 2249 		ADC	M
+   0E00 57            [ 7] 2250 		MOV	D,A
+   0E01 23            [ 6] 2251 		INX	H
+   0E02 79            [ 4] 2252 		MOV	A,C
+   0E03 8E            [ 7] 2253 		ADC	M
+   0E04 4F            [ 4] 2254 		MOV	C,A
+   0E05 23            [ 6] 2255 		INX	H
+   0E06 78            [ 4] 2256 		MOV	A,B
+   0E07 8E            [ 7] 2257 		ADC	M
+   0E08 47            [ 7] 2258 		MOV	B,A
+   0E09 C9            [10] 2259 		RET
+                           2260 
+                           2261 ;-----------------------------------------------------------------------------------------------------
+   0E0A 13            [ 6] 2262 INC_32:		INX	D
+   0E0B 7A            [ 4] 2263 		MOV	A,D
+   0E0C B3            [ 4] 2264 		ORA	E
+   0E0D C0            [12] 2265 		RNZ
+   0E0E 03            [ 6] 2266 		INX	B
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 44
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
-                           2267 ;-----------------------------------------------------------------------------------------------------
-   0E0B 7A            [ 4] 2268 DEC_32:		MOV	A,D
-   0E0C B3            [ 4] 2269 		ORA	E
-   0E0D C2 11 0E      [10] 2270 		JNZ	DEC_32NOBORROW
-   0E10 0B            [ 6] 2271 		DCX	B
-   0E11 1B            [ 6] 2272 DEC_32NOBORROW:	DCX	D
-   0E12 C9            [10] 2273 		RET
-                           2274 
-                           2275 ;-----------------------------------------------------------------------------------------------------
-   0E13 7A            [ 4] 2276 TSTZ_32:		MOV	A,D
-   0E14 B3            [ 4] 2277 		ORA	E
-   0E15 C0            [12] 2278 		RNZ
-   0E16 B1            [ 4] 2279 		ORA	C
-   0E17 C0            [12] 2280 		RNZ
-   0E18 B0            [ 4] 2281 		ORA	B
-   0E19 C9            [10] 2282 		RET
-                           2283 
-                           2284 
+   0E0F C9            [10] 2267 		RET
+                           2268 
+                           2269 ;-----------------------------------------------------------------------------------------------------
+   0E10 7A            [ 4] 2270 DEC_32:		MOV	A,D
+   0E11 B3            [ 4] 2271 		ORA	E
+   0E12 C2 16 0E      [10] 2272 		JNZ	DEC_32NOBORROW
+   0E15 0B            [ 6] 2273 		DCX	B
+   0E16 1B            [ 6] 2274 DEC_32NOBORROW:	DCX	D
+   0E17 C9            [10] 2275 		RET
+                           2276 
+                           2277 ;-----------------------------------------------------------------------------------------------------
+   0E18 7A            [ 4] 2278 TSTZ_32:		MOV	A,D
+   0E19 B3            [ 4] 2279 		ORA	E
+   0E1A C0            [12] 2280 		RNZ
+   0E1B B1            [ 4] 2281 		ORA	C
+   0E1C C0            [12] 2282 		RNZ
+   0E1D B0            [ 4] 2283 		ORA	B
+   0E1E C9            [10] 2284 		RET
                            2285 
                            2286 
-                           2287 ;-----------------------------------------------------------------------------------------------------
-                           2288 ;Compare BCDE with 32bit word at HL
-   0E1A 23            [ 6] 2289 CMP_HL_32:	INX	H		;Point to MSB
-   0E1B 23            [ 6] 2290 		INX	H
-   0E1C 23            [ 6] 2291 		INX	H
-   0E1D 78            [ 4] 2292 		MOV	A,B		;Compare with B
-   0E1E BE            [ 7] 2293 		CMP	M
-   0E1F C2 32 0E      [10] 2294 		JNZ	CH3_R1
-   0E22 2B            [ 6] 2295 		DCX	H
-   0E23 79            [ 4] 2296 		MOV	A,C
-   0E24 BE            [ 7] 2297 		CMP	M
-   0E25 C2 33 0E      [10] 2298 		JNZ	CH3_R2
-   0E28 2B            [ 6] 2299 		DCX	H
-   0E29 7A            [ 4] 2300 		MOV	A,D
-   0E2A BE            [ 7] 2301 		CMP	M
-   0E2B C2 34 0E      [10] 2302 		JNZ	CH3_R3
-   0E2E 2B            [ 6] 2303 		DCX	H
-   0E2F 7B            [ 4] 2304 		MOV	A,E
-   0E30 BE            [ 7] 2305 		CMP	M
-   0E31 C9            [10] 2306 		RET
-   0E32 2B            [ 6] 2307 CH3_R1:		DCX	H
-   0E33 2B            [ 6] 2308 CH3_R2:		DCX	H
-   0E34 2B            [ 6] 2309 CH3_R3:		DCX	H
-   0E35 C9            [10] 2310 		RET
-                           2311 
-                           2312 ;------------------------- COMPARE DE WITH HL
-   0E36 7A            [ 4] 2313 CMP_DE_HL:	MOV	A,D		;Compare the MSB first
-   0E37 BC            [ 4] 2314 		CMP	H
-   0E38 C0            [12] 2315 		RNZ
-   0E39 7B            [ 4] 2316 		MOV	A,E
-   0E3A BD            [ 4] 2317 		CMP	L
-   0E3B C9            [10] 2318 		RET
-                           2319 
-                           2320 ;-----------------------------------------------------------------------------------------------------
-   0E3C 06 02         [ 7] 2321 COPY_RAM2:	MVI	B,2	;2 BYTES
+                           2287 
+                           2288 
+                           2289 ;-----------------------------------------------------------------------------------------------------
+                           2290 ;Compare BCDE with 32bit word at HL
+   0E1F 23            [ 6] 2291 CMP_HL_32:	INX	H		;Point to MSB
+   0E20 23            [ 6] 2292 		INX	H
+   0E21 23            [ 6] 2293 		INX	H
+   0E22 78            [ 4] 2294 		MOV	A,B		;Compare with B
+   0E23 BE            [ 7] 2295 		CMP	M
+   0E24 C2 37 0E      [10] 2296 		JNZ	CH3_R1
+   0E27 2B            [ 6] 2297 		DCX	H
+   0E28 79            [ 4] 2298 		MOV	A,C
+   0E29 BE            [ 7] 2299 		CMP	M
+   0E2A C2 38 0E      [10] 2300 		JNZ	CH3_R2
+   0E2D 2B            [ 6] 2301 		DCX	H
+   0E2E 7A            [ 4] 2302 		MOV	A,D
+   0E2F BE            [ 7] 2303 		CMP	M
+   0E30 C2 39 0E      [10] 2304 		JNZ	CH3_R3
+   0E33 2B            [ 6] 2305 		DCX	H
+   0E34 7B            [ 4] 2306 		MOV	A,E
+   0E35 BE            [ 7] 2307 		CMP	M
+   0E36 C9            [10] 2308 		RET
+   0E37 2B            [ 6] 2309 CH3_R1:		DCX	H
+   0E38 2B            [ 6] 2310 CH3_R2:		DCX	H
+   0E39 2B            [ 6] 2311 CH3_R3:		DCX	H
+   0E3A C9            [10] 2312 		RET
+                           2313 
+                           2314 ;------------------------- COMPARE DE WITH HL
+   0E3B 7A            [ 4] 2315 CMP_DE_HL:	MOV	A,D		;Compare the MSB first
+   0E3C BC            [ 4] 2316 		CMP	H
+   0E3D C0            [12] 2317 		RNZ
+   0E3E 7B            [ 4] 2318 		MOV	A,E
+   0E3F BD            [ 4] 2319 		CMP	L
+   0E40 C9            [10] 2320 		RET
+                           2321 
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 45
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
-   0E3E C3 43 0E      [10] 2322 		JMP	COPY_RAM
-   0E41 06 04         [ 7] 2323 COPY_RAM4:	MVI	B,4	;4 BYTES PER WORD
-   0E43 7E            [ 7] 2324 COPY_RAM:	MOV	A,M
-   0E44 12            [ 7] 2325 		STAX	D
-   0E45 23            [ 6] 2326 		INX	H
-   0E46 13            [ 6] 2327 		INX	D
-   0E47 05            [ 4] 2328 		DCR	B
-   0E48 C2 43 0E      [10] 2329 		JNZ	COPY_RAM
-   0E4B C9            [10] 2330 		RET
-                           2331 
-                           2332 ;-----------------------------------------------------------------------------------------------------
-                           2333 		;HL = (HL) word at memory location HL
-   0E4C 7E            [ 7] 2334 LD_HL_HL:	MOV	A,M		;Fetch L from (HL)
-   0E4D 23            [ 6] 2335 		INX	H
-   0E4E 66            [ 4] 2336 		MOV	H,M		;Fetch H from (HL+1)
-   0E4F 6F            [ 4] 2337 		MOV	L,A
-   0E50 C9            [10] 2338 		RET
-                           2339 
-                           2340 ;-----------------------------------------------------------------------------------------------------
-                           2341 ;	FILL_BLOCK, Fills a block of RAM with value in A
-                           2342 ;	Input:	A = value
-                           2343 ;		HL = Start Address
-                           2344 ;		B = Length of Fill (MAX = 0 = 256 bytes)
-                           2345 ;-----------------------------------------------------------------------------------------------------
-   0E51 F5            [12] 2346 FILL_BLOCK:	PUSH	PSW
-   0E52 C5            [12] 2347 		PUSH	B
-   0E53 E5            [12] 2348 		PUSH	H
-   0E54 77            [ 7] 2349 FB_LP:		MOV	M,A
-   0E55 23            [ 6] 2350 		INX	H
-   0E56 05            [ 4] 2351 		DCR	B
-   0E57 C2 54 0E      [10] 2352 		JNZ	FB_LP
-   0E5A E1            [10] 2353 		POP	H
-   0E5B C1            [10] 2354 		POP	B
-   0E5C F1            [10] 2355 		POP	PSW
-   0E5D C9            [10] 2356 		RET
-                           2357 
-                           2358 ;-----------------------------------------------------------------------------------------------------
-   0E5E E9            [ 6] 2359 VCALL:		PCHL		;Jump to HL
-                           2360 
-                           2361 ;-----------------------------------------------------------------------------------------------------
-                           2362 ;Maximum number to divide is Logical Sector 2001/4 = 500
-                           2363 ;If dividing by powers of 2, then we can shift the number for fast divide
-   0E5F 3A 51 FD      [13] 2364 DIV16BY8SPC:	LDA	SEC_PER_CLUS
-                           2365 ;Input:	DE=Dividend, A=Divisor
-                           2366 ;Out:	DE=Result, A=Remainder
-   0E62 EB            [ 4] 2367 DIV16BY8:	XCHG		; HL = Dividend
-   0E63 1E 00         [ 7] 2368 		MVI	E,00	; Quotient = 0
-                           2369 		;LHLD	2200H	; Get Dividend
-                           2370 		;LDA	2300	; Get Divisor
-   0E65 47            [ 7] 2371 		MOV	B, A	; Store        Divisor
-   0E66 0E 08         [ 7] 2372 		MVI	C, 08	; Count = 8
-   0E68 29            [10] 2373 DIV16BY8_LP:	DAD H		; Dividend = Dividend x 2
-   0E69 7B            [ 4] 2374 		MOV	A, E
-   0E6A 07            [ 4] 2375 		RLC
-   0E6B 5F            [ 4] 2376 		MOV	E, A	; Quotient = Quotient x 2
+                           2322 ;-----------------------------------------------------------------------------------------------------
+   0E41 06 02         [ 7] 2323 COPY_RAM2:	MVI	B,2	;2 BYTES
+   0E43 C3 48 0E      [10] 2324 		JMP	COPY_RAM
+   0E46 06 04         [ 7] 2325 COPY_RAM4:	MVI	B,4	;4 BYTES PER WORD
+   0E48 7E            [ 7] 2326 COPY_RAM:	MOV	A,M
+   0E49 12            [ 7] 2327 		STAX	D
+   0E4A 23            [ 6] 2328 		INX	H
+   0E4B 13            [ 6] 2329 		INX	D
+   0E4C 05            [ 4] 2330 		DCR	B
+   0E4D C2 48 0E      [10] 2331 		JNZ	COPY_RAM
+   0E50 C9            [10] 2332 		RET
+                           2333 
+                           2334 ;-----------------------------------------------------------------------------------------------------
+                           2335 		;HL = (HL) word at memory location HL
+   0E51 7E            [ 7] 2336 LD_HL_HL:	MOV	A,M		;Fetch L from (HL)
+   0E52 23            [ 6] 2337 		INX	H
+   0E53 66            [ 4] 2338 		MOV	H,M		;Fetch H from (HL+1)
+   0E54 6F            [ 4] 2339 		MOV	L,A
+   0E55 C9            [10] 2340 		RET
+                           2341 
+                           2342 ;-----------------------------------------------------------------------------------------------------
+                           2343 ;	FILL_BLOCK, Fills a block of RAM with value in A
+                           2344 ;	Input:	A = value
+                           2345 ;		HL = Start Address
+                           2346 ;		B = Length of Fill (MAX = 0 = 256 bytes)
+                           2347 ;-----------------------------------------------------------------------------------------------------
+   0E56 F5            [12] 2348 FILL_BLOCK:	PUSH	PSW
+   0E57 C5            [12] 2349 		PUSH	B
+   0E58 E5            [12] 2350 		PUSH	H
+   0E59 77            [ 7] 2351 FB_LP:		MOV	M,A
+   0E5A 23            [ 6] 2352 		INX	H
+   0E5B 05            [ 4] 2353 		DCR	B
+   0E5C C2 59 0E      [10] 2354 		JNZ	FB_LP
+   0E5F E1            [10] 2355 		POP	H
+   0E60 C1            [10] 2356 		POP	B
+   0E61 F1            [10] 2357 		POP	PSW
+   0E62 C9            [10] 2358 		RET
+                           2359 
+                           2360 ;-----------------------------------------------------------------------------------------------------
+   0E63 E9            [ 6] 2361 VCALL:		PCHL		;Jump to HL
+                           2362 
+                           2363 ;-----------------------------------------------------------------------------------------------------
+                           2364 ;Maximum number to divide is Logical Sector 2001/4 = 500
+                           2365 ;If dividing by powers of 2, then we can shift the number for fast divide
+   0E64 3A 51 FD      [13] 2366 DIV16BY8SPC:	LDA	SEC_PER_CLUS
+                           2367 ;Input:	DE=Dividend, A=Divisor
+                           2368 ;Out:	DE=Result, A=Remainder
+   0E67 EB            [ 4] 2369 DIV16BY8:	XCHG		; HL = Dividend
+   0E68 1E 00         [ 7] 2370 		MVI	E,00	; Quotient = 0
+                           2371 		;LHLD	2200H	; Get Dividend
+                           2372 		;LDA	2300	; Get Divisor
+   0E6A 47            [ 7] 2373 		MOV	B, A	; Store        Divisor
+   0E6B 0E 08         [ 7] 2374 		MVI	C, 08	; Count = 8
+   0E6D 29            [10] 2375 DIV16BY8_LP:	DAD H		; Dividend = Dividend x 2
+   0E6E 7B            [ 4] 2376 		MOV	A, E
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 46
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
-   0E6C 7C            [ 4] 2377 		MOV	A, H
-   0E6D 90            [ 4] 2378 		SUB	B	; Is most significant byte of Dividend > divisor
-   0E6E DA 73 0E      [10] 2379 		JC	DIV16BY8_SK	; No, go to Next step
-   0E71 67            [ 7] 2380 		MOV	H, A	; Yes, subtract divisor
-   0E72 1C            [ 4] 2381 		INR	E	; and Quotient = Quotient + 1
-   0E73 0D            [ 4] 2382 DIV16BY8_SK:	DCR	C	; Count = Count - 1
-   0E74 C2 68 0E      [10] 2383 		JNZ	DIV16BY8_LP ; Is count =0 repeat
-                           2384 		;MOV	A, E
-                           2385 		;STA	2401H	; Store Quotient
-   0E77 7C            [ 4] 2386 		MOV	A, H
-                           2387 		;STA	2410H	; Store remainder
-   0E78 16 00         [ 7] 2388 		MVI	D,0	; Quotient in DE
-   0E7A C9            [10] 2389 		RET
-                           2390 
-                           2391 ;-----------------------------------------------------------------------------------------------------
-   0E7B 3A 38 FD      [13] 2392 DIVBYSHIFT:	LDA	DF_SHIFTCNT	; DE = Dividend
-   0E7E 47            [ 7] 2393 		MOV	B,A
-   0E7F 05            [ 4] 2394 DBS_LP:		DCR	B
-   0E80 C8            [12] 2395 		RZ
-   0E81 B7            [ 4] 2396 		ORA	A	;Clear Carry
-   0E82 7A            [ 4] 2397 		MOV	A,D
-   0E83 1F            [ 4] 2398 		RAR
-   0E84 57            [ 7] 2399 		MOV	D,A
-   0E85 7B            [ 4] 2400 		MOV	A,E
-   0E86 1F            [ 4] 2401 		RAR
-   0E87 5F            [ 4] 2402 		MOV	E,A
-   0E88 C3 7F 0E      [10] 2403 		JMP	DBS_LP
-                           2404 
-                           2405 ;-----------------------------------------------------------------------------------------------------
-   0E8B 3A 3D FD      [13] 2406 MODBYMASK:	LDA	MODMASK
-   0E8E A3            [ 4] 2407 		ANA	E
-   0E8F C9            [10] 2408 		RET
-                           2409 
-                           2410 
+   0E6F 07            [ 4] 2377 		RLC
+   0E70 5F            [ 4] 2378 		MOV	E, A	; Quotient = Quotient x 2
+   0E71 7C            [ 4] 2379 		MOV	A, H
+   0E72 90            [ 4] 2380 		SUB	B	; Is most significant byte of Dividend > divisor
+   0E73 DA 78 0E      [10] 2381 		JC	DIV16BY8_SK	; No, go to Next step
+   0E76 67            [ 7] 2382 		MOV	H, A	; Yes, subtract divisor
+   0E77 1C            [ 4] 2383 		INR	E	; and Quotient = Quotient + 1
+   0E78 0D            [ 4] 2384 DIV16BY8_SK:	DCR	C	; Count = Count - 1
+   0E79 C2 6D 0E      [10] 2385 		JNZ	DIV16BY8_LP ; Is count =0 repeat
+                           2386 		;MOV	A, E
+                           2387 		;STA	2401H	; Store Quotient
+   0E7C 7C            [ 4] 2388 		MOV	A, H
+                           2389 		;STA	2410H	; Store remainder
+   0E7D 16 00         [ 7] 2390 		MVI	D,0	; Quotient in DE
+   0E7F C9            [10] 2391 		RET
+                           2392 
+                           2393 ;-----------------------------------------------------------------------------------------------------
+   0E80 3A 38 FD      [13] 2394 DIVBYSHIFT:	LDA	DF_SHIFTCNT	; DE = Dividend
+   0E83 47            [ 7] 2395 		MOV	B,A
+   0E84 05            [ 4] 2396 DBS_LP:		DCR	B
+   0E85 C8            [12] 2397 		RZ
+   0E86 B7            [ 4] 2398 		ORA	A	;Clear Carry
+   0E87 7A            [ 4] 2399 		MOV	A,D
+   0E88 1F            [ 4] 2400 		RAR
+   0E89 57            [ 7] 2401 		MOV	D,A
+   0E8A 7B            [ 4] 2402 		MOV	A,E
+   0E8B 1F            [ 4] 2403 		RAR
+   0E8C 5F            [ 4] 2404 		MOV	E,A
+   0E8D C3 84 0E      [10] 2405 		JMP	DBS_LP
+                           2406 
+                           2407 ;-----------------------------------------------------------------------------------------------------
+   0E90 3A 3D FD      [13] 2408 MODBYMASK:	LDA	MODMASK
+   0E93 A3            [ 4] 2409 		ANA	E
+   0E94 C9            [10] 2410 		RET
                            2411 
                            2412 
-                           2413 ;----------------------------------------------------------------------------------------------------; RAM SPACE
-                           2414 ;>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>;
-                           2415 ;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<;
-                           2416 ;----------------------------------------------------------------------------------------------------; RAM SPACE
-   FD00                    2417 		.ORG	0xFD00
-                           2418 ;		.DSEG
-   FD00                    2419 HIGHSTACK:			;Stack starts saveing at FCFFh and grows downward
-                           2420 
-                           2421 ;SDFCB:
-                           2422 ;FSTAT		.blkb	1	;+0  Status of FCB, 00=File Not Open
-                           2423 ;FNAME		.blkb	11	;+1
-                           2424 ;AFClus0	.blkb	2	;+12 First Cluster of File as given by the Directory Entry.
-                           2425 ;CRFClus	.blkb	2	;+14 Current Relative Cluster location in file, (0 to F for a system with 32 Sectors per Cluster)
-                           2426 ;CAFClus	.blkb	2	;+16 Current Absolute Cluster location in file, set to AFClus0, then updated with FAT
-                           2427 ;RFSec		.blkb	2	;+18 Relative Sector being addressed (0 to 500, based 26 sectors per track and 77 tracks Divide by 4)
-                           2428 ;SSOC		.blkb	4	;+20 Starting Sector of Cluster, this is the first Sector for that Cluster
-                           2429 ;ABS_SEC	.blkb	4	;+24 Absolute Sector of Current Relative Sector
-                           2430 ;RESV		.blkb	4	;Filler for 32 bytes
-   FD00                    2431 SDISKA:		.blkb	32	;File Control Block
+                           2413 
+                           2414 
+                           2415 ;----------------------------------------------------------------------------------------------------; RAM SPACE
+                           2416 ;>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>;
+                           2417 ;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<;
+                           2418 ;----------------------------------------------------------------------------------------------------; RAM SPACE
+   FD00                    2419 		.ORG	0xFD00
+                           2420 ;		.DSEG
+   FD00                    2421 HIGHSTACK:			;Stack starts saveing at FCFFh and grows downward
+                           2422 
+                           2423 ;SDFCB:
+                           2424 ;FSTAT		.blkb	1	;+0  Status of FCB, 00=File Not Open
+                           2425 ;FNAME		.blkb	11	;+1
+                           2426 ;AFClus0	.blkb	2	;+12 First Cluster of File as given by the Directory Entry.
+                           2427 ;CRFClus	.blkb	2	;+14 Current Relative Cluster location in file, (0 to F for a system with 32 Sectors per Cluster)
+                           2428 ;CAFClus	.blkb	2	;+16 Current Absolute Cluster location in file, set to AFClus0, then updated with FAT
+                           2429 ;RFSec		.blkb	2	;+18 Relative Sector being addressed (0 to 500, based 26 sectors per track and 77 tracks Divide by 4)
+                           2430 ;SSOC		.blkb	4	;+20 Starting Sector of Cluster, this is the first Sector for that Cluster
+                           2431 ;ABS_SEC	.blkb	4	;+24 Absolute Sector of Current Relative Sector
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 47
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
-   FD20                    2432 FSIZE:		.blkb	4	;File Size
-                           2433 
-   FD24                    2434 GH_VIEW:	.blkb	1	;View File Load
+                           2432 ;RESV		.blkb	4	;Filler for 32 bytes
+   FD00                    2433 SDISKA:		.blkb	32	;File Control Block
+   FD20                    2434 FSIZE:		.blkb	4	;File Size
                            2435 
-                           2436 ; SPECIAL FLAGS.
+   FD24                    2436 GH_VIEW:	.blkb	1	;View File Load
                            2437 
-                     FD25  2438 CLEAR_RAM	.EQU	.	;Clear all RAM after this point on INIT
+                           2438 ; SPECIAL FLAGS.
                            2439 
-   FD25                    2440 INB_PTR:	.blkb	2	;Pointer to In Byte
-   FD27                    2441 GH_STATE:	.blkb	2	;Pointer to Get HEX State
-   FD29                    2442 GH_ERR_CNT:	.blkb	1	;Count of ERRORS
-   FD2A                    2443 GH_STATE2:	.blkb	2	;Pointer to Get HEX State
-   FD2C                    2444 GH_BYTE:	.blkb	1	;Temp to hold MSD
-   FD2D                    2445 GH_CHKSUM:	.blkb	1	;HEX File, record Checksum
-   FD2E                    2446 GH_COUNT:	.blkb	1	;HEX File, record data count
-   FD2F                    2447 GH_ADDR:	.blkb	2	;HEX File, record address
-   FD31                    2448 GH_TYPE:	.blkb	1	;HEX File, record type
-   FD32                    2449 GH_START:	.blkb	2	;HEX File, start address
-   FD34                    2450 GH_VALID:	.blkb	1	;HEX File, start address valid (set)
-   FD35                    2451 PC_POS:		.blkb	1
-                           2452 
-   FD36                    2453 DIVIDE_FUNC:	.blkb	2	;Pointer to the Divide Function
-   FD38                    2454 DF_SHIFTCNT:	.blkb	1	;Count of shifts required for Fast Divide
-   FD39                    2455 MUL8:		.blkb	1	;8 bit multiplier
-   FD3A                    2456 M_COUNTER:	.blkb	1	;8 bit counter for multiply routine
-   FD3B                    2457 MOD_FUNC:	.blkb	2	;Pointer to the Mod Function
-   FD3D                    2458 MODMASK:	.blkb	1	;8 bit mask to get Relative Sector within a cluster from a Relative File sector
-                           2459 
-   FD3E                    2460 LOGICAL_SEC:	.blkb	2	;Logical Sector for next Read/Write Operation
+                     FD25  2440 CLEAR_RAM	.EQU	.	;Clear all RAM after this point on INIT
+                           2441 
+   FD25                    2442 INB_PTR:	.blkb	2	;Pointer to In Byte
+   FD27                    2443 GH_STATE:	.blkb	2	;Pointer to Get HEX State
+   FD29                    2444 GH_ERR_CNT:	.blkb	1	;Count of ERRORS
+   FD2A                    2445 GH_STATE2:	.blkb	2	;Pointer to Get HEX State
+   FD2C                    2446 GH_BYTE:	.blkb	1	;Temp to hold MSD
+   FD2D                    2447 GH_CHKSUM:	.blkb	1	;HEX File, record Checksum
+   FD2E                    2448 GH_COUNT:	.blkb	1	;HEX File, record data count
+   FD2F                    2449 GH_ADDR:	.blkb	2	;HEX File, record address
+   FD31                    2450 GH_TYPE:	.blkb	1	;HEX File, record type
+   FD32                    2451 GH_START:	.blkb	2	;HEX File, start address
+   FD34                    2452 GH_VALID:	.blkb	1	;HEX File, start address valid (set)
+   FD35                    2453 PC_POS:		.blkb	1
+                           2454 
+   FD36                    2455 DIVIDE_FUNC:	.blkb	2	;Pointer to the Divide Function
+   FD38                    2456 DF_SHIFTCNT:	.blkb	1	;Count of shifts required for Fast Divide
+   FD39                    2457 MUL8:		.blkb	1	;8 bit multiplier
+   FD3A                    2458 M_COUNTER:	.blkb	1	;8 bit counter for multiply routine
+   FD3B                    2459 MOD_FUNC:	.blkb	2	;Pointer to the Mod Function
+   FD3D                    2460 MODMASK:	.blkb	1	;8 bit mask to get Relative Sector within a cluster from a Relative File sector
                            2461 
-   FD40                    2462 SD_CARD_TYPE:	.blkb	1	;SD CARD TYPE
-   FD41                    2463 SDC_STATUS:	.blkb	1	;SD Status Code returned
-   FD42                    2464 SD_PARAM:	.blkb	4	;32 bit address parameter for SD Commands
-   FD46                    2465 SD_PART_TYPE:	.blkb	1	;SD PARTITION TYPE
-   FD47                    2466 SD_PART_BASE:	.blkb	4	;SD PARTITION STARTING RECORD
-   FD4B                    2467 SD_PART_SIZE:	.blkb	4	;SD PARTITION SIZE (Must follow SD_PART_BASE)
-   FD4F                    2468 BYTE_P_SEC:	.blkb	2	;0x0B Bytes per Sector (Almost always 512)
-   FD51                    2469 SEC_PER_CLUS:	.blkb	1	;0x0D
-   FD52                    2470 RESERVED_SEC:	.blkb	2	;0x0E - 0x0F
-   FD54                    2471 FAT_COPIES:	.blkb	1	;0x10
-   FD55                    2472 ROOTDIR_SIZE:	.blkb	2	;0x11 - 0x12
-   FD57                    2473 FILESYS_SEC:	.blkb	4	;0x13 - 0x14 or 0x20 - 0x23
-   FD5B                    2474 HIDDEN_SEC:	.blkb	4	;0x1C - 0x1F
-   FD5F                    2475 SEC_PER_FAT:	.blkb	2	;0x16 - 0x17
-   FD61                    2476 FAT1START:	.blkb	4	;Calculated Sector to FAT1
-   FD65                    2477 DIR_SECTOR:	.blkb	4	;Calculated Sector to Root Directory
-   FD69                    2478 DATASTART:	.blkb	4	;Calculated Sector to Data Area
-   FD6D                    2479 FILENAME:	.blkb	8	;File Name
-   FD75                    2480 FILEEXT:	.blkb	3	;File Extension
-   FD78                    2481 SEC_PTR:	.blkb	4	;Sector Pointer, general use variable that holds the last sector read
-   FD7C                    2482 DIRTY_DATA:	.blkb	1	;Indicates when data Read has been altered, ie. Requires flushing back to SD Card
-   FD7D                    2483 ENT_COUNT:	.blkb	2	;Directory Entry Counter, Counts down maximum directory entries in Find File
-                           2484 
-                           2485 
+   FD3E                    2462 LOGICAL_SEC:	.blkb	2	;Logical Sector for next Read/Write Operation
+                           2463 
+   FD40                    2464 SD_CARD_TYPE:	.blkb	1	;SD CARD TYPE
+   FD41                    2465 SDC_STATUS:	.blkb	1	;SD Status Code returned
+   FD42                    2466 SD_PARAM:	.blkb	4	;32 bit address parameter for SD Commands
+   FD46                    2467 SD_PART_TYPE:	.blkb	1	;SD PARTITION TYPE
+   FD47                    2468 SD_PART_BASE:	.blkb	4	;SD PARTITION STARTING RECORD
+   FD4B                    2469 SD_PART_SIZE:	.blkb	4	;SD PARTITION SIZE (Must follow SD_PART_BASE)
+   FD4F                    2470 BYTE_P_SEC:	.blkb	2	;0x0B Bytes per Sector (Almost always 512)
+   FD51                    2471 SEC_PER_CLUS:	.blkb	1	;0x0D
+   FD52                    2472 RESERVED_SEC:	.blkb	2	;0x0E - 0x0F
+   FD54                    2473 FAT_COPIES:	.blkb	1	;0x10
+   FD55                    2474 ROOTDIR_SIZE:	.blkb	2	;0x11 - 0x12
+   FD57                    2475 FILESYS_SEC:	.blkb	4	;0x13 - 0x14 or 0x20 - 0x23
+   FD5B                    2476 HIDDEN_SEC:	.blkb	4	;0x1C - 0x1F
+   FD5F                    2477 SEC_PER_FAT:	.blkb	2	;0x16 - 0x17
+   FD61                    2478 FAT1START:	.blkb	4	;Calculated Sector to FAT1
+   FD65                    2479 DIR_SECTOR:	.blkb	4	;Calculated Sector to Root Directory
+   FD69                    2480 DATASTART:	.blkb	4	;Calculated Sector to Data Area
+   FD6D                    2481 FILENAME:	.blkb	8	;File Name
+   FD75                    2482 FILEEXT:	.blkb	3	;File Extension
+   FD78                    2483 SEC_PTR:	.blkb	4	;Sector Pointer, general use variable that holds the last sector read
+   FD7C                    2484 DIRTY_DATA:	.blkb	1	;Indicates when data Read has been altered, ie. Requires flushing back to SD Card
+   FD7D                    2485 ENT_COUNT:	.blkb	2	;Directory Entry Counter, Counts down maximum directory entries in Find File
                            2486 
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 48
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
                            2487 
-   FE00                    2488 		.ORG	0xFE00
-   FE00                    2489 SD_RAM_BUFFER:	.blkb	512		;512 BYTE SD CARD BUFFER
-                           2490 
-                           2491 
-                           2492 		.end
+                           2488 
+                           2489 
+   FE00                    2490 		.ORG	0xFE00
+   FE00                    2491 SD_RAM_BUFFER:	.blkb	512		;512 BYTE SD CARD BUFFER
+                           2492 
                            2493 
-                           2494 
+                           2494 		.end
                            2495 
-                           2496 ;----------------------------------------------------------------------------------------------------; INSTRUCTION LIST REFERENCE
-                           2497 ;>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>;
-                           2498 ;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<;
+                           2496 
+                           2497 
+                           2498 ;----------------------------------------------------------------------------------------------------; INSTRUCTION LIST REFERENCE
                            2499 ;>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>;
                            2500 ;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<;
                            2501 ;>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>;
@@ -2851,163 +2851,165 @@ Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
                            2512 ;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<;
                            2513 ;>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>;
                            2514 ;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<;
-                           2515 ;----------------------------------------------------------------------------------------------------;
-                           2516 
-                           2517 ;DATA TRANSFER GROUP
-                           2518 ;'Mnem.     'Description                 'Notes                '
-                           2519 ;'----------+----------------------------+---------------------'
-                           2520 ; MOV r1,r2 | r1 <- r2                   |r = A,B,C,D,E,H,L
-                           2521 ; MOV r,M   | r <- (HL)
-                           2522 ; MOV M,r   | (HL) <- r
-                           2523 ; HLT       | HALT
-                           2524 ; MVI r,d   | r <- d, Move Immediate data
-                           2525 ; MVI M     | (HL) <- d, Immediate data
-                           2526 ; INR r     | r <- r+1
-                           2527 ; DCR r     | r <- r-1
-                           2528 ; INR M     | (HL) <- (HL)+1
-                           2529 ; DCR M     | (HL) <- (HL)-1
-                           2530 ; ADD r     | A <- A+r
-                           2531 ; ADC r     | A <- A+r+CY                |Add with Carry
-                           2532 ; SUB r     | A <- A-r
-                           2533 ; SBB r     | A <- A-r-CY                |Subtract with Borrow
-                           2534 ; ANA r     | A <- A AND r
-                           2535 ; XRA r     | A <- A XOR r
-                           2536 ; ORA r     | A <- A OR r
-                           2537 ; CMP r     | A-r                        |Compare
-                           2538 ; ADD M     | A <- A+(HL)
-                           2539 ; ADC M     |
-                           2540 ; SUB M     |
-                           2541 ; SBB M     |
+                           2515 ;>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>;
+                           2516 ;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<;
+                           2517 ;----------------------------------------------------------------------------------------------------;
+                           2518 
+                           2519 ;DATA TRANSFER GROUP
+                           2520 ;'Mnem.     'Description                 'Notes                '
+                           2521 ;'----------+----------------------------+---------------------'
+                           2522 ; MOV r1,r2 | r1 <- r2                   |r = A,B,C,D,E,H,L
+                           2523 ; MOV r,M   | r <- (HL)
+                           2524 ; MOV M,r   | (HL) <- r
+                           2525 ; HLT       | HALT
+                           2526 ; MVI r,d   | r <- d, Move Immediate data
+                           2527 ; MVI M     | (HL) <- d, Immediate data
+                           2528 ; INR r     | r <- r+1
+                           2529 ; DCR r     | r <- r-1
+                           2530 ; INR M     | (HL) <- (HL)+1
+                           2531 ; DCR M     | (HL) <- (HL)-1
+                           2532 ; ADD r     | A <- A+r
+                           2533 ; ADC r     | A <- A+r+CY                |Add with Carry
+                           2534 ; SUB r     | A <- A-r
+                           2535 ; SBB r     | A <- A-r-CY                |Subtract with Borrow
+                           2536 ; ANA r     | A <- A AND r
+                           2537 ; XRA r     | A <- A XOR r
+                           2538 ; ORA r     | A <- A OR r
+                           2539 ; CMP r     | A-r                        |Compare
+                           2540 ; ADD M     | A <- A+(HL)
+                           2541 ; ADC M     |
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 49
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
-                           2542 ; ANA M     |
-                           2543 ; XRA M     |
-                           2544 ; ORA M     |
-                           2545 ; CMP M     |
-                           2546 ; ADI d     | A <- A+d, ADD Immediate data
-                           2547 ; ACI d     |
-                           2548 ; SUI d     |
-                           2549 ; SBI d     |
-                           2550 ; ANI d     |
-                           2551 ; XRI d     |
-                           2552 ; ORI d     |
-                           2553 ; CPI d     |
-                           2554 ; RLC       | Rotate A Left, CY<-MSB   Only Carry Affected
-                           2555 ; RRC       | Rotate A Right, CY<-LSB  Only Carry Affected
-                           2556 ; RAL       | Rotate A Left through Carry  Only Carry Affected
-                           2557 ; RAR       | Rotate A Right through Carry Only Carry Affected
-                           2558 ; JMP addr  | Jump Address
-                           2559 ; JC  addr  | Jump on Carry
-                           2560 ; JNC addr  | Jump on NOT Cary
-                           2561 ; JZ  addr  | Jump on ZERO
-                           2562 ; JNZ addr  | Jump on NOT ZERO
-                           2563 ; JP  addr  | Jump on Positive (MSB=0)
-                           2564 ; JM  addr  | Jump on Minus (MSB=1)
-                           2565 ; JPE addr  | Jump on Parity Even (Parity bit =1)
-                           2566 ; JPO addr  | Jump on Parity Odd (Parity bit =0)
-                           2567 ; CALL addr | Call subroutine
-                           2568 ; CC  addr
-                           2569 ; CNC addr
-                           2570 ; CZ  addr
-                           2571 ; CNZ addr
-                           2572 ; CP  addr
-                           2573 ; CM  addr
-                           2574 ; CPE addr
-                           2575 ; CPO addr
-                           2576 ; RET       | Return from subroutine
-                           2577 ; RC
-                           2578 ; RNC
-                           2579 ; RZ
-                           2580 ; RNZ
-                           2581 ; RP
-                           2582 ; RM
-                           2583 ; RPE
-                           2584 ; RPO
-                           2585 ; RST n     | Restart to Vector n        | n=0,1,2,3,4,5,6,7
-                           2586 ; IN  p     | A <- Port p, Input
-                           2587 ; OUT p     | Port p <- A, Output
-                           2588 ; LXI B,dd  | BC <- dd, Load Immediate data, 16 bit to Register Pair
-                           2589 ; LXI D,dd  | DE <- dd
-                           2590 ; LXI H,dd  | HL <- dd
-                           2591 ; LXI SP,dd | SP <- dd
-                           2592 ; PUSH B    | PUSH BC register pair to STACK
-                           2593 ; PUSH D    | PUSH DE register pair to STACK
-                           2594 ; PUSH H    | PUSH HL register pair to STACK
-                           2595 ; PUSH PSW  | PUSH A,Flags register pair to STACK
-                           2596 ; POP B     | POP BC register pair from STACK
+                           2542 ; SUB M     |
+                           2543 ; SBB M     |
+                           2544 ; ANA M     |
+                           2545 ; XRA M     |
+                           2546 ; ORA M     |
+                           2547 ; CMP M     |
+                           2548 ; ADI d     | A <- A+d, ADD Immediate data
+                           2549 ; ACI d     |
+                           2550 ; SUI d     |
+                           2551 ; SBI d     |
+                           2552 ; ANI d     |
+                           2553 ; XRI d     |
+                           2554 ; ORI d     |
+                           2555 ; CPI d     |
+                           2556 ; RLC       | Rotate A Left, CY<-MSB   Only Carry Affected
+                           2557 ; RRC       | Rotate A Right, CY<-LSB  Only Carry Affected
+                           2558 ; RAL       | Rotate A Left through Carry  Only Carry Affected
+                           2559 ; RAR       | Rotate A Right through Carry Only Carry Affected
+                           2560 ; JMP addr  | Jump Address
+                           2561 ; JC  addr  | Jump on Carry
+                           2562 ; JNC addr  | Jump on NOT Cary
+                           2563 ; JZ  addr  | Jump on ZERO
+                           2564 ; JNZ addr  | Jump on NOT ZERO
+                           2565 ; JP  addr  | Jump on Positive (MSB=0)
+                           2566 ; JM  addr  | Jump on Minus (MSB=1)
+                           2567 ; JPE addr  | Jump on Parity Even (Parity bit =1)
+                           2568 ; JPO addr  | Jump on Parity Odd (Parity bit =0)
+                           2569 ; CALL addr | Call subroutine
+                           2570 ; CC  addr
+                           2571 ; CNC addr
+                           2572 ; CZ  addr
+                           2573 ; CNZ addr
+                           2574 ; CP  addr
+                           2575 ; CM  addr
+                           2576 ; CPE addr
+                           2577 ; CPO addr
+                           2578 ; RET       | Return from subroutine
+                           2579 ; RC
+                           2580 ; RNC
+                           2581 ; RZ
+                           2582 ; RNZ
+                           2583 ; RP
+                           2584 ; RM
+                           2585 ; RPE
+                           2586 ; RPO
+                           2587 ; RST n     | Restart to Vector n        | n=0,1,2,3,4,5,6,7
+                           2588 ; IN  p     | A <- Port p, Input
+                           2589 ; OUT p     | Port p <- A, Output
+                           2590 ; LXI B,dd  | BC <- dd, Load Immediate data, 16 bit to Register Pair
+                           2591 ; LXI D,dd  | DE <- dd
+                           2592 ; LXI H,dd  | HL <- dd
+                           2593 ; LXI SP,dd | SP <- dd
+                           2594 ; PUSH B    | PUSH BC register pair to STACK
+                           2595 ; PUSH D    | PUSH DE register pair to STACK
+                           2596 ; PUSH H    | PUSH HL register pair to STACK
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 50
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 
 
-                           2597 ; POP D     | POP DE register pair from STACK
-                           2598 ; POP H     | POP HL register pair from STACK
-                           2599 ; POP PSW   | POP A,Flags register pair from STACK
-                           2600 ; STA addr  | (addr) <- A, Store A Direct
-                           2601 ; LDA addr  | A <- (addr), Load A Direct
-                           2602 ; XCHG      | Exchange HL <> DE
-                           2603 ; XTHL      | Exchange HL <> (SP), Exchange HL with Top of Stack
-                           2604 ; SPHL      | SP <- HL, Move HL to SP
-                           2605 ; PCHL      | PC <- HL, Move HL to PC
-                           2606 ; DAD B     | HL <- HL+BC, Add 16 bit register pairs
-                           2607 ; DAD D     | HL <- HL+DE, Add 16 bit register pairs
-                           2608 ; DAD H     | HL <- HL+HL, Add 16 bit register pairs
-                           2609 ; DAD SP    | HL <- HL+SP, Add 16 bit register pairs
-                           2610 ; STAX B    | (BC) <- A, Store A Indirect
-                           2611 ; STAX D    | (DE) <- A, Store A Indirect
-                           2612 ; LDAX B    | A <- (BC), Load A Indirect
-                           2613 ; LDAX D    | A <- (DE), Load A Indirect
-                           2614 ; INX B     | BC <- BC+1, Increment 16 bit register pair
-                           2615 ; INX D     | DE <- DE+1, Increment 16 bit register pair
-                           2616 ; INX H     | HL <- HL+1, Increment 16 bit register pair
-                           2617 ; INX SP    | SP <- SP+1, Increment 16 bit register
-                           2618 ; DCX B     | BC <- BC-1, Decrement 16 bit register pair
-                           2619 ; DCX D     | DE <- DE-1, Decrement 16 bit register pair
-                           2620 ; DCX H     | HL <- HL-1, Decrement 16 bit register pair
-                           2621 ; DCX SP    | SP <- SP-1, Decrement 16 bit register
-                           2622 ; CMA       | A <- /A, Complement Accumulator
-                           2623 ; STC       | Set Carry
-                           2624 ; CMC       | Complement Carry
-                           2625 ; DAA       | Decimal Adjust Accumulator
-                           2626 ; SHLD addr | (addr) <- HL, Store HL Direct
-                           2627 ; LHLD addr | HL <- (addr), Load HL Direct
-                           2628 ; EI        | Enable Interrupts
-                           2629 ; DI        | Disable Interrupts
-                           2630 ; NOP       | No Op
+                           2597 ; PUSH PSW  | PUSH A,Flags register pair to STACK
+                           2598 ; POP B     | POP BC register pair from STACK
+                           2599 ; POP D     | POP DE register pair from STACK
+                           2600 ; POP H     | POP HL register pair from STACK
+                           2601 ; POP PSW   | POP A,Flags register pair from STACK
+                           2602 ; STA addr  | (addr) <- A, Store A Direct
+                           2603 ; LDA addr  | A <- (addr), Load A Direct
+                           2604 ; XCHG      | Exchange HL <> DE
+                           2605 ; XTHL      | Exchange HL <> (SP), Exchange HL with Top of Stack
+                           2606 ; SPHL      | SP <- HL, Move HL to SP
+                           2607 ; PCHL      | PC <- HL, Move HL to PC
+                           2608 ; DAD B     | HL <- HL+BC, Add 16 bit register pairs
+                           2609 ; DAD D     | HL <- HL+DE, Add 16 bit register pairs
+                           2610 ; DAD H     | HL <- HL+HL, Add 16 bit register pairs
+                           2611 ; DAD SP    | HL <- HL+SP, Add 16 bit register pairs
+                           2612 ; STAX B    | (BC) <- A, Store A Indirect
+                           2613 ; STAX D    | (DE) <- A, Store A Indirect
+                           2614 ; LDAX B    | A <- (BC), Load A Indirect
+                           2615 ; LDAX D    | A <- (DE), Load A Indirect
+                           2616 ; INX B     | BC <- BC+1, Increment 16 bit register pair
+                           2617 ; INX D     | DE <- DE+1, Increment 16 bit register pair
+                           2618 ; INX H     | HL <- HL+1, Increment 16 bit register pair
+                           2619 ; INX SP    | SP <- SP+1, Increment 16 bit register
+                           2620 ; DCX B     | BC <- BC-1, Decrement 16 bit register pair
+                           2621 ; DCX D     | DE <- DE-1, Decrement 16 bit register pair
+                           2622 ; DCX H     | HL <- HL-1, Decrement 16 bit register pair
+                           2623 ; DCX SP    | SP <- SP-1, Decrement 16 bit register
+                           2624 ; CMA       | A <- /A, Complement Accumulator
+                           2625 ; STC       | Set Carry
+                           2626 ; CMC       | Complement Carry
+                           2627 ; DAA       | Decimal Adjust Accumulator
+                           2628 ; SHLD addr | (addr) <- HL, Store HL Direct
+                           2629 ; LHLD addr | HL <- (addr), Load HL Direct
+                           2630 ; EI        | Enable Interrupts
+                           2631 ; DI        | Disable Interrupts
+                           2632 ; NOP       | No Op
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 51
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 Symbol Table
 
     .__.$$$.       =   2710 L   |     .__.ABS.       =   0000 G
     .__.CPU.       =   0000 L   |     .__.H$L.       =   0000 L
-    ABS_SEC        =   0018     |   2 ADD_32_HL          0DF5 R
+    ABS_SEC        =   0018     |   2 ADD_32_HL          0DFA R
     AFClus0        =   000C     |   2 BIT_MARCH          036F R
   2 BOOT_SD            04B6 R   |   2 BOOT_SDVIEW        0114 R
   2 BYTEMARCH2         02E5 R   |   2 BYTE_P_SEC         FD4F R
-    CAFClus        =   0010     |   2 CH3_R1             0E32 R
-  2 CH3_R2             0E33 R   |   2 CH3_R3             0E34 R
+    CAFClus        =   0010     |   2 CH3_R1             0E37 R
+  2 CH3_R2             0E38 R   |   2 CH3_R3             0E39 R
   2 CHAR_ERROR         0608 R   |   2 CHKSUM_ERROR       06A3 R
   2 CLEAR_RAM      =   FD25 R   |   2 CMPF_LP1           09B1 R
   2 CMPF_LP2           09C7 R   |   2 CMPF_RETFAIL       09D5 R
-  2 CMP_DE_HL          0E36 R   |   2 CMP_FILENAME       09AB R
-  2 CMP_HL_32          0E1A R   |   2 COPY_RAM           0E43 R
-  2 COPY_RAM2          0E3C R   |   2 COPY_RAM4          0E41 R
+  2 CMP_DE_HL          0E3B R   |   2 CMP_FILENAME       09AB R
+  2 CMP_HL_32          0E1F R   |   2 COPY_RAM           0E48 R
+  2 COPY_RAM2          0E41 R   |   2 COPY_RAM4          0E46 R
     CPU_IO         =   0020     |     CRFClus        =   000E 
-  2 DATASTART          FD69 R   |   2 DBS_LP             0E7F R
+  2 DATASTART          FD69 R   |   2 DBS_LP             0E84 R
   2 DDLP0              00C1 R   |   2 DDLP1              00C3 R
   2 DDLP2              00C6 R   |   2 DDLP3              00D2 R
   2 DDLP4              00E4 R   |   2 DDLP5              0103 R
   2 DDSKP              0107 R   |   2 DD_NEXT            0181 R
-  2 DD_SAMELINE        0171 R   |   2 DEC_32             0E0B R
-  2 DEC_32NOBORROW     0E11 R   |   2 DF_SHIFTCNT        FD38 R
+  2 DD_SAMELINE        0171 R   |   2 DEC_32             0E10 R
+  2 DEC_32NOBORROW     0E16 R   |   2 DF_SHIFTCNT        FD38 R
   2 DIRTY_DATA         FD7C R   |   2 DIR_SECTOR         FD65 R
-  2 DISK_READ          0858 R   |   2 DIV16BY8           0E62 R
-  2 DIV16BY8SPC        0E5F R   |   2 DIV16BY8_LP        0E68 R
-  2 DIV16BY8_SK        0E73 R   |   2 DIVBYSHIFT         0E7B R
+  2 DISK_READ          0858 R   |   2 DIV16BY8           0E67 R
+  2 DIV16BY8SPC        0E64 R   |   2 DIV16BY8_LP        0E6D R
+  2 DIV16BY8_SK        0E78 R   |   2 DIVBYSHIFT         0E80 R
   2 DIVIDE_FUNC        FD36 R   |   2 DO_DIR             011C R
   2 DO_EOF             05BA R   |   2 DRSS_ABC           097F R
   2 DRSS_LP            0953 R   |   2 DRSS_SHIFT         0960 R
@@ -3018,13 +3020,13 @@ Symbol Table
   2 DR_SEEK_DONE       0937 R   |   2 DR_SEEK_FAT        08CC R
   2 DR_SEEK_LP         08CF R   |   2 ENT_COUNT          FD7D R
   2 FAT1START          FD61 R   |   2 FAT_COPIES         FD54 R
-  2 FB_LP              0E54 R   |   2 FILEEXT            FD75 R
+  2 FB_LP              0E59 R   |   2 FILEEXT            FD75 R
   2 FILENAME           FD6D R   |   2 FILESYS_SEC        FD57 R
-  2 FILL_BLOCK         0E51 R   |     FNAME          =   0001 
+  2 FILL_BLOCK         0E56 R   |     FNAME          =   0001 
     FPLED          =   00FF     |     FPSW           =   00FF 
   2 FSIZE              FD20 R   |     FSTAT          =   0000 
   2 GC_0               07AE R   |   2 GC_DO              07C0 R
-  2 GET_CHAR           07A2 R   |   2 GET_STRING         0D89 R
+  2 GET_CHAR           07A2 R   |   2 GET_STRING         0D8E R
   2 GH0                05C8 R   |   2 GH0_NEXT           068C R
   2 GH1                062A R   |   2 GH2                0633 R
   2 GH3                063C R   |   2 GH3_RET            0650 R
@@ -3038,7 +3040,7 @@ Symbol Table
   2 GH_IGNORED         0693 R   |   2 GH_LSD             05F0 R
   2 GH_MSD             05DC R   |   2 GH_NEXT_BYTE       05D2 R
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 52
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 Symbol Table
 
@@ -3047,28 +3049,28 @@ Symbol Table
   2 GH_VALID           FD34 R   |   2 GH_VIEW            FD24 R
   2 HIDDEN_SEC         FD5B R   |   2 HIGHSTACK          FD00 R
   2 IB_LP              073E R   |   2 IB_RET             0749 R
-  2 INB_PTR            FD25 R   |   2 INC_32             0E05 R
-  2 INITFAT_C1_DON     0A76 R   |   2 INITFAT_C2_DON     0A98 R
-  2 INITFAT_C2_LP      0A84 R   |   2 INITFAT_C3_0       0AD3 R
-  2 INITFAT_C3_1       0AFA R   |   2 INITFAT_C3_ERR     0ABE R
-  2 INITFAT_C3_LP      0AA4 R   |   2 INITFAT_C3_LP2     0AD5 R
-  2 INITFAT_C3_LP3     0AE7 R   |   2 INITFAT_C4_1       0B11 R
-  2 INITFAT_C4_2       0B2B R   |   2 INITFAT_C4_3       0B30 R
-  2 INITFAT_C4_LP      0B0B R   |   2 INITFAT_FAIL       0B6D R
-  2 INITFAT_FAIL1      0B57 R   |   2 INITFAT_PGOOD      0A12 R
-  2 INITFAT_TFS_DO     0A58 R   |   2 INITFAT_TFS_OK     0A51 R
-  2 INIT_BLOCK         073D R   |   2 INIT_FAIL          0C39 R
-  2 INIT_FAT           09D8 R   |   2 INIT_SDCARD        0C06 R
-  2 INPUT_FNAME        0187 R   |   2 ISD_0              0C10 R
-  2 ISD_1              0C4A R   |   2 ISD_2              0C6C R
-  2 ISD_3              0C87 R   |   2 ISD_4              0CB4 R
-  2 ISD_5              0CE5 R   |   2 ISD_6              0CEE R
-  2 ISD_LP1            0C2B R   |   2 ISD_LP2            0C9A R
+  2 INB_PTR            FD25 R   |   2 INC_32             0E0A R
+  2 INITFAT_C1_DON     0A7B R   |   2 INITFAT_C2_DON     0A9D R
+  2 INITFAT_C2_LP      0A89 R   |   2 INITFAT_C3_0       0AD8 R
+  2 INITFAT_C3_1       0AFF R   |   2 INITFAT_C3_ERR     0AC3 R
+  2 INITFAT_C3_LP      0AA9 R   |   2 INITFAT_C3_LP2     0ADA R
+  2 INITFAT_C3_LP3     0AEC R   |   2 INITFAT_C4_1       0B16 R
+  2 INITFAT_C4_2       0B30 R   |   2 INITFAT_C4_3       0B35 R
+  2 INITFAT_C4_LP      0B10 R   |   2 INITFAT_FAIL       0B72 R
+  2 INITFAT_FAIL1      0B5C R   |   2 INITFAT_PGOOD      0A17 R
+  2 INITFAT_TFS_DO     0A5D R   |   2 INITFAT_TFS_OK     0A56 R
+  2 INIT_BLOCK         073D R   |   2 INIT_FAIL          0C3E R
+  2 INIT_FAT           09D8 R   |   2 INIT_SDCARD        0C0B R
+  2 INPUT_FNAME        0187 R   |   2 ISD_0              0C15 R
+  2 ISD_1              0C4F R   |   2 ISD_2              0C71 R
+  2 ISD_3              0C8C R   |   2 ISD_4              0CB9 R
+  2 ISD_5              0CEA R   |   2 ISD_6              0CF3 R
+  2 ISD_LP1            0C30 R   |   2 ISD_LP2            0C9F R
   2 IS_HEX_CHAR        0718 R   |   2 KILL_SHADOW        0715 R
-  2 LD_HL_HL           0E4C R   |   2 LOADIT             01C3 R
-  2 LOGICAL_SEC        FD3E R   |   2 MODBYMASK          0E8B R
+  2 LD_HL_HL           0E51 R   |   2 LOADIT             01C3 R
+  2 LOGICAL_SEC        FD3E R   |   2 MODBYMASK          0E90 R
   2 MODMASK            FD3D R   |   2 MOD_FUNC           FD3B R
-  2 MOV_32_HL          0DE5 R   |   2 MOV_HL_32          0DED R
+  2 MOV_32_HL          0DEA R   |   2 MOV_HL_32          0DF2 R
   2 MSG1               0034 R   |   2 MSG12              048D R
   2 MSG2               01DC R   |   2 MSG3               0263 R
   2 MSG4               02CC R   |   2 MSG5               0358 R
@@ -3076,12 +3078,12 @@ Symbol Table
   2 MSG8               042E R   |   2 MUL8               FD39 R
   2 M_COUNTER          FD3A R   |   2 PC_LP              07D5 R
   2 PC_NL              07E2 R   |   2 PC_POS             FD35 R
-  2 PFE                0DC4 R   |   2 PF_LP1             0DB2 R
-  2 PF_LP2             0DD1 R   |   2 PF_RET             0DE3 R
+  2 PFE                0DC9 R   |   2 PF_LP1             0DB7 R
+  2 PF_LP2             0DD6 R   |   2 PF_RET             0DE8 R
     PPORT          =   0038     |   2 PRINT              0786 R
   2 PRINTB             0798 R   |   2 PRINTI             0790 R
   2 PRINTI_DO          04AB R   |   2 PRINTI_NS          04A4 R
-  2 PRINT_FILENAME     0DAF R   |     PROPELLERD     =   0001 
+  2 PRINT_FILENAME     0DB4 R   |     PROPELLERD     =   0001 
     PROPELLERS     =   0000     |   2 PUT_BC             074B R
   2 PUT_BYTE           076C R   |   2 PUT_CHAR           07C3 R
   2 PUT_DE             0756 R   |   2 PUT_HEX            077B R
@@ -3098,7 +3100,7 @@ Symbol Table
   2 RT2_LP4            029F R   |   2 RT2_NX1            02AF R
   2 RT3_LP1            0371 R   |   2 RT3_LP2            037E R
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 53
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 Symbol Table
 
@@ -3113,39 +3115,39 @@ Symbol Table
   2 RT5_LP2            03E8 R   |   2 RT5_LP3            03FD R
   2 RT5_NX1            03ED R   |   2 RT5_NX2            0402 R
   2 RT5_SKP            03E0 R   |   2 RT_FAIL            0426 R
-  2 SDC_1              0D1B R   |   2 SDC_2              0D22 R
-  2 SDC_LP             0D40 R   |   2 SDC_RET            0D4F R
+  2 SDC_1              0D20 R   |   2 SDC_2              0D27 R
+  2 SDC_LP             0D45 R   |   2 SDC_RET            0D54 R
   2 SDC_STATUS         FD41 R   |   2 SDFF_LP            084D R
   2 SDISKA             FD00 R   |   2 SDLF_LP            0146 R
   2 SDO_DO             0513 R   |   2 SDV_FIND_FILE      0821 R
   2 SDV_FIND_FILE1     0827 R   |   2 SDV_FOUND          083D R
-  2 SD_CARD_TYPE       FD40 R   |   2 SD_CLEAR_ARG       0D7B R
-  2 SD_CMD             0D0B R   |   2 SD_DELAY           0D06 R
-  2 SD_DELAY100        0D04 R   |   2 SD_DESELECT        0CF3 R
+  2 SD_CARD_TYPE       FD40 R   |   2 SD_CLEAR_ARG       0D80 R
+  2 SD_CMD             0D10 R   |   2 SD_DELAY           0D0B R
+  2 SD_DELAY100        0D09 R   |   2 SD_DESELECT        0CF8 R
   2 SD_FETCH           07F6 R   |   2 SD_FIND_FILE       084A R
   2 SD_LDIR1           07E9 R   |   2 SD_LDIRN           07FF R
   2 SD_MANUAL          050D R   |   2 SD_OPEN            04FF R
   2 SD_PARAM           FD42 R   |   2 SD_PART_BASE       FD47 R
   2 SD_PART_SIZE       FD4B R   |   2 SD_PART_TYPE       FD46 R
-  2 SD_RAM_BUFFER      FE00 R   |   2 SD_READ_SEC        0B98 R
-  2 SD_RS_0            0BBE R   |   2 SD_RS_1            0BD0 R
-  2 SD_RS_FORCED       0BA2 R   |   2 SD_RS_LP0          0BAD R
-  2 SD_RS_LP1          0BC0 R   |   2 SD_RS_LP2          0BD3 R
-  2 SD_SELECT          0CFA R   |   2 SD_TEST            07FC R
+  2 SD_RAM_BUFFER      FE00 R   |   2 SD_READ_SEC        0B9D R
+  2 SD_RS_0            0BC3 R   |   2 SD_RS_1            0BD5 R
+  2 SD_RS_FORCED       0BA7 R   |   2 SD_RS_LP0          0BB2 R
+  2 SD_RS_LP1          0BC5 R   |   2 SD_RS_LP2          0BD8 R
+  2 SD_SELECT          0CFF R   |   2 SD_TEST            07FC R
   2 SEC_PER_CLUS       FD51 R   |   2 SEC_PER_FAT        FD5F R
-  2 SEC_PTR            FD78 R   |   2 SET_PARAM          0BEB R
-    SPI            =   0030     |   2 SPI_RX             0D51 R
-    SPI_SS         =   0031     |   2 SP_RET             0BFC R
+  2 SEC_PTR            FD78 R   |   2 SET_PARAM          0BF0 R
+    SPI            =   0030     |   2 SPI_RX             0D56 R
+    SPI_SS         =   0031     |   2 SP_RET             0C01 R
     SSOC           =   0014     |   2 START_DELAY        0002 R
   2 SYS_HALT           0487 R   |   2 TEST_RAM           01CC R
-  2 TEST_SIGNATURE     0B83 R   |   2 TO_UPPER           0DA6 R
-  2 TSTZ_32            0E13 R   |     UART0          =   0020 
-    UART1          =   0028     |   2 VCALL              0E5E R
-  2 WAIT_NOT_BUSY      0D59 R   |   2 WNB_0              0D6F R
-  2 WNB_LP             0D5D R   |   2 WNB_LP2            0D5F R
+  2 TEST_SIGNATURE     0B88 R   |   2 TO_UPPER           0DAB R
+  2 TSTZ_32            0E18 R   |     UART0          =   0020 
+    UART1          =   0028     |   2 VCALL              0E63 R
+  2 WAIT_NOT_BUSY      0D5E R   |   2 WNB_0              0D74 R
+  2 WNB_LP             0D62 R   |   2 WNB_LP2            0D64 R
 
 ASxxxx Assembler V05.31  (Intel 8085)                                  Page 54
-Hexadecimal [16-Bits]                                 Tue Nov 17 09:55:27 2020
+Hexadecimal [16-Bits]                                 Tue Nov 17 09:59:44 2020
 
 Area Table
 
